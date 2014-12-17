@@ -21,3 +21,8 @@ package 'cassandra' do
   version node['et_cassandra']['version']
   action :install
 end
+
+service 'cassandra' do
+  supports status: true, restart: true
+  action [:enable, :start]
+end
