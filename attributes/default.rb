@@ -9,6 +9,16 @@ default['et_cassandra']['user'] = 'cassandra'
 # http://www.datastax.com/documentation/cassandra/1.2/cassandra/install/installJnaDeb.html
 default['et_cassandra']['jnapkg'] = 'libjna-java'
 
+# We don't necessarily want all of the nodes in the cluster to restart
+# upon configuration changes
+default['et_cassandra']['skip_restart'] = true
+
+default['et_cassandra']['env']['max_heap_size'] = '6G'
+default['et_cassandra']['env']['heap_newsize'] = '1600M'
+default['et_cassandra']['env']['heapdump_dir'] = '/var/lib/cassandra/heap_dumps'
+default['et_cassandra']['env']['malloc_arena_max'] = 16
+default['et_cassandra']['env']['enable_gc_logging'] = true
+
 # Java install settings
 default['java']['install_flavor'] = 'openjdk'
 default['java']['jdk_version'] = '7'

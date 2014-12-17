@@ -26,3 +26,7 @@ service 'cassandra' do
   supports status: true, restart: true
   action [:enable, :start]
 end
+
+template '/etc/cassandra/cassandra-env.sh' do
+  notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
+end
