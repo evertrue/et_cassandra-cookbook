@@ -1,0 +1,33 @@
+# YAML topology configuration file for Cassandra,
+# to be used with YamlFileNetworkTopologySnitch.
+
+# The topology, as a list of data centers.
+#
+# Each data center has a name and a list of racks.
+#
+# Each rack has a name and a list of nodes.
+#
+# Each node has a broadcast address (required)
+# and a data-center-local address (optional).
+# If dc_local_address is specified, its peers
+# in the same data center will attempt to
+# reconnect over that address instead.
+topology:
+  <% @topology.each do |dc, racks| %>
+  - dc_name: <%= dc.upcase %>
+    racks:
+      <%  racks.each do |rack, nodes| %>
+      - rack_name: <%= rack.upcase %>
+        nodes:
+          <%    nodes.each do |ip| %>
+          - broadcast_address: <%= ip %>
+          <%    end %>
+      <%  end %>
+  <% end %>
+
+# Default data center name for unknown nodes; defaults to "UNKNOWN"
+# default_dc_name: UNKNOWN
+
+# Default rack name for unknown nodes
+# default_rack_name: UNKNOWN; defaults to "UNKNOWN"
+
