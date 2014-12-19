@@ -28,7 +28,11 @@ topology_analogs = {
 nodes = search(
   :node,
   node['et_cassandra']['discovery']['topo_search_str'] +
-  " AND chef_environment:#{node.chef_environment}"
+  " AND chef_environment:#{node.chef_environment}",
+  keys: {
+    'ip'  => ['ipaddress'],
+    'ec2' => ['placement_availability_zone']
+  }
 )
 
 topology = Hash.new { |h, k| h[k] = {} }
