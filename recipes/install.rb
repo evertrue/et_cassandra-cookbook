@@ -27,8 +27,13 @@ service 'cassandra' do
   action [:enable, :start]
 end
 
-template '/etc/cassandra/cassandra-env.sh' do
-  notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
+[
+  'cassandra-env.sh',
+  'cassandra.yaml'
+].each do |conf|
+  template "#{node['et_cassandra']['conf_path']}/#{conf}" do
+    notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
+  end
 end
 
 include_recipe 'et_cassandra::search_discovery'
