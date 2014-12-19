@@ -27,7 +27,7 @@ topology_analogs = {
 
 nodes = search(
   :node,
-  node['et_cassandra']['discovery']['search_str'] +
+  node['et_cassandra']['discovery']['topo_search_str'] +
   " AND chef_environment:#{node.chef_environment}"
 )
 

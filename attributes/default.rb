@@ -20,7 +20,7 @@ default['et_cassandra']['env']['malloc_arena_max'] = 16
 default['et_cassandra']['env']['enable_gc_logging'] = true
 
 # Node discovery
-default['et_cassandra']['discovery']['search_str'] = 'recipe:et_cassandra'
+default['et_cassandra']['discovery']['topo_search_str'] = 'recipe:et_cassandra'
 
 # Cassandra storage config
 # Values reflect the default configuration shipped w/ the Cassandra version
