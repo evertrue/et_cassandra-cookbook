@@ -21,6 +21,7 @@ default['et_cassandra']['env']['enable_gc_logging'] = true
 
 # Node discovery
 default['et_cassandra']['discovery']['topo_search_str'] = 'recipe:et_cassandra'
+default['et_cassandra']['discovery']['seed_search_str'] = 'role:cassandra_seed'
 
 # Cassandra storage config
 # Values reflect the default configuration shipped w/ the Cassandra version
@@ -52,17 +53,6 @@ default['et_cassandra']['config'] = {
   'commitlog_sync'                 => 'periodic',
   'commitlog_sync_period_in_ms'    => 10_000,
   'commitlog_segment_size_in_mb'   => 32,
-  # Structure is seemingly ornate to map 1:1 to YAML output needed in actual config
-  'seed_provider' => [
-    {
-      'class_name' => 'org.apache.cassandra.locator.SimpleSeedProvider',
-      'parameters' => [
-        {
-          'seeds' => '127.0.0.1'
-        }
-      ]
-    }
-  ],
   'concurrent_reads'                         => 32,
   'concurrent_writes'                        => 32,
   'concurrent_counter_writes'                => 32,

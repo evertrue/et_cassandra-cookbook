@@ -27,6 +27,32 @@ service 'cassandra' do
   action [:enable, :start]
 end
 
+seeds = search(
+  :node,
+  node['et_cassandra']['discovery']['seed_search_str'] +
+  " AND chef_environment:#{node.chef_environment}",
+  keys: {
+    'ip'  => ['ipaddress']
+  }
+)
+
+seed_ips = ''
+seeds.each do |s|
+  seed_ips + "#{s['ip']},"
+end
+
+# Structure is seemingly ornate to map 1:1 to YAML output needed in actual config
+node.default['et_cassandra']['config']['seed_provider'] = [
+  {
+    'class_name' => 'org.apache.cassandra.locator.SimpleSeedProvider',
+    'parameters' => [
+      {
+        'seeds' => seed_ips
+      }
+    ]
+  }
+]
+
 [
   'cassandra-env.sh',
   'cassandra.yaml'
