@@ -31,8 +31,6 @@ nodes = search(
   " AND chef_environment:#{node.chef_environment}"
 )
 
-log nodes.to_json
-
 topology = Hash.new { |h, k| h[k] = {} }
 nodes.each do |node|
   region = node['ec2']['placement_availability_zone'][0..-2]
