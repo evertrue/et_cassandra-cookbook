@@ -30,7 +30,7 @@ describe 'Apache Cassandra' do
     end
   end
 
-  context 'is configured' do
+  context 'has the desired configuration' do
     describe file '/etc/cassandra/cassandra.yaml' do
       it { is_expected.to be_file }
       describe '#content' do
@@ -43,7 +43,7 @@ describe 'Apache Cassandra' do
     end
   end
 
-  context 'is configured to populate its topology' do
+  context 'has the desired topology configured' do
     describe file '/etc/cassandra/cassandra-topology.properties' do
       it { is_expected.to be_file }
       describe '#content' do
