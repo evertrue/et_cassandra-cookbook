@@ -7,8 +7,10 @@
 package node['et_cassandra']['jnapkg']
 
 user node['et_cassandra']['user'] do
+  home node['et_cassandra']['home']
   system true
   shell  '/bin/sh'
+  supports manage_home: true
 end
 
 apt_repository 'cassandra' do

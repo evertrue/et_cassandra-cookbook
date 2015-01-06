@@ -1,6 +1,7 @@
 default['et_cassandra']['version'] = '2.1.0-2'
 
 default['et_cassandra']['user'] = 'cassandra'
+default['et_cassandra']['home'] = '/var/lib/cassandra'
 
 # Path to Cassandra configs
 default['et_cassandra']['conf_path'] = '/etc/cassandra'
@@ -39,8 +40,8 @@ default['et_cassandra']['config'] = {
   'authorizer'                     => 'AllowAllAuthorizer',
   'permissions_validity_in_ms'     => 2000,
   'partitioner'                    => 'org.apache.cassandra.dht.Murmur3Partitioner',
-  'data_file_directories'          => ['/var/lib/cassandra/data'],
-  'commitlog_directory'            => '/var/lib/cassandra/commitlog',
+  'data_file_directories'          => ["#{node['et_cassandra']['home']}/cassandra/data"],
+  'commitlog_directory'            => "#{node['et_cassandra']['home']}/cassandra/commitlog",
   'disk_failure_policy'            => 'stop',
   'commit_failure_policy'          => 'stop',
   'key_cache_size_in_mb'           => nil,
@@ -49,7 +50,7 @@ default['et_cassandra']['config'] = {
   'row_cache_save_period'          => 0,
   'counter_cache_size_in_mb'       => nil,
   'counter_cache_save_period'      => 7200,
-  'saved_caches_directory'         => '/var/lib/cassandra/saved_caches',
+  'saved_caches_directory'         => "#{node['et_cassandra']['home']}/cassandra/saved_caches",
   'commitlog_sync'                 => 'periodic',
   'commitlog_sync_period_in_ms'    => 10_000,
   'commitlog_segment_size_in_mb'   => 32,
