@@ -36,9 +36,7 @@ seeds = search(
   }
 )
 
-# TODO: This almost certainly could be done more elegantly
-seed_ips = []
-seeds.each { |s| s['data'].map { |_k, ip| seed_ips << ip } }
+seed_ips = seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }.join ','
 
 # Structure is seemingly ornate to map 1:1 to YAML output needed in actual config
 node.default['et_cassandra']['config']['seed_provider'] = [
@@ -46,7 +44,7 @@ node.default['et_cassandra']['config']['seed_provider'] = [
     'class_name' => 'org.apache.cassandra.locator.SimpleSeedProvider',
     'parameters' => [
       {
-        'seeds' => seed_ips.join(',')
+        'seeds' => seed_ips
       }
     ]
   }
