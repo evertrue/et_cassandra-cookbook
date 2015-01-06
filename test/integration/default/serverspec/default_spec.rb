@@ -24,7 +24,7 @@ describe 'Apache Cassandra' do
     end
   end
 
-  context 'is configured to find the correct nodes' do
+  context 'is configured' do
     describe file '/etc/cassandra/cassandra.yaml' do
       it { is_expected.to be_file }
       describe '#content' do
