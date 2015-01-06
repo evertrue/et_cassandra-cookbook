@@ -31,8 +31,8 @@ seeds = search(
   :node,
   node['et_cassandra']['discovery']['seed_search_str'] +
   " AND chef_environment:#{node.chef_environment}",
-  keys: {
-    'ip'  => ['ipaddress']
+  filter_result: {
+    'ip' => %w(ipaddress)
   }
 )
 

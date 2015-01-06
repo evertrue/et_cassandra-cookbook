@@ -29,22 +29,22 @@ nodes = search(
   :node,
   node['et_cassandra']['discovery']['topo_search_str'] +
   " AND chef_environment:#{node.chef_environment}",
-  keys: {
-    'ip'  => ['ipaddress'],
-    'ec2' => ['placement_availability_zone']
+  filter_result: {
+    'ip'  => %w(ipaddress),
+    'az' => %w(ec2 placement_availability_zone)
   }
 )
 
 topology = Hash.new { |h, k| h[k] = {} }
-nodes.each do |node|
-  region = node['ec2']['placement_availability_zone'][0..-2]
-  az     = node['ec2']['placement_availability_zone'][-1, 1]
+nodes.each do |n|
+  region = n['data']['az'][0..-2]
+  az     = n['data']['az'][-1, 1]
 
   dc  = topology_analogs[:dc][region]
   rac = topology_analogs[:az][az]
 
   topology[dc][rac] = [
-    node['ipaddress']
+    n['data']['ip']
   ]
 end
 
