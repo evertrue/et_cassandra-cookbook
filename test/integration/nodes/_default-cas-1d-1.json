@@ -1,0 +1,22 @@
+{
+  "name": "_default-cas-1d-1",
+  "chef_environment": "_default",
+  "run_list": [
+    "recipe[et_base]",
+    "recipe[et_cassandra]"
+  ],
+  "automatic": {
+    "fqdn": "_defaul-cas-1d-1.priv.evertrue.com",
+    "ipaddress": "169.254.0.5",
+    "ec2": {
+      "hostname":"ip-169-254-0-5.priv.evertrue.com",
+      "local_hostname":"ip-169-254-0-5.priv.evertrue.com",
+      "local_ipv4":"169.254.0.5",
+      "placement_availability_zone":"us-east-1d",
+      "userdata":null
+    },
+    "recipes": [
+      "et_cassandra"
+    ]
+  }
+}
