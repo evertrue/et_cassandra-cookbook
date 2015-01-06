@@ -22,6 +22,18 @@ package 'cassandra' do
   action :install
 end
 
+[
+  node['et_cassandra']['config']['data_file_directories'],
+  node['et_cassandra']['config']['commitlog_directory'],
+  node['et_cassandra']['config']['saved_caches_directory']
+].flatten.each do |dir|
+  directory dir do
+    owner node['et_cassandra']['user']
+    group node['et_cassandra']['user']
+    recursive true
+  end
+end
+
 service 'cassandra' do
   supports status: true, restart: true
   action [:enable, :start]

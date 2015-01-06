@@ -9,6 +9,12 @@ describe 'Apache Cassandra' do
     expect(service('cassandra')).to be_running
   end
 
+  it 'has the necessary permissions for its directories' do
+    expect(file('/var/lib/cassandra/data')).to be_owned_by 'cassandra'
+    expect(file('/var/lib/cassandra/commitlog')).to be_owned_by 'cassandra'
+    expect(file('/var/lib/cassandra/saved_caches')).to be_owned_by 'cassandra'
+  end
+
   context 'has the desired environment config' do
     describe file '/etc/cassandra/cassandra-env.sh' do
       it { is_expected.to be_file }
