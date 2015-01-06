@@ -74,3 +74,12 @@ node.default['et_cassandra']['config']['seed_provider'] = [
 end
 
 include_recipe 'et_cassandra::search_discovery'
+
+# Ensure Cassandra is not restarted on subsequent runs
+ruby_block 'cassandra_started' do
+  block do
+    node.set['et_cassandra']['skip_restart'] = true
+    node.set['et_cassandra']['service_action'] = :enable
+    node.save
+  end
+end

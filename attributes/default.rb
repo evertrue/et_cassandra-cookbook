@@ -12,7 +12,8 @@ default['et_cassandra']['jnapkg'] = 'libjna-java'
 
 # We don't necessarily want all of the nodes in the cluster to restart
 # upon configuration changes
-default['et_cassandra']['skip_restart'] = true
+default['et_cassandra']['skip_restart'] = false
+default['et_cassandra']['service_action'] = [:enable, :start]
 
 default['et_cassandra']['env']['max_heap_size'] = '6G'
 default['et_cassandra']['env']['heap_newsize'] = '1600M'
