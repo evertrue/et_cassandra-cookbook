@@ -140,11 +140,26 @@ esac
 # times. If in doubt, and if you do not particularly want to tweak, go with
 # 100 MB per physical CPU core.
 
+<%- if node['et_cassandra']['env']['max_heap_size'] -%>
 MAX_HEAP_SIZE="<%= node['et_cassandra']['env']['max_heap_size'] %>"
+<%- else -%>
+#MAX_HEAP_SIZE="4G"
+<%- end -%>
+<%- if node['et_cassandra']['env']['heap_newsize'] -%>
 HEAP_NEWSIZE="<%= node['et_cassandra']['env']['heap_newsize'] %>"
+<%- else -%>
+#HEAP_NEWSIZE="800M"
+<%- end -%>
+<%- if node['et_cassandra']['env']['heapdump_dir'] -%>
 CASSANDRA_HEAPDUMP_DIR="<%= node['et_cassandra']['env']['heapdump_dir'] %>"
+<%- end -%>
+
 # Set this to control the amount of arenas per-thread in glibc
+<%- if node['et_cassandra']['env']['malloc_arena_max'] -%>
 export MALLOC_ARENA_MAX=<%= node['et_cassandra']['env']['malloc_arena_max'] %>
+<%- else -%>
+#export MALLOC_ARENA_MAX=4
+<%- end -%>
 
 if [ "x$MAX_HEAP_SIZE" = "x" ] && [ "x$HEAP_NEWSIZE" = "x" ]; then
     calculate_heap_sizes
@@ -157,7 +172,11 @@ fi
 
 if [ "x$MALLOC_ARENA_MAX" = "x" ]
 then
+<%- if node['et_cassandra']['env']['malloc_arena_max'] -%>
     export MALLOC_ARENA_MAX=<%= node['et_cassandra']['env']['malloc_arena_max'] %>
+<%- else -%>
+    export MALLOC_ARENA_MAX=4
+<%- end -%>
 fi
 
 # Specifies the default port over which Cassandra will be available for

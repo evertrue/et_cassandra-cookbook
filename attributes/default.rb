@@ -15,11 +15,11 @@ default['et_cassandra']['jnapkg'] = 'libjna-java'
 default['et_cassandra']['skip_restart'] = false
 default['et_cassandra']['service_action'] = [:enable, :start]
 
-default['et_cassandra']['env']['max_heap_size'] = '6G'
-default['et_cassandra']['env']['heap_newsize'] = '1600M'
-default['et_cassandra']['env']['heapdump_dir'] = '/var/lib/cassandra/heap_dumps'
-default['et_cassandra']['env']['malloc_arena_max'] = 16
-default['et_cassandra']['env']['enable_gc_logging'] = true
+default['et_cassandra']['env']['max_heap_size'] = nil
+default['et_cassandra']['env']['heap_newsize'] = nil
+default['et_cassandra']['env']['heapdump_dir'] = nil
+default['et_cassandra']['env']['malloc_arena_max'] = nil
+default['et_cassandra']['env']['enable_gc_logging'] = false
 
 # Node discovery
 default['et_cassandra']['discovery']['topo_search_str'] = 'recipe:et_cassandra'

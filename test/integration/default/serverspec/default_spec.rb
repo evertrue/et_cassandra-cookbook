@@ -20,12 +20,10 @@ describe 'Apache Cassandra' do
       it { is_expected.to be_file }
       describe '#content' do
         subject { super().content }
-        it { is_expected.to include 'MAX_HEAP_SIZE="6G' }
-        it { is_expected.to include 'HEAP_NEWSIZE="1600M' }
-        it { is_expected.to include 'CASSANDRA_HEAPDUMP_DIR="/var/lib/cassandra/heap_dumps' }
-        it { is_expected.to include 'export MALLOC_ARENA_MAX=16' }
-        it { is_expected.to include "then\n    export MALLOC_ARENA_MAX=16" }
-        it { is_expected.to include 'JVM_OPTS="$JVM_OPTS -XX:+PrintGCDetails"' }
+        it { is_expected.to include '#MAX_HEAP_SIZE="4G' }
+        it { is_expected.to include '#HEAP_NEWSIZE="800M' }
+        it { is_expected.to include '#export MALLOC_ARENA_MAX=4' }
+        it { is_expected.to include "then\n    export MALLOC_ARENA_MAX=4" }
       end
     end
   end
