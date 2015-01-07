@@ -38,7 +38,7 @@ end
 
 service 'cassandra' do
   supports status: true, restart: true
-  action [:enable, :start]
+  action node['et_cassandra']['service_action']
 end
 
 seeds = search(
