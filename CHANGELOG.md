@@ -1,5 +1,16 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.0 (2015-01-08)
+
+Improvements:
+
+* Install `jemalloc` package, as per @glennlprimmer, for better `malloc` handling
+* Provide simple method for dependent packages to be easily installed before Cassandra via an attribute
+* Add comments as headers of Chef-managed config files
+    - Avoids people hacking files manually, then being confused when their changes disappear
+* Add installation of OpsCenter with default values
+    - Configurable via attributes
+
 ## v1.1.0 (2015-01-07)
 
 Bugs:
