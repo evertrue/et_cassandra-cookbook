@@ -10,6 +10,9 @@ default['et_cassandra']['conf_path'] = '/etc/cassandra'
 # http://www.datastax.com/documentation/cassandra/1.2/cassandra/install/installJnaDeb.html
 default['et_cassandra']['packages']['jnapkg'] = 'libjna-java'
 
+# Use jemalloc to improve malloc implementation
+default['et_cassandra']['packages']['jemalloc'] = 'libjemalloc1'
+
 # We don't necessarily want all of the nodes in the cluster to restart
 # upon configuration changes
 default['et_cassandra']['skip_restart'] = false
