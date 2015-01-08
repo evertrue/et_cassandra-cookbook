@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe 'Apache Cassandra' do
+  context 'has the necessary packages installed' do
+    %w(
+      libjna-java
+      jemalloc
+      cassandra
+    ).each do |pkg|
+      describe package pkg do
+        it { is_expected.to be_installed }
+      end
+    end
+  end
+
   it 'has an enabled service of cassandra' do
     expect(service('cassandra')).to be_enabled
   end
