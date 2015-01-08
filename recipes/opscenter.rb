@@ -32,3 +32,10 @@ end
 
 node.default['et_cassandra']['opscenter']['cluster']['name'] =
   node['et_cassandra']['config']['cluster_name'].downcase.tr(' ', '_')
+
+template '/etc/opscenter/opscenterd.conf' do
+  source 'opscenter.conf.erb'
+  variables(
+    config: node['et_cassandra']['opscenter']['config']
+  )
+end

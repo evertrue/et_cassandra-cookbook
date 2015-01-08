@@ -1,0 +1,10 @@
+# This file is managed by Chef. Changes will be overwritten.
+
+# opscenterd.conf
+
+<% @config.each do |header, items| %>
+[<%= header %>]
+<% items.each do |k, v| %>
+<%= k %> = <%= v %>
+<% end %>
+<% end %>
