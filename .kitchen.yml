@@ -15,3 +15,11 @@ suites:
   - name: default
     run_list:
       - recipe[et_cassandra::default]
+
+  - name: opscenter
+    run_list:
+      - recipe[et_cassandra::opscenter]
+    attributes:
+      et_cassandra:
+        opscenter:
+          master: true
