@@ -4,7 +4,9 @@
 #
 # Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
 
-package node['et_cassandra']['jnapkg']
+node['et_cassandra']['packages'].each do |_k, pkg|
+  package pkg
+end
 
 user node['et_cassandra']['user'] do
   home node['et_cassandra']['home']

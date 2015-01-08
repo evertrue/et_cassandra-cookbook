@@ -8,7 +8,7 @@ default['et_cassandra']['conf_path'] = '/etc/cassandra'
 
 # As per DatStax docs re: the JNA improving memory usage
 # http://www.datastax.com/documentation/cassandra/1.2/cassandra/install/installJnaDeb.html
-default['et_cassandra']['jnapkg'] = 'libjna-java'
+default['et_cassandra']['packages']['jnapkg'] = 'libjna-java'
 
 # We don't necessarily want all of the nodes in the cluster to restart
 # upon configuration changes
