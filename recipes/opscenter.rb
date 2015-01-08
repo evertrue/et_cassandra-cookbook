@@ -39,3 +39,12 @@ template '/etc/opscenter/opscenterd.conf' do
     config: node['et_cassandra']['opscenter']['config']
   )
 end
+
+template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster_name']}.conf" do
+  source 'opscenter.conf.erb'
+  variables(
+    config: node['et_cassandra']['opscenter']['cluster']['config']
+  )
+  notifies :restart, 'service[opscenterd]'
+  only_if { node['et_cassandra']['opscenter']['cluster']['managed'] }
+end

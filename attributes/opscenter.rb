@@ -9,3 +9,5 @@ default['et_cassandra']['opscenter']['config'] = {
     'enabled' => 'False'
   }
 }
+
+default['et_cassandra']['opscenter']['cluster']['managed'] = false
