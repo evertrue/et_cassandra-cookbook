@@ -15,11 +15,7 @@ user node['et_cassandra']['user'] do
   supports manage_home: true
 end
 
-apt_repository 'cassandra' do
-  uri 'http://debian.datastax.com/community'
-  components %w(stable main)
-  key 'http://debian.datastax.com/debian/repo_key'
-end
+include_recipe 'et_cassandra::repo'
 
 package 'cassandra' do
   version node['et_cassandra']['version']
