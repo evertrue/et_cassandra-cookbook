@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.1 (2015-01-09)
+
+Bugs:
+
+* OpsCenter cluster configuration is only set up on the OpsCenter master
+* OpsCenter master config is also now only installed/set up on the OpsCenter master
+
 ## v1.2.0 (2015-01-08)
 
 Improvements:
