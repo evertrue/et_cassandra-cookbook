@@ -35,6 +35,7 @@ node.default['et_cassandra']['opscenter']['cluster']['name'] =
 
 template '/etc/opscenter/opscenterd.conf' do
   source 'opscenter.conf.erb'
+  notifies :restart, 'service[opscenterd]'
   variables(
     config: node['et_cassandra']['opscenter']['config']
   )
