@@ -48,5 +48,8 @@ template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster_n
     config: node['et_cassandra']['opscenter']['cluster']['config']
   )
   notifies :restart, 'service[opscenterd]'
-  only_if { node['et_cassandra']['opscenter']['cluster']['managed'] }
+  only_if do
+    node['et_cassandra']['opscenter']['master'] &&
+      node['et_cassandra']['opscenter']['cluster']['managed']
+  end
 end
