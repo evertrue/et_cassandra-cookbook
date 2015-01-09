@@ -91,3 +91,21 @@ eos
     end
   end
 end
+
+describe 'Opscenter' do
+  describe package 'datastax-agent' do
+    it { is_expected.to be_installed }
+  end
+
+  describe package 'opscenter' do
+    it { is_expected.to_not be_installed }
+  end
+
+  describe service 'datastax-agent' do
+    it { is_expected.to be_enabled }
+  end
+
+  describe service 'datastax-agent' do
+    it { is_expected.to be_running }
+  end
+end

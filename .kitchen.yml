@@ -15,6 +15,7 @@ suites:
   - name: default
     run_list:
       - recipe[et_cassandra::default]
+      - recipe[et_cassandra::opscenter]
 
   - name: opscenter
     run_list:
