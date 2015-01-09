@@ -39,6 +39,7 @@ template '/etc/opscenter/opscenterd.conf' do
   variables(
     config: node['et_cassandra']['opscenter']['config']
   )
+  only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
 template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster_name']}.conf" do
