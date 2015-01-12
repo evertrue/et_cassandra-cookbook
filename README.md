@@ -1,4 +1,3 @@
 # et_cassandra
 
-TODO: Enter the cookbook description here.
-
+This cookbook will install and configure a Cassandra node, optionally allowing for the installation of OpsCenter and the Datastax Agent.
