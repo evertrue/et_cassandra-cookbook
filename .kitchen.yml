@@ -24,3 +24,15 @@ suites:
       et_cassandra:
         opscenter:
           master: true
+          cluster:
+            managed: true
+            config:
+              jmx:
+                username: ''
+                password: ''
+                port: 7199
+              cassandra:
+                username: ''
+                seed_hosts: '0.0.0.0'
+                api_port: 9160
+                password: ''
