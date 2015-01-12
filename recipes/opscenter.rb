@@ -6,28 +6,20 @@
 
 include_recipe 'et_cassandra::repo'
 
-pkgs = %w(
-  datastax-agent
-)
-
-svcs = %w(
-  datastax-agent
-)
-
-if node['et_cassandra']['opscenter']['master']
-  pkgs << 'opscenter'
-  svcs << 'opscenterd'
+package 'datastax-agent'
+service 'datastax-agent' do
+  supports status: true, restart: true
+  action [:enable, :start]
 end
 
-pkgs.each do |pkg|
-  package pkg
+package 'opscenter' do
+  only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
-svcs.each do |svc|
-  service svc do
-    supports status: true, restart: true, reload: true
-    action [:enable, :start]
-  end
+service 'opscenterd' do
+  supports status: true, restart: true
+  action [:enable, :start]
+  only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
 node.default['et_cassandra']['opscenter']['cluster']['name'] =
@@ -42,7 +34,14 @@ template '/etc/opscenter/opscenterd.conf' do
   only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
-template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster_name']}.conf" do
+directory '/etc/opscenter/clusters' do
+  only_if do
+    node['et_cassandra']['opscenter']['master'] &&
+      node['et_cassandra']['opscenter']['cluster']['managed']
+  end
+end
+
+template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster']['name']}.conf" do
   source 'opscenter.conf.erb'
   variables(
     config: node['et_cassandra']['opscenter']['cluster']['config']
