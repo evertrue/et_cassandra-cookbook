@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.2 (2015-01-12)
+
+Bugs:
+
+* Ensure OpsCenter cluster config directory exists
+* Ensure `service[opscenterd]` exists in the resource collection, regardless of whether its actually acted upon, using `only_if` guards.
+
 ## v1.2.1 (2015-01-09)
 
 Bugs:
