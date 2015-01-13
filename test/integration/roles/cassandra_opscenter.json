@@ -1,0 +1,20 @@
+{
+  "name": "cassandra_opscenter",
+  "description": "Cassandra OpsCenter role, provides an OpsCenter master/UI",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+    "et_cassandra": {
+      "opscenter": {
+        "master": true
+      }
+    }
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+
+  ],
+  "env_run_lists": {
+  }
+}

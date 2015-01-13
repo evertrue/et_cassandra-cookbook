@@ -20,10 +20,10 @@ suites:
   - name: opscenter
     run_list:
       - recipe[et_cassandra::opscenter]
+      - role[cassandra_opscenter]
     attributes:
       et_cassandra:
         opscenter:
-          master: true
           cluster:
             managed: true
             config:
