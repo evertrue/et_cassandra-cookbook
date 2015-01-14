@@ -92,20 +92,22 @@ eos
   end
 end
 
-describe 'Opscenter' do
-  describe package 'datastax-agent' do
-    it { is_expected.to be_installed }
+describe 'DataStax OpsCenter' do
+  it 'is not installed' do
+    expect(package('opscenter')).to_not be_installed
+  end
+end
+
+describe 'DataStax Agent' do
+  it 'is installed' do
+    expect(package('datastax-agent')).to be_installed
   end
 
-  describe package 'opscenter' do
-    it { is_expected.to_not be_installed }
+  it 'is enabled as a service' do
+    expect(service('datastax-agent')).to be_enabled
   end
 
-  describe service 'datastax-agent' do
-    it { is_expected.to be_enabled }
-  end
-
-  describe service 'datastax-agent' do
-    it { is_expected.to be_running }
+  it 'is running as a service' do
+    expect(service('datastax-agent')).to be_running
   end
 end
