@@ -52,3 +52,29 @@ template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster']
       node['et_cassandra']['opscenter']['cluster']['managed']
   end
 end
+
+if node['et_cassandra']['opscenter']['master']
+  stomp_interface = node['ipaddress']
+else
+  stomp_interface = search(
+    :node,
+    node['et_cassandra']['opscenter']['opscenterd_search_str'] +
+    " AND chef_environment:#{node.chef_environment}",
+    filter_result: {
+      'ip' => %w(ipaddress)
+    }
+  ).first['data']['ip']
+end
+
+log "stomp_interface is #{stomp_interface}"
+
+use_ssl = (node['et_cassandra']['opscenter']['config']['agents']['use_ssl'] ? 1 : 0)
+
+template '/var/lib/datastax-agent/conf/address.yaml' do
+  owner node['et_cassandra']['opscenter']['user']
+  group node['et_cassandra']['opscenter']['user']
+  variables(
+    stomp_interface: stomp_interface,
+    use_ssl: use_ssl
+  )
+end

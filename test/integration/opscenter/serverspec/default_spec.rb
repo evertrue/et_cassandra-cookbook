@@ -46,4 +46,15 @@ describe 'DataStax Agent' do
   it 'is running as a service' do
     expect(service('datastax-agent')).to be_running
   end
+
+  context 'has the correct config' do
+    describe file '/var/lib/datastax-agent/conf/address.yaml' do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to match(/stomp_interface: \b(?:\d{1,3}\.){3}\d{1,3}\b/i) }
+        it { is_expected.to include 'use_ssl: 0' }
+      end
+    end
+  end
 end
