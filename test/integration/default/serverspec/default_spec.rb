@@ -4,7 +4,7 @@ describe 'Apache Cassandra' do
   context 'has the necessary packages installed' do
     %w(
       libjna-java
-      jemalloc
+      libjemalloc1
       cassandra
     ).each do |pkg|
       describe package pkg do
