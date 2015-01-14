@@ -6,7 +6,7 @@ default['et_cassandra']['opscenter']['config'] = {
     'interface' => '0.0.0.0'
   },
   'authentication' => {
-    'enabled' => 'False'
+    'enabled' => false
   }
 }
 
