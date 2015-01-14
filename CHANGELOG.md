@@ -1,5 +1,15 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.3 (2015-01-14)
+
+Bugs:
+
+* DataStax Agent was not being configured before, now we manage the configuration
+    - This will require beefing up, but for now, it does the bare minimum
+* Fix some test assertions & make them more consistent
+* Use booleans for some Ruby → YAML output
+* Use same roles as might be used in prod for testing
+
 ## v1.2.2 (2015-01-12)
 
 Bugs:
