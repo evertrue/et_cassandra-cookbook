@@ -20,7 +20,8 @@
       "et_cassandra"
     ],
     "roles": [
-      "cassandra_seed"
+      "cassandra_seed",
+      "cassandra_opscenter"
     ]
   }
 }
