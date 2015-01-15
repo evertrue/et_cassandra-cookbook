@@ -73,6 +73,7 @@ use_ssl = (node['et_cassandra']['opscenter']['config']['agents']['use_ssl'] ? 1 
 template '/var/lib/datastax-agent/conf/address.yaml' do
   owner node['et_cassandra']['opscenter']['user']
   group node['et_cassandra']['opscenter']['user']
+  notifies :restart, 'service[datastax-agent]'
   variables(
     stomp_interface: stomp_interface,
     use_ssl: use_ssl
