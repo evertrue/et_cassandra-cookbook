@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.5 (2015-01-15)
+
+Bugs:
+
+* Fix topology configs to include the current node as well as all other nodes
+
 ## v1.2.4 (2015-01-15)
 
 Bugs:
