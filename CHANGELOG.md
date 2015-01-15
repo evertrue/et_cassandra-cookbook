@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.6 (2015-01-15)
+
+Bugs:
+
+* Fix notification of `service[datastax-agent]` upon changes to its config
+
 ## v1.2.5 (2015-01-15)
 
 Bugs:
