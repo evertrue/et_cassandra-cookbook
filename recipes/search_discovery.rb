@@ -49,6 +49,10 @@ topology = nodes.each_with_object({}) do |n, m|
   ]
 end
 
+current_node_region = topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]]
+current_node_az = topology_analogs[:az][node['ec2']['placement_availability_zone'][-1, 1]]
+topology[current_node_region][current_node_az] << node['ipaddress']
+
 %w(
   properties
   yaml
@@ -61,8 +65,8 @@ end
 template '/etc/cassandra/cassandra-rackdc.properties' do
   variables(
     topology: {
-      dc: topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]],
-      rac: topology_analogs[:az][node['ec2']['placement_availability_zone'][-1, 1]]
+      dc: current_node_region,
+      rac: current_node_az
     }
   )
 end

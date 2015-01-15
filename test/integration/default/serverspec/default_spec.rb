@@ -79,6 +79,11 @@ topology:
       - rack_name: RAC2
         nodes:
           - broadcast_address: 169.254.0.2
+eos
+        end
+
+        it do
+          is_expected.to include <<-eos
       - rack_name: RAC3
         nodes:
           - broadcast_address: 169.254.0.4
