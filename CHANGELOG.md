@@ -16,7 +16,7 @@ Bugs:
 
 Bugs:
 
-* Add missing toplogoy config file to fully, properly, configure Cassandra
+* Add missing topology config file to fully, properly, configure Cassandra
 
 ## v1.2.3 (2015-01-14)
 
