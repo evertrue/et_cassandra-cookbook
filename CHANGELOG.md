@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.4 (2015-01-15)
+
+Bugs:
+
+* Add missing toplogoy config file to fully, properly, configure Cassandra
+
 ## v1.2.3 (2015-01-14)
 
 Bugs:
