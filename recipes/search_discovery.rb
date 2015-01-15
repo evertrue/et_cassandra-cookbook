@@ -35,15 +35,16 @@ nodes = search(
   }
 )
 
-topology = Hash.new { |h, k| h[k] = {} }
-nodes.each do |n|
+topology = nodes.each_with_object({}) do |n, m|
   region = n['data']['az'][0..-2]
   az     = n['data']['az'][-1, 1]
 
   dc  = topology_analogs[:dc][region]
   rac = topology_analogs[:az][az]
 
-  topology[dc][rac] = [
+  m[dc] ||= {}
+
+  m[dc][rac] = [
     n['data']['ip']
   ]
 end
