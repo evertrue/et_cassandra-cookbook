@@ -16,12 +16,17 @@ suites:
     run_list:
       - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
+    attributes:
+      ec2:
+        placement_availability_zone: us-east-1b
 
   - name: opscenter
     run_list:
       - recipe[et_cassandra::opscenter]
       - role[cassandra_opscenter]
     attributes:
+      ec2:
+        placement_availability_zone: us-east-1b
       et_cassandra:
         opscenter:
           cluster:

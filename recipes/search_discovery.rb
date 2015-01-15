@@ -56,3 +56,12 @@ end
     variables topology: topology
   end
 end
+
+template '/etc/cassandra/cassandra-rackdc.properties' do
+  variables(
+    topology: {
+      dc: topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]],
+      rac: topology_analogs[:az][node['ec2']['placement_availability_zone'][-1, 1]]
+    }
+  )
+end

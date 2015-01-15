@@ -89,6 +89,15 @@ eos
         end
       end
     end
+
+    describe file '/etc/cassandra/cassandra-rackdc.properties' do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'dc=DC1' }
+        it { is_expected.to include 'rack=RAC2' }
+      end
+    end
   end
 end
 
