@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.7 (2015-01-26)
+
+* Ensure Berksfile is uploaded to Chef Server
+
 ## v1.2.6 (2015-01-15)
 
 Bugs:
