@@ -1,5 +1,5 @@
 default['et_cassandra']['opscenter']['cluster']['name'] = nil
-default['et_cassandra']['opscenter']['opscenterd_search_str'] = 'roles:cassandra_opscenter'
+default['et_cassandra']['opscenter']['opscenterd_search_str'] = 'role:cassandra_opscenter'
 default['et_cassandra']['opscenter']['user'] = 'opscenter-agent'
 
 default['et_cassandra']['opscenter']['config'] = {

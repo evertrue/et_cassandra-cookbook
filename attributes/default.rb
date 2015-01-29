@@ -26,7 +26,7 @@ default['et_cassandra']['env']['enable_gc_logging'] = false
 
 # Node discovery
 default['et_cassandra']['discovery']['topo_search_str'] = 'recipe:et_cassandra'
-default['et_cassandra']['discovery']['seed_search_str'] = 'roles:cassandra_seed'
+default['et_cassandra']['discovery']['seed_search_str'] = 'role:cassandra_seed'
 
 # Cassandra storage config
 # Values reflect the default configuration shipped w/ the Cassandra version
