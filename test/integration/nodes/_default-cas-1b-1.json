@@ -4,7 +4,8 @@
   "run_list": [
     "recipe[et_base]",
     "recipe[et_cassandra]",
-    "role[cassandra_seed]"
+    "role[cassandra_seed]",
+    "role[cassandra_opscenter]"
   ],
   "automatic": {
     "fqdn": "_defaul-cas-1b-1.priv.evertrue.com",
