@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## v1.2.8 (2015-01-29)
+
+* Fix Chef search syntax for roles
+
 ## v1.2.7 (2015-01-26)
 
 * Ensure Berksfile is uploaded to Chef Server
