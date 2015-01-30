@@ -95,7 +95,6 @@ default['et_cassandra']['config'] = {
   'truncate_request_timeout_in_ms'           => 60_000,
   'request_timeout_in_ms'                    => 10_000,
   'cross_node_timeout'                       => false,
-  'endpoint_snitch'                          => 'SimpleSnitch',
   'dynamic_snitch_update_interval_in_ms'     => 100,
   'dynamic_snitch_reset_interval_in_ms'      => 600_000,
   'dynamic_snitch_badness_threshold'         => 0.1,

@@ -47,7 +47,7 @@ describe 'Apache Cassandra' do
         subject { super().content }
         it { is_expected.to include 'cluster_name: Test Cluster' }
         it { is_expected.to include 'cross_node_timeout: false' }
-        it { is_expected.to include 'endpoint_snitch: SimpleSnitch' }
+        it { is_expected.to include 'endpoint_snitch: GossipingPropertyFileSnitch' }
         it { is_expected.to include "data_file_directories:\n- \"/var/lib/cassandra/data\"" }
         it { is_expected.to include 'commitlog_directory: "/var/lib/cassandra/commitlog"' }
         it { is_expected.to include 'saved_caches_directory: "/var/lib/cassandra/saved_caches"' }
