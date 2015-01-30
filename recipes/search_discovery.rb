@@ -51,6 +51,9 @@ current_node_region = topology_analogs[:dc][node['ec2']['placement_availability_
 current_node_az = topology_analogs[:az][node['ec2']['placement_availability_zone'][-1, 1]]
 topology[current_node_region][current_node_az] << node['ipaddress']
 
+# Ensure we don't have any duplicate entries after first convergence
+topology[current_node_region][current_node_az] = topology[current_node_region][current_node_az].uniq
+
 %w(
   properties
   yaml
