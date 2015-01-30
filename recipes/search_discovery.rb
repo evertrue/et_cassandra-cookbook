@@ -49,6 +49,11 @@ end
 
 current_node_region = topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]]
 current_node_az = topology_analogs[:az][node['ec2']['placement_availability_zone'][-1, 1]]
+
+# If this is the only node, and thus `topology` is empty, ensure we have the
+# necessary structures in place
+topology[current_node_region] ||= {}
+topology[current_node_region][current_node_az] ||= []
 topology[current_node_region][current_node_az] << node['ipaddress']
 
 # Ensure we don't have any duplicate entries after first convergence
