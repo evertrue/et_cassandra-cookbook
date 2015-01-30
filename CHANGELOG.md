@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v1.3.1] (2015-01-29)
+
+* Update `cassandra-env.sh` for Cassandra 2.1.2
+
 ## [v1.3.0] (2015-01-29)
 
 ### Fixes
@@ -120,6 +124,7 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v1.3.1]: https://github.com/evertrue/et_cassandra/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/evertrue/et_cassandra/compare/v1.2.11...v1.3.0
 [v1.2.11]: https://github.com/evertrue/et_cassandra/compare/v1.2.10...v1.2.11
 [v1.2.10]: https://github.com/evertrue/et_cassandra/compare/v1.2.9...v1.2.10
