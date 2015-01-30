@@ -43,10 +43,8 @@ topology = nodes.each_with_object({}) do |n, m|
   rac = topology_analogs[:az][az]
 
   m[dc] ||= {}
-
-  m[dc][rac] = [
-    n['data']['ip']
-  ]
+  m[dc][rac] ||= []
+  m[dc][rac] << n['data']['ip']
 end
 
 current_node_region = topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]]
