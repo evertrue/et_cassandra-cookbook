@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v1.2.9] (2015-01-29)
+
+### Fixes
+
+* Fix assignment of multiple IPs to single AZ in topology
+* Fix addition of current node’s IP to topology to avoid duplicate entries
+
 ## [v1.2.8] (2015-01-29)
 
 ### Fixes:
@@ -90,6 +97,7 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v1.2.9]: https://github.com/evertrue/et_cassandra/compare/v1.2.8...v1.2.9
 [v1.2.8]: https://github.com/evertrue/et_cassandra/compare/v1.2.7...v1.2.8
 [v1.2.7]: https://github.com/evertrue/et_cassandra/compare/v1.2.6...v1.2.7
 [v1.2.6]: https://github.com/evertrue/et_cassandra/compare/v1.2.5...v1.2.6
