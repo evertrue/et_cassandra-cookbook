@@ -46,6 +46,7 @@ default['et_cassandra']['config'] = {
   'partitioner'                    => 'org.apache.cassandra.dht.Murmur3Partitioner',
   'data_file_directories'          => ["#{node['et_cassandra']['home']}/data"],
   'commitlog_directory'            => "#{node['et_cassandra']['home']}/commitlog",
+  'endpoint_snitch'                => 'GossipingPropertyFileSnitch',
   'disk_failure_policy'            => 'stop',
   'commit_failure_policy'          => 'stop',
   'key_cache_size_in_mb'           => nil,
