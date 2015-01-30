@@ -69,6 +69,8 @@ describe 'Apache Cassandra' do
       end
     end
 
+    # Content assertion is split in two b/c we do not have a reliable way
+    # to definitively know the test node's IP address
     describe file '/etc/cassandra/cassandra-topology.yaml' do
       it { is_expected.to be_file }
       describe '#content' do
