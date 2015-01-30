@@ -1,5 +1,15 @@
 # CHANGELOG for et_cassandra
 
+## [v1.3.0] (2015-01-29)
+
+### Fixes
+
+* Remove duplicate config attribute causing topology config to fail
+
+### Changes
+
+* Upgrade to Cassandra 2.1.2
+
 ## [v1.2.11] (2015-01-29)
 
 ### Fixes
