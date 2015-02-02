@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v1.4.0] (2015-01-29)
+
+### Changes
+
+* Use a symlink to consolidate `datastax-agent` configs
+* Ensure OpsCenter’s logs are all world-readable
+
 ## [v1.3.1] (2015-01-29)
 
 ### Fixes
