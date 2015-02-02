@@ -1,4 +1,4 @@
-default['et_cassandra']['version'] = '2.1.2'
+default['et_cassandra']['version'] = '2.1.0-2'
 
 default['et_cassandra']['user'] = 'cassandra'
 default['et_cassandra']['home'] = '/var/lib/cassandra'
