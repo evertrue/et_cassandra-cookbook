@@ -53,6 +53,11 @@ template "/etc/opscenter/clusters/#{node['et_cassandra']['opscenter']['cluster']
   end
 end
 
+directory '/var/log/opscenter' do
+  mode '0755'
+  only_if { node['et_cassandra']['opscenter']['master'] }
+end
+
 if node['et_cassandra']['opscenter']['master']
   stomp_interface = node['ipaddress']
 else

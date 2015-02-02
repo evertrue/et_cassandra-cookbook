@@ -32,6 +32,10 @@ describe 'DataStax OpsCenter' do
       end
     end
   end
+
+  it 'has world-readable logs' do
+    expect(file('/var/log/opscenter')).to be_mode '755'
+  end
 end
 
 describe 'DataStax Agent' do
