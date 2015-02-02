@@ -141,4 +141,11 @@ describe 'DataStax Agent' do
       end
     end
   end
+
+  context 'has a single place for config' do
+    describe file '/var/lib/datastax-agent/conf' do
+      it { is_expected.to be_symlink }
+      it { is_expected.to be_linked_to '/etc/datastax-agent' }
+    end
+  end
 end

@@ -58,6 +58,18 @@ directory '/var/log/opscenter' do
   only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
+agent_conf_path = '/var/lib/datastax-agent/conf'
+
+execute "rm -rf #{agent_conf_path}" do
+  notifies :create, "link[#{agent_conf_path}]", :immediately
+  not_if { ::File.symlink? agent_conf_path }
+end
+
+link '/var/lib/datastax-agent/conf' do
+  to '/etc/datastax-agent'
+  action :nothing
+end
+
 if node['et_cassandra']['opscenter']['master']
   stomp_interface = node['ipaddress']
 else
@@ -73,7 +85,7 @@ end
 
 use_ssl = (node['et_cassandra']['opscenter']['config']['agents']['use_ssl'] ? 1 : 0)
 
-template '/var/lib/datastax-agent/conf/address.yaml' do
+template "#{agent_conf_path}/address.yaml" do
   owner node['et_cassandra']['opscenter']['user']
   group node['et_cassandra']['opscenter']['user']
   notifies :restart, 'service[datastax-agent]'
