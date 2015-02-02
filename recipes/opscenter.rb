@@ -66,8 +66,6 @@ else
   ).first['data']['ip']
 end
 
-log "stomp_interface is #{stomp_interface}"
-
 use_ssl = (node['et_cassandra']['opscenter']['config']['agents']['use_ssl'] ? 1 : 0)
 
 template '/var/lib/datastax-agent/conf/address.yaml' do
