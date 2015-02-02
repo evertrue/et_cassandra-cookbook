@@ -2,6 +2,8 @@
 
 ## [v1.3.1] (2015-01-29)
 
+### Fixes
+
 * Update `cassandra-env.sh` for Cassandra 2.1.2
 
 ## [v1.3.0] (2015-01-29)
