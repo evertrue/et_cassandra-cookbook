@@ -1,5 +1,15 @@
 # CHANGELOG for et_cassandra
 
+## [v1.5.0] (2015-02-06)
+
+### Fixes
+
+* Ensure JEMalloc is hooked up properly in C* env config
+
+### Changes
+
+* Add ability to specify any `JVM_OPTS` via an attribute
+
 ## [v1.4.0] (2015-01-29)
 
 ### Changes
