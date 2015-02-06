@@ -12,6 +12,7 @@ default['et_cassandra']['packages']['jnapkg'] = 'libjna-java'
 
 # Use jemalloc to improve malloc implementation
 default['et_cassandra']['packages']['jemalloc'] = 'libjemalloc1'
+default['et_cassandra']['env']['ld_library_path'] = '/usr/lib/x86_64-linux-gnu'
 
 # We don't necessarily want all of the nodes in the cluster to restart
 # upon configuration changes

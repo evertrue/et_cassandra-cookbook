@@ -268,6 +268,10 @@ JVM_OPTS="$JVM_OPTS -XX:GCLogFileSize=10M"
 # library path (Example: /usr/local/lib/). Usually "make install" will do the right thing.
 # export LD_LIBRARY_PATH=<JEMALLOC_HOME>/lib/
 # JVM_OPTS="$JVM_OPTS -Djava.library.path=<JEMALLOC_HOME>/lib/"
+<%- if node['et_cassandra']['env']['ld_library_path'] -%>
+export LD_LIBRARY_PATH=<%= node['et_cassandra']['env']['ld_library_path'] %>/lib/
+JVM_OPTS="$JVM_OPTS -Djava.library.path=<%= node['et_cassandra']['env']['ld_library_path'] %>/lib/"
+<%- end -%>
 
 # uncomment to have Cassandra JVM listen for remote debuggers/profilers on port 1414
 # JVM_OPTS="$JVM_OPTS -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1414"
