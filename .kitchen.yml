@@ -19,6 +19,11 @@ suites:
     attributes:
       ec2:
         placement_availability_zone: us-east-1b
+      et_cassandra:
+        env:
+          jvm_opts:
+            - -XX:+CMSConcurrentMTEnabled
+            - -XX:ConcGCThreads=6
 
   - name: opscenter
     run_list:

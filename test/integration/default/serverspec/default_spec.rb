@@ -38,6 +38,8 @@ describe 'Apache Cassandra' do
         it { is_expected.to include "then\n    export MALLOC_ARENA_MAX=4" }
         it { is_expected.to include 'export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/lib/' }
         it { is_expected.to include 'JVM_OPTS="$JVM_OPTS -Djava.library.path=/usr/lib/x86_64-linux-gnu/lib/"' }
+        it { is_expected.to include 'JVM_OPTS="$JVM_OPTS -XX:+CMSConcurrentMTEnabled' }
+        it { is_expected.to include 'JVM_OPTS="$JVM_OPTS -XX:ConcGCThreads=6' }
       end
     end
   end

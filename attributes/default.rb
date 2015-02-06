@@ -25,6 +25,9 @@ default['et_cassandra']['env']['heapdump_dir'] = nil
 default['et_cassandra']['env']['malloc_arena_max'] = nil
 default['et_cassandra']['env']['enable_gc_logging'] = false
 
+# JVM options in this attribute as an array will be included in cassandra-env.sh
+default['et_cassandra']['env']['jvm_opts'] = []
+
 # Node discovery
 default['et_cassandra']['discovery']['topo_search_str'] = 'recipe:et_cassandra'
 default['et_cassandra']['discovery']['seed_search_str'] = 'role:cassandra_seed'
