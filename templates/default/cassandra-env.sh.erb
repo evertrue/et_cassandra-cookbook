@@ -316,5 +316,5 @@ JVM_OPTS="$JVM_OPTS $MX4J_PORT"
 JVM_OPTS="$JVM_OPTS $JVM_EXTRA_OPTS"
 
 <%- node['et_cassandra']['env']['jvm_opts'].each do |jvm_opt| -%>
-JVM_OPTS="$JVM_OPTS <%= jvm_opt %>
+JVM_OPTS="$JVM_OPTS <%= jvm_opt %>"
 <%- end -%>
