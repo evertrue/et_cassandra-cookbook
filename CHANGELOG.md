@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v2.0.1] (2015-02-27)
+
+### Fixes
+
+* Fix typo in `cassandra-env.sh` template
+
 ## [v2.0.0] (2015-02-27)
 
 ### Fixes
