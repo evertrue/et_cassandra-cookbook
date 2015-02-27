@@ -16,8 +16,8 @@
 
 # These properties are used with GossipingPropertyFileSnitch and will
 # indicate the rack and dc for this node
-dc=<%= @topology[:dc].upcase %>
-rack=<%= @topology[:rac].upcase %>
+dc=<%= @topology[:dc].downcase %>
+rack=<%= @topology[:rac].downcase %>
 
 # Add a suffix to a datacenter name. Used by the Ec2Snitch and Ec2MultiRegionSnitch
 # to append a string to the EC2 region name.

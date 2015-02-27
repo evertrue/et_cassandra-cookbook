@@ -20,7 +20,7 @@
 <% @topology.each do |dc, racks| %>
 <%  racks.each do |rack, nodes| %>
 <%    nodes.each do |ip| %>
-<%= ip %>=<%= dc.upcase %>:<%= rack.upcase %>
+<%= ip %>=<%= dc.downcase %>:<%= rack.downcase %>
 <%    end %>
 <%  end %>
 <% end %>

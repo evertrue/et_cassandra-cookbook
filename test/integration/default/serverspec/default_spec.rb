@@ -65,11 +65,11 @@ describe 'Apache Cassandra' do
       it { is_expected.to be_file }
       describe '#content' do
         subject { super().content }
-        it { is_expected.to include '169.254.0.1=DC1:RAC2' }
-        it { is_expected.to include '169.254.0.2=DC1:RAC2' }
-        it { is_expected.to include '169.254.0.3=DC1:RAC3' }
-        it { is_expected.to include '169.254.0.4=DC1:RAC3' }
-        it { is_expected.to include '169.254.0.5=DC1:RAC4' }
+        it { is_expected.to include '169.254.0.1=us-east-1:b' }
+        it { is_expected.to include '169.254.0.2=us-east-1:b' }
+        it { is_expected.to include '169.254.0.3=us-east-1:c' }
+        it { is_expected.to include '169.254.0.4=us-east-1:c' }
+        it { is_expected.to include '169.254.0.5=us-east-1:d' }
       end
     end
 
@@ -82,9 +82,9 @@ describe 'Apache Cassandra' do
         it do
           is_expected.to include <<-eos
 topology:
-  - dc_name: DC1
+  - dc_name: us-east-1
     racks:
-      - rack_name: RAC2
+      - rack_name: b
         nodes:
           - broadcast_address: 169.254.0.1
           - broadcast_address: 169.254.0.2
@@ -93,11 +93,11 @@ eos
 
         it do
           is_expected.to include <<-eos
-      - rack_name: RAC3
+      - rack_name: c
         nodes:
           - broadcast_address: 169.254.0.3
           - broadcast_address: 169.254.0.4
-      - rack_name: RAC4
+      - rack_name: d
         nodes:
           - broadcast_address: 169.254.0.5
 eos
@@ -109,8 +109,8 @@ eos
       it { is_expected.to be_file }
       describe '#content' do
         subject { super().content }
-        it { is_expected.to include 'dc=DC1' }
-        it { is_expected.to include 'rack=RAC2' }
+        it { is_expected.to include 'dc=us-east-1' }
+        it { is_expected.to include 'rack=b' }
       end
     end
   end

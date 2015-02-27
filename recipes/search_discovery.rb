@@ -4,27 +4,6 @@
 #
 # Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
 
-topology_analogs = {
-  dc: {
-    'us-east-1'      => 'dc1',
-    'us-west-1'      => 'dc2',
-    'us-west-2'      => 'dc3',
-    'eu-central-1'   => 'dc4',
-    'eu-west-1'      => 'dc5',
-    'ap-northeast-1' => 'dc6',
-    'ap-southeast-1' => 'dc7',
-    'ap-southeast-2' => 'dc8',
-    'sa-east-1'      => 'dc9'
-  },
-  az: {
-    'a' => 'rac1',
-    'b' => 'rac2',
-    'c' => 'rac3',
-    'd' => 'rac4',
-    'e' => 'rac5'
-  }
-}
-
 nodes = search(
   :node,
   node['et_cassandra']['discovery']['topo_search_str'] +
@@ -39,16 +18,13 @@ topology = nodes.each_with_object({}) do |n, m|
   region = n['data']['az'][0..-2]
   az     = n['data']['az'][-1, 1]
 
-  dc  = topology_analogs[:dc][region]
-  rac = topology_analogs[:az][az]
-
-  m[dc] ||= {}
-  m[dc][rac] ||= []
-  m[dc][rac] << n['data']['ip']
+  m[region] ||= {}
+  m[region][az] ||= []
+  m[region][az] << n['data']['ip']
 end
 
-current_node_region = topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]]
-current_node_az = topology_analogs[:az][node['ec2']['placement_availability_zone'][-1, 1]]
+current_node_region = node['ec2']['placement_availability_zone'][0..-2]
+current_node_az     = node['ec2']['placement_availability_zone'][-1, 1]
 
 # If this is the only node, and thus `topology` is empty, ensure we have the
 # necessary structures in place

@@ -16,10 +16,10 @@
 # reconnect over that address instead.
 topology:
   <% @topology.each do |dc, racks| %>
-  - dc_name: <%= dc.upcase %>
+  - dc_name: <%= dc.downcase %>
     racks:
       <%  racks.each do |rack, nodes| %>
-      - rack_name: <%= rack.upcase %>
+      - rack_name: <%= rack.downcase %>
         nodes:
           <%    nodes.each do |ip| %>
           - broadcast_address: <%= ip %>
