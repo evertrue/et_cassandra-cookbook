@@ -86,8 +86,6 @@ end
 use_ssl = (node['et_cassandra']['opscenter']['config']['agents']['use_ssl'] ? 1 : 0)
 
 template "#{agent_conf_path}/address.yaml" do
-  owner node['et_cassandra']['opscenter']['user']
-  group node['et_cassandra']['opscenter']['user']
   notifies :restart, 'service[datastax-agent]'
   variables(
     stomp_interface: stomp_interface,
