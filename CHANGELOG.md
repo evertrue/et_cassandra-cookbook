@@ -1,5 +1,17 @@
 # CHANGELOG for et_cassandra
 
+## [v2.0.0] (2015-02-27)
+
+### Fixes
+
+* Correct ownership for DataStax Agent config
+    - On nodes without OpsCenter installed, previous ownership would not work
+
+### Changes
+
+* Upgrade to Cassandra 2.1.3
+* Refactor topology search discovery to directly correlate to AWS regions & AZs
+
 ## [v1.5.0] (2015-02-06)
 
 ### Fixes
@@ -143,6 +155,7 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v2.0.0]: https://github.com/evertrue/et_cassandra/compare/v1.3.1...v2.0.0
 [v1.3.1]: https://github.com/evertrue/et_cassandra/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/evertrue/et_cassandra/compare/v1.2.11...v1.3.0
 [v1.2.11]: https://github.com/evertrue/et_cassandra/compare/v1.2.10...v1.2.11
