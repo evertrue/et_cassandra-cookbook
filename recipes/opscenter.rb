@@ -6,13 +6,17 @@
 
 include_recipe 'et_cassandra::repo'
 
-package 'datastax-agent'
+package 'datastax-agent' do
+  action :upgrade
+end
+
 service 'datastax-agent' do
   supports status: true, restart: true
   action [:enable, :start]
 end
 
 package 'opscenter' do
+  action :upgrade
   only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
