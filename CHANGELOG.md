@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v2.1.0] (2015-03-03)
+
+### Changes
+
+* Keep Opscenter and DataStax Agent up-to-date
+* Add warning if trying to use cookbook with Chef < 12
+
 ## [v2.0.1] (2015-02-27)
 
 ### Fixes
