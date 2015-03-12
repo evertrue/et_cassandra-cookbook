@@ -77,14 +77,21 @@ end
 if node['et_cassandra']['opscenter']['master']
   stomp_interface = node['ipaddress']
 else
-  stomp_interface = search(
+  r = search(
     :node,
     node['et_cassandra']['opscenter']['opscenterd_search_str'] +
     " AND chef_environment:#{node.chef_environment}",
     filter_result: {
       'ip' => %w(ipaddress)
     }
-  ).first['data']['ip']
+  ).first
+  stomp_interface = (
+    if Chef::VersionConstraint.new('< 12.1.1').include?(Chef::VERSION)
+      r['data']['ip']
+    else
+      r['ip']
+    end
+  )
 end
 
 use_ssl = (node['et_cassandra']['opscenter']['config']['agents']['use_ssl'] ? 1 : 0)
