@@ -18,7 +18,11 @@
       "userdata":null
     },
     "recipes": [
-      "et_cassandra"
+      "et_cassandra::default",
+      "et_cassandra::install",
+      "et_cassandra::repo",
+      "et_cassandra::search_discovery",
+      "et_cassandra::opscenter"
     ],
     "roles": [
       "cassandra_seed",
