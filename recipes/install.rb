@@ -52,7 +52,7 @@ seed_ips = (
   if Chef::VersionConstraint.new('< 12.1.1').include? Chef::VERSION
     # Versions of Chef prior to 12.1 return this data in a format that can only
     # be described as "bizarre."
-    seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }.join ','
+    seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }
   else
     seeds.map { |h| h['ip'] }
   end
@@ -64,7 +64,7 @@ node.default['et_cassandra']['config']['seed_provider'] = [
     'class_name' => 'org.apache.cassandra.locator.SimpleSeedProvider',
     'parameters' => [
       {
-        'seeds' => seed_ips
+        'seeds' => seed_ips.join(',')
       }
     ]
   }
