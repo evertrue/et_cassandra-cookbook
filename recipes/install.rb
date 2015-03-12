@@ -50,8 +50,8 @@ seeds = search(
 
 seed_ips = (
   if Chef::VersionConstraint.new('< 12.1.0').include? Chef::VERSION
-    # Versions of Chef prior to 12.1 return this data in a less-than-stellar
-    # format.
+    # Versions of Chef prior to 12.1 return this data in a format that can only
+    # be described as "bizarre."
     seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }.join ','
   else
     seeds.map { |h| h['ip'] }
