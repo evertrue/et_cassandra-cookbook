@@ -36,15 +36,16 @@ nodes = search(
 )
 
 topology = nodes.each_with_object({}) do |n, m|
-  region = n['data']['az'][0..-2]
-  az     = n['data']['az'][-1, 1]
+  n_d = Chef::VersionConstraint.new('< 12.1.1').include?(Chef::VERSION) ? n['data'] : n
+  region = n_d['az'][0..-2]
+  az     = n_d['az'][-1, 1]
 
   dc  = topology_analogs[:dc][region]
   rac = topology_analogs[:az][az]
 
   m[dc] ||= {}
   m[dc][rac] ||= []
-  m[dc][rac] << n['data']['ip']
+  m[dc][rac] << n_d['ip']
 end
 
 current_node_region = topology_analogs[:dc][node['ec2']['placement_availability_zone'][0..-2]]
