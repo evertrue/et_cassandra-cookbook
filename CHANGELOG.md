@@ -1,5 +1,19 @@
 # CHANGELOG for et_cassandra
 
+## [v1.5.1] (2015-03-13)
+
+### Fixes
+
+* Backport fixes from v2.x:
+    * Ensure stronger ciphers are available to Java
+    * Add warning that this cookbook requires Chef 12
+    * Ensure Opscenter & DataStax Agent are up-to-date
+    * Add missing double quote to end of cassandra-env.sh template
+    * Fix ownership for DataStax Agent config
+* Backport fixes from `eherot/chef_12_compatibility` branch:
+    * Make Chef search results Chef 12.1 compatible
+    * Make the test data more realistic
+
 ## [v1.5.0] (2015-02-06)
 
 ### Fixes
