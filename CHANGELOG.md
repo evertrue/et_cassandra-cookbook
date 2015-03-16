@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v2.1.1] (2015-03-16)
+
+### Fixes
+
+* Make Chef search results Chef 12.1.1 compatible
+* Make test data more realistic
+
 ## [v2.1.0] (2015-03-03)
 
 ### Changes
@@ -182,6 +189,7 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v2.1.1]: https://github.com/evertrue/et_cassandra/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/evertrue/et_cassandra/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/evertrue/et_cassandra/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/evertrue/et_cassandra/compare/v1.5.0...v2.0.0
