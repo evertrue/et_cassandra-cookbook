@@ -25,6 +25,20 @@
 * Upgrade to Cassandra 2.1.3
 * Refactor topology search discovery to directly correlate to AWS regions & AZs
 
+## [v1.5.1] (2015-03-13)
+
+### Fixes
+
+* Backport fixes from v2.x:
+    * Ensure stronger ciphers are available to Java
+    * Add warning that this cookbook requires Chef 12
+    * Ensure Opscenter & DataStax Agent are up-to-date
+    * Add missing double quote to end of cassandra-env.sh template
+    * Fix ownership for DataStax Agent config
+* Backport fixes from `eherot/chef_12_compatibility` branch:
+    * Make Chef search results Chef 12.1 compatible
+    * Make the test data more realistic
+
 ## [v1.5.0] (2015-02-06)
 
 ### Fixes
@@ -171,6 +185,7 @@
 [v2.1.0]: https://github.com/evertrue/et_cassandra/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/evertrue/et_cassandra/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/evertrue/et_cassandra/compare/v1.5.0...v2.0.0
+[v1.5.1]: https://github.com/evertrue/et_cassandra/compare/v1.5.0...v1.5.1
 [v1.5.0]: https://github.com/evertrue/et_cassandra/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/evertrue/et_cassandra/compare/v1.3.2...v1.4.0
 [v1.3.2]: https://github.com/evertrue/et_cassandra/compare/v1.3.1...v1.3.2
