@@ -168,8 +168,12 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v2.1.0]: https://github.com/evertrue/et_cassandra/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/evertrue/et_cassandra/compare/v2.0.0...v2.0.1
-[v2.0.0]: https://github.com/evertrue/et_cassandra/compare/v1.3.1...v2.0.0
+[v2.0.0]: https://github.com/evertrue/et_cassandra/compare/v1.5.0...v2.0.0
+[v1.5.0]: https://github.com/evertrue/et_cassandra/compare/v1.4.0...v1.5.0
+[v1.4.0]: https://github.com/evertrue/et_cassandra/compare/v1.3.2...v1.4.0
+[v1.3.2]: https://github.com/evertrue/et_cassandra/compare/v1.3.1...v1.3.2
 [v1.3.1]: https://github.com/evertrue/et_cassandra/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/evertrue/et_cassandra/compare/v1.2.11...v1.3.0
 [v1.2.11]: https://github.com/evertrue/et_cassandra/compare/v1.2.10...v1.2.11
