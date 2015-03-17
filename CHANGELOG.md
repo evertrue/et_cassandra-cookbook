@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v2.1.2] (2015-03-17)
+
+### Fixes
+
+* Fix determination of C* seed on first convergence of the first node of a new C* ring
+    - Assumes this first node is the seed, to avoid Chef Searches returning no results & ending up with a lack of seeds (which C* does not like)
+
 ## [v2.1.1] (2015-03-16)
 
 ### Fixes
