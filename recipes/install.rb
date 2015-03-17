@@ -49,7 +49,10 @@ seeds = search(
 )
 
 seed_ips = (
-  if Chef::VersionConstraint.new('< 12.1.1').include? Chef::VERSION
+  if seeds.nil? || seeds.empty?
+    log 'Assuming this node is the first node of a new ring, and should be a Cassandra seed'
+    [ node['ipaddress'] ]
+  elsif Chef::VersionConstraint.new('< 12.1.1').include? Chef::VERSION
     # Versions of Chef prior to 12.1 return this data in a format that can only
     # be described as "bizarre."
     seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }
