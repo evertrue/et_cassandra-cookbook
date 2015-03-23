@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v2.1.3] (2015-03-23)
+
+### Fixes
+
+* Increase `ulimit` for the `cassandra` user
+
 ## [v2.1.2] (2015-03-17)
 
 ### Fixes
