@@ -22,6 +22,11 @@ package 'cassandra' do
   action :install
 end
 
+template "/etc/default/#{node['et_cassandra']['user']}" do
+  source 'cassandra-user-default.erb'
+  notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
+end
+
 [
   node['et_cassandra']['config']['data_file_directories'],
   node['et_cassandra']['config']['commitlog_directory'],

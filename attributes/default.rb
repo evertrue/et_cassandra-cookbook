@@ -3,6 +3,8 @@ default['et_cassandra']['version'] = '2.1.3'
 default['et_cassandra']['user'] = 'cassandra'
 default['et_cassandra']['home'] = '/var/lib/cassandra'
 
+default['et_cassandra']['limits']['nofile'] = 65_535
+
 # Path to Cassandra configs
 default['et_cassandra']['conf_path'] = '/etc/cassandra'
 

@@ -13,6 +13,16 @@ describe 'Apache Cassandra' do
     end
   end
 
+  context 'user has a high file descriptor limit' do
+    describe file '/etc/default/cassandra' do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'ulimit -n 65535' }
+      end
+    end
+  end
+
   it 'has an enabled service of cassandra' do
     expect(service('cassandra')).to be_enabled
   end
