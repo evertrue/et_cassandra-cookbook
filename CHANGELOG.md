@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v2.1.4] (2015-04-27)
+
+### Changes
+
+* Place logging on ec2 ephemeral storage if available
+* Give cloud tests their own suite name
+
 ## [v2.1.3] (2015-03-23)
 
 ### Fixes
