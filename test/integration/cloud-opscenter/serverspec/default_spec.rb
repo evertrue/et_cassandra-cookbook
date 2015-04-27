@@ -34,7 +34,17 @@ describe 'DataStax OpsCenter' do
   end
 
   it 'has world-readable logs' do
-    expect(file('/var/log/opscenter')).to be_mode '755'
+    expect(file('/mnt/dev0/opscenter')).to be_mode '755'
+  end
+
+  context 'has content in the correct log files' do
+    describe file('/mnt/dev0/opscenter/opscenterd.log') do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'INFO: Log opened.' }
+      end
+    end
   end
 end
 
@@ -65,7 +75,7 @@ describe 'DataStax Agent' do
       it { is_expected.to be_file }
       describe '#content' do
         subject { super().content }
-        it { is_expected.to include 'LOG="/var' }
+        it { is_expected.to include 'LOG="/mnt' }
       end
     end
   end
@@ -74,6 +84,20 @@ describe 'DataStax Agent' do
     describe file '/var/lib/datastax-agent/conf' do
       it { is_expected.to be_symlink }
       it { is_expected.to be_linked_to '/etc/datastax-agent' }
+    end
+  end
+
+  context 'has content in the correct log files' do
+    describe file('/mnt/dev0/datastax-agent/agent.log') do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'DataStax Agent version' }
+      end
+    end
+
+    describe file('/mnt/dev0/datastax-agent/startup.log') do
+      it { is_expected.to be_file }
     end
   end
 end
