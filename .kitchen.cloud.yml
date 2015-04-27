@@ -1,0 +1,59 @@
+---
+driver:
+  name: ec2
+  require_chef_omnibus: true
+  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+  region: us-east-1
+  availability_zone: us-east-1b
+  security_group_ids: ['ci-testing']
+  username: ubuntu
+  flavor_id: c3.large
+  interface: public
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+    driver:
+      image_id: ami-b2bc80da
+      tags:
+        Name: vagrant-et-cassandra-ubuntu-1404
+        Env: dev
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ec2test::default]
+      - recipe[et_cassandra::default]
+      - recipe[et_cassandra::opscenter]
+    attributes:
+      et_cassandra:
+        env:
+          jvm_opts:
+            - -XX:+CMSConcurrentMTEnabled
+            - -XX:ConcGCThreads=6
+
+  - name: opscenter
+    run_list:
+      - recipe[ec2test::default]
+      - recipe[et_cassandra::opscenter]
+      - role[cassandra_opscenter]
+    attributes:
+      et_cassandra:
+        opscenter:
+          cluster:
+            managed: true
+            config:
+              jmx:
+                username: ''
+                password: ''
+                port: 7199
+              cassandra:
+                username: ''
+                seed_hosts: '0.0.0.0'
+                api_port: 9160
+                password: ''
