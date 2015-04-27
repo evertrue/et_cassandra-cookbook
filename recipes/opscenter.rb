@@ -120,6 +120,13 @@ template "#{agent_conf_path}/address.yaml" do
   )
 end
 
+template '/etc/default/datastax-agent' do
+  source 'datastax-agent-default.erb'
+  owner  'root'
+  group  'root'
+  mode   0644
+end
+
 template "#{agent_conf_path}/log4j.properties" do
   source 'datastax-log4j.properties.erb'
   owner  'root'
