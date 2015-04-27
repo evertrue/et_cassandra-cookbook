@@ -10,9 +10,9 @@ include_recipe 'storage'
 if node['storage']['ephemeral_mounts']
   node.set['et_cassandra']['opscenter']['config']['logging']['log_path'] =
     "#{node['storage']['ephemeral_mounts'].first}/opscenter/opscenterd.log"
-  node.default['et_cassandra']['datastax-agent']['log_dir'] =
+  node.set['et_cassandra']['datastax-agent']['log_dir'] =
     "#{node['storage']['ephemeral_mounts'].first}/datastax-agent"
-  directory node.default['et_cassandra']['datastax-agent']['log_dir'] do
+  directory node.set['et_cassandra']['datastax-agent']['log_dir'] do
     owner     node['et_cassandra']['user']
     group     node['et_cassandra']['user']
     mode      0755

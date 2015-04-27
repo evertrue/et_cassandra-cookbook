@@ -29,7 +29,7 @@ end
 
 include_recipe 'storage'
 
-node.default['et_cassandra']['log_dir'] =
+node.set['et_cassandra']['log_dir'] =
   if node['storage']['ephemeral_mounts']
     "#{node['storage']['ephemeral_mounts'].first}/cassandra"
   else
