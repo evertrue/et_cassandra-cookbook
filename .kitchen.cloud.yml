@@ -25,7 +25,7 @@ platforms:
         Env: dev
 
 suites:
-  - name: default
+  - name: cloud-default
     run_list:
       - recipe[ec2test::default]
       - recipe[et_cassandra::default]
@@ -37,7 +37,7 @@ suites:
             - -XX:+CMSConcurrentMTEnabled
             - -XX:ConcGCThreads=6
 
-  - name: opscenter
+  - name: cloud-opscenter
     run_list:
       - recipe[ec2test::default]
       - recipe[et_cassandra::opscenter]
