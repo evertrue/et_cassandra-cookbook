@@ -60,6 +60,14 @@ describe 'DataStax Agent' do
         it { is_expected.to include 'use_ssl: 0' }
       end
     end
+
+    describe file '/etc/default/datastax-agent' do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'LOG="/var' }
+      end
+    end
   end
 
   context 'has a single place for config' do
