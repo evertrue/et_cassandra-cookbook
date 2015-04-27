@@ -122,15 +122,9 @@ end
 
 template '/etc/default/datastax-agent' do
   source 'datastax-agent-default.erb'
-  owner  'root'
-  group  'root'
-  mode   0644
 end
 
 template "#{agent_conf_path}/log4j.properties" do
   source 'datastax-log4j.properties.erb'
-  owner  'root'
-  group  'root'
-  mode   0644
   notifies :restart, 'service[datastax-agent]'
 end
