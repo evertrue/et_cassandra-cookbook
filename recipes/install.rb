@@ -27,10 +27,20 @@ template "/etc/default/#{node['et_cassandra']['user']}" do
   notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
 end
 
+include_recipe 'storage'
+
+node.default['et_cassandra']['log_dir'] =
+  if node['storage']['ephemeral_mounts']
+    "#{node['storage']['ephemeral_mounts'].first}/cassandra"
+  else
+    '/var/log/cassandra'
+  end
+
 [
   node['et_cassandra']['config']['data_file_directories'],
   node['et_cassandra']['config']['commitlog_directory'],
-  node['et_cassandra']['config']['saved_caches_directory']
+  node['et_cassandra']['config']['saved_caches_directory'],
+  node['et_cassandra']['log_dir']
 ].flatten.each do |dir|
   directory dir do
     owner node['et_cassandra']['user']
@@ -80,7 +90,8 @@ node.default['et_cassandra']['config']['seed_provider'] = [
 
 [
   'cassandra-env.sh',
-  'cassandra.yaml'
+  'cassandra.yaml',
+  'logback.xml'
 ].each do |conf|
   template "#{node['et_cassandra']['conf_path']}/#{conf}" do
     notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']

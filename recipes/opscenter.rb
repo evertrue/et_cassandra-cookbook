@@ -5,6 +5,22 @@
 # Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
 
 include_recipe 'et_cassandra::repo'
+include_recipe 'storage'
+
+if node['storage']['ephemeral_mounts']
+  node.set['et_cassandra']['opscenter']['config']['logging']['log_path'] =
+    "#{node['storage']['ephemeral_mounts'].first}/opscenter/opscenterd.log"
+  node.default['et_cassandra']['datastax-agent']['log_dir'] =
+    "#{node['storage']['ephemeral_mounts'].first}/datastax-agent"
+  directory node.default['et_cassandra']['datastax-agent']['log_dir'] do
+    owner     node['et_cassandra']['user']
+    group     node['et_cassandra']['user']
+    mode      0755
+    action    :create
+    recursive true
+  end
+  
+end
 
 package 'datastax-agent' do
   action :upgrade
@@ -102,4 +118,12 @@ template "#{agent_conf_path}/address.yaml" do
     stomp_interface: stomp_interface,
     use_ssl: use_ssl
   )
+end
+
+template "#{agent_conf_path}/log4j.properties" do
+  source 'datastax-log4j.properties.erb'
+  owner  'root'
+  group  'root'
+  mode   0644
+  notifies :restart, 'service[datastax-agent]'
 end

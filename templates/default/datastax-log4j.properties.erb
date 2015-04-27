@@ -1,0 +1,19 @@
+# Based on the example properties given at http://logging.apache.org/log4j/1.2/manual.html
+# Set root logger level to DEBUG and its only appender to A1.
+log4j.rootLogger=INFO,R,stdout
+
+log4j.logger.org.apache.http=OFF
+log4j.logger.org.eclipse.jetty=WARN,stdout
+
+# stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%5p [%t] %d{ISO8601} %m%n
+
+# rolling log file
+log4j.appender.R=org.apache.log4j.RollingFileAppender
+log4j.appender.R.maxFileSize=20MB
+log4j.appender.R.maxBackupIndex=5
+log4j.appender.R.layout=org.apache.log4j.PatternLayout
+log4j.appender.R.layout.ConversionPattern=%5p [%t] %d{ISO8601} %m%n
+log4j.appender.R.File=<%= node['et_cassandra']['datastax-agent']['log_dir'] %>/agent.log
