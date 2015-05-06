@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v3.0.0] (2015-05-06)
+
+### Changes
+
+* Upgrading cassandra to 2.1.5
+
 ## [v2.1.4] (2015-04-27)
 
 ### Changes
