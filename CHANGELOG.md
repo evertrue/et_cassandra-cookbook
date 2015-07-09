@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v3.0.1] (2015-07-09)
+
+### Changes
+
+* enable incremental_backups
+
 ## [v3.0.0] (2015-05-06)
 
 ### Changes
