@@ -19,7 +19,6 @@ if node['storage']['ephemeral_mounts']
     action    :create
     recursive true
   end
-  
 end
 
 package 'datastax-agent' do
