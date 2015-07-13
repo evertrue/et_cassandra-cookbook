@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.1] (2015-07-13)
+
+### Changes
+
+* attribute-ize snapshot credentials data bag source
+
 ## [v4.1.0] (2015-07-13)
 
 ### Changes
