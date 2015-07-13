@@ -16,6 +16,7 @@ suites:
     run_list:
       - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
+      - recipe[et_cassandra::backups]
     attributes:
       ec2:
         placement_availability_zone: us-east-1b

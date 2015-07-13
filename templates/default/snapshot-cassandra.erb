@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+source /etc/cassandra/snapshots.conf
+
+root_dir="<%= node['et_cassandra']['home'] %>"
+data_dir="<%= node['et_cassandra']['config']['data_file_directories'] %>"
+work_dir="${root_dir}/backup_work_dir"
+
+mkdir -p "${work_dir}"
+
+# Performs the snapshot and gets the ID
+snapshot_id=`nodetool -h localhost snapshot | \
+             grep 'Snapshot directory: ' | \
+             awk '{print $3}'
+
+for snapshot_dir in `find $data_dir -type d -name $snapshot_id`
+do
+  cf_dir=`dirname \`dirname $snapshot_dir\``
+  cf=`basename $cf_dir`
+  schema_dir=`dirname $cf_dir`
+  schema=`basename $schema_dir`
+
+  tarball="${work_dir}/$schema-$cf.tar.gz"
+
+  tar -czf "$tarball" \
+    -C `dirname $snapshot_dir` \
+    "$snapshot_dir"
+
+  trap "rm -f $tarball; exit" INT TERM EXIT
+
+  /usr/local/bin/s3put \
+    --access_key $AWS_ACCESS_KEY_ID \
+    --secret_key $AWS_SECRET_ACCESS_KEY \
+    --bucket $S3_BUCKET \
+    --prefix "$work_dir" \
+    --key_prefix "/cassandra/<%= node.chef_environment %>/$snapshot_id" \
+    "$tarball"
+
+  rm -f "$tarball"
+
+  trap - INT TERM EXIT
+done
