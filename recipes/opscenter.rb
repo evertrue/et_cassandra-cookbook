@@ -19,6 +19,11 @@ if node['storage']['ephemeral_mounts']
     action    :create
     recursive true
   end
+else
+  node.set['et_cassandra']['opscenter']['config']['logging']['log_path'] =
+    '/var/log/opscenter/opscenterd.log'
+  node.set['et_cassandra']['datastax-agent']['log_dir'] =
+    '/var/log/datastax-agent'
 end
 
 package 'datastax-agent' do
