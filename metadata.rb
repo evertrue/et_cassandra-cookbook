@@ -10,4 +10,4 @@ supports 'ubuntu', '= 14.04'
 
 depends 'java', '~> 1.29'
 depends 'apt',  '~> 2.6'
-depends 'storage'
+depends 'storage', '>= 2.2.6'
