@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.2] (2015-07-13)
+
+### Fixes
+
+* Bad reference to snapshot creds data bag
+
 ## [v4.1.1] (2015-07-13)
 
 ### Changes
