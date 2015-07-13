@@ -1,6 +1,9 @@
 snapshot_conf = node['et_cassandra']['snapshot_conf'].to_h
 
-creds = data_bag_item('secrets', 'aws_credentials')['CassandraBackups']
+creds = data_bag_item(
+  node['et_cassandra']['snapshot']['data_bag'],
+  ['et_cassandra']['snapshot']['data_bag_item']
+)['CassandraBackups']
 snapshot_conf['AWS_ACCESS_KEY_ID'] = creds['access_key_id']
 snapshot_conf['AWS_SECRET_ACCESS_KEY'] = creds['secret_access_key']
 
