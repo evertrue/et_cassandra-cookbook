@@ -1,5 +1,19 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.0] (2015-07-13)
+
+### Changes
+
+* Add a backup/snapshot script
+
+### Fixes
+
+* Properly handle non-existent ephemeral storage
+* Make sure our own IP address is in the seed_ips list
+* Use `node['ipaddress']` as the listen_address instead of localhost
+* Trivial linting-related changes
+* Add some sane rubocop exceptions
+
 ## [v4.0.0] (2015-07-13)
 
 ### Changes
