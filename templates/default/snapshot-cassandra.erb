@@ -15,25 +15,25 @@ snapshot_id=`nodetool -h localhost snapshot | \
              grep 'Snapshot directory: ' | \
              awk '{print $3}'`
 
-let dir_index=0
+let dir_index=1
 
 for data_dir in $data_dirs; do
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
-    tarball="${work_dir}/$keyspace-$dir_index-`date +%Y-%m-%dT%H%M%S`.tar.gz"
+    tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
-    if stat */*/snapshots/$snapshot_id; then
-      tar -czf "$tarball" \
-        -C `dirname $data_dir` \
-        */*/snapshots/$snapshot_id
+    if stat "$data_dir"/*/*/snapshots/$snapshot_id > /dev/null; then
+      tar -czf "$tarball" -C "$data_dir" */*/snapshots/"$snapshot_id"
 
       trap "rm -f $tarball; exit" INT TERM EXIT
+
+      backup_name=$keyspace-$dir_index-`date +%Y-%m-%dT%H%M%S`
 
       /usr/local/bin/s3put \
         --access_key $AWS_ACCESS_KEY_ID \
         --secret_key $AWS_SECRET_ACCESS_KEY \
         --bucket $BUCKET \
         --prefix "$work_dir" \
-        --key_prefix "cassandra/<%= node.chef_environment %>/$snapshot_id" \
+        --key_prefix "cassandra/<%= node.chef_environment %>/$backup_name" \
         "$tarball"
 
       rm -f "$tarball"
