@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.8] (2015-07-14)
+
+### Fixes
+
+* Switch to cron_d resource (because cron sux)
+
 ## [v4.1.7] (2015-07-14)
 
 ### Changes
