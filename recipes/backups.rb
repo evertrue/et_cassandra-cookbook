@@ -22,16 +22,16 @@ template '/usr/local/sbin/upload-incrementals' do
   mode   0755
 end
 
-cron 'Cassandra Weekly Snapshot' do
+cron_d 'Cassandra Weekly Snapshot' do
   command '/usr/local/sbin/snapshot-cassandra'
-  minute  '0'
-  hour    '1'
-  weekday :sunday
+  minute  0
+  hour    1
+  weekday 0
 end
 
-cron 'Cassandra Daily Incremental' do
+cron_d 'Cassandra Daily Incremental' do
   command '/usr/local/sbin/upload-incrementals'
-  minute  '0'
-  hour    '1'
+  minute  0
+  hour    1
   weekday '1-6'
 end
