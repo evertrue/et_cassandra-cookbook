@@ -22,20 +22,20 @@ for data_dir in $data_dirs; do
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
     tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
-    if stat "$data_dir"/*/*/snapshots/$snapshot_id > /dev/null; then
+    if stat "$data_dir"/"$keyspace"/*/snapshots/$snapshot_id > /dev/null; then
       cd "$data_dir"
-      tar -czf "$tarball" */*/snapshots/"$snapshot_id"
+      tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id
 
       trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
 
-      backup_name=$keyspace-$dir_index-`date +%Y-%m-%dT%H%M%S`
+      backup_date=`date +%Y-%m-%dT%H%M%S`
 
       /usr/local/bin/s3put \
         --access_key $AWS_ACCESS_KEY_ID \
         --secret_key $AWS_SECRET_ACCESS_KEY \
         --bucket $BUCKET \
         --prefix "$work_dir" \
-        --key_prefix "cassandra/<%= node.chef_environment %>/$backup_name" \
+        --key_prefix "cassandra/<%= node.chef_environment %>/$backup_date" \
         "$tarball"
 
       rm -f "$tarball"
