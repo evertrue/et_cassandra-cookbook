@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.4] (2015-07-14)
+
+### Fixes
+
+* Minor fixes to the snapshot script
+
 ## [v4.1.3] (2015-07-14)
 
 ### Fixes
