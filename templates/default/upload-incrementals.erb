@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -e
+
+source /etc/cassandra/snapshots.conf
+
+root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
+data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
+work_dir="${root_dir}/backup_work_dir"
+old_pwd="$PWD"
+
+mkdir -p "${work_dir}"
+
+backup_date=`date +%Y-%m-%dT%H%M%S`
+
+let dir_index=1
+
+for data_dir in $data_dirs; do
+  for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+    tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+
+    if stat "$data_dir"/"$keyspace"/*/backups > /dev/null; then
+      cd "$data_dir"
+      tar -czf "$tarball" "$keyspace"/*/backups
+
+      trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
+
+      /usr/local/bin/s3put \
+        --access_key $AWS_ACCESS_KEY_ID \
+        --secret_key $AWS_SECRET_ACCESS_KEY \
+        --bucket $BUCKET \
+        --prefix "$work_dir" \
+        --key_prefix "cassandra/<%= node.chef_environment %>/incrementals/$backup_date" \
+        "$tarball"
+
+      rm -f "$tarball"
+
+      trap - INT TERM EXIT
+    else
+      echo "Nothing to back up in $data_dir/$keyspace/*/backups"
+    fi
+  done
+  let dir_index++
+done
+
+cd "$old_pwd"
