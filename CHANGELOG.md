@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.3] (2015-07-14)
+
+### Fixes
+
+* Major fixes to the snapshot script and a change to the output directory structure
+
 ## [v4.1.2] (2015-07-13)
 
 ### Fixes
