@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+set -e
+
 source /etc/cassandra/snapshots.conf
 
 root_dir="<%= node['et_cassandra']['home'] %>"
-data_dir="<%= node['et_cassandra']['config']['data_file_directories'] %>"
+data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
 work_dir="${root_dir}/backup_work_dir"
 
 mkdir -p "${work_dir}"
@@ -11,32 +13,35 @@ mkdir -p "${work_dir}"
 # Performs the snapshot and gets the ID
 snapshot_id=`nodetool -h localhost snapshot | \
              grep 'Snapshot directory: ' | \
-             awk '{print $3}'
+             awk '{print $3}'`
 
-for snapshot_dir in `find $data_dir -type d -name $snapshot_id`
-do
-  cf_dir=`dirname \`dirname $snapshot_dir\``
-  cf=`basename $cf_dir`
-  schema_dir=`dirname $cf_dir`
-  schema=`basename $schema_dir`
+let dir_index=0
 
-  tarball="${work_dir}/$schema-$cf.tar.gz"
+for data_dir in $data_dirs; do
+  for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+    tarball="${work_dir}/$keyspace-$dir_index-`date +%Y-%m-%dT%H%M%S`.tar.gz"
 
-  tar -czf "$tarball" \
-    -C `dirname $snapshot_dir` \
-    "$snapshot_dir"
+    if stat */*/snapshots/$snapshot_id; then
+      tar -czf "$tarball" \
+        -C `dirname $data_dir` \
+        */*/snapshots/$snapshot_id
 
-  trap "rm -f $tarball; exit" INT TERM EXIT
+      trap "rm -f $tarball; exit" INT TERM EXIT
 
-  /usr/local/bin/s3put \
-    --access_key $AWS_ACCESS_KEY_ID \
-    --secret_key $AWS_SECRET_ACCESS_KEY \
-    --bucket $S3_BUCKET \
-    --prefix "$work_dir" \
-    --key_prefix "/cassandra/<%= node.chef_environment %>/$snapshot_id" \
-    "$tarball"
+      /usr/local/bin/s3put \
+        --access_key $AWS_ACCESS_KEY_ID \
+        --secret_key $AWS_SECRET_ACCESS_KEY \
+        --bucket $BUCKET \
+        --prefix "$work_dir" \
+        --key_prefix "cassandra/<%= node.chef_environment %>/$snapshot_id" \
+        "$tarball"
 
-  rm -f "$tarball"
+      rm -f "$tarball"
 
-  trap - INT TERM EXIT
+      trap - INT TERM EXIT
+    else
+      echo "Nothing to back up in */*/snapshots/$snapshot_id"
+    fi
+  done
+  let dir_index++
 done
