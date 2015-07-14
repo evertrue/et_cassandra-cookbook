@@ -4,7 +4,7 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
-root_dir="<%= node['et_cassandra']['home'] %>"
+root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
 work_dir="${root_dir}/backup_work_dir"
 
