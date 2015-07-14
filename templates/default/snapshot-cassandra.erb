@@ -7,6 +7,7 @@ source /etc/cassandra/snapshots.conf
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
 work_dir="${root_dir}/backup_work_dir"
+old_pwd="$PWD"
 
 mkdir -p "${work_dir}"
 
@@ -22,9 +23,10 @@ for data_dir in $data_dirs; do
     tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
     if stat "$data_dir"/*/*/snapshots/$snapshot_id > /dev/null; then
-      tar -czf "$tarball" -C "$data_dir" */*/snapshots/"$snapshot_id"
+      cd "$data_dir"
+      tar -czf "$tarball" */*/snapshots/"$snapshot_id"
 
-      trap "rm -f $tarball; exit" INT TERM EXIT
+      trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
 
       backup_name=$keyspace-$dir_index-`date +%Y-%m-%dT%H%M%S`
 
@@ -45,3 +47,5 @@ for data_dir in $data_dirs; do
   done
   let dir_index++
 done
+
+cd "$old_pwd"
