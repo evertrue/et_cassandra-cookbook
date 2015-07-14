@@ -16,6 +16,8 @@ snapshot_id=`nodetool -h localhost snapshot | \
              grep 'Snapshot directory: ' | \
              awk '{print $3}'`
 
+backup_date=`date +%Y-%m-%dT%H%M%S`
+
 let dir_index=1
 
 for data_dir in $data_dirs; do
@@ -27,8 +29,6 @@ for data_dir in $data_dirs; do
       tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id
 
       trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
-
-      backup_date=`date +%Y-%m-%dT%H%M%S`
 
       /usr/local/bin/s3put \
         --access_key $AWS_ACCESS_KEY_ID \
@@ -42,7 +42,7 @@ for data_dir in $data_dirs; do
 
       trap - INT TERM EXIT
     else
-      echo "Nothing to back up in */*/snapshots/$snapshot_id"
+      echo "Nothing to back up in "$data_dir"/"$keyspace"/*/snapshots/$snapshot_id"
     fi
   done
   let dir_index++
