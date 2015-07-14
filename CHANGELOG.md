@@ -1,5 +1,13 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.7] (2015-07-14)
+
+### Changes
+
+* Add cron jobs for the backups
+* Change the upload path of the snapshot tool to differentiate from incremental backups
+* Add incremental backup uploading script
+
 ## [v4.1.6] (2015-07-14)
 
 ### Fixes
