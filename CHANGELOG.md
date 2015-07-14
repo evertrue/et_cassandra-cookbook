@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.5] (2015-07-14)
+
+### Fixes
+
+* in snapshot tool: cd to data dir before building tarball
+* Fix root_dir path in snapshot tool
+
 ## [v4.1.4] (2015-07-14)
 
 ### Fixes
