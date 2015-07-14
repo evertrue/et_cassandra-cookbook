@@ -16,3 +16,8 @@ template '/usr/local/sbin/snapshot-cassandra' do
   source 'snapshot-cassandra.erb'
   mode   0755
 end
+
+template '/usr/local/sbin/upload-incrementals' do
+  source 'upload-incrementals.erb'
+  mode   0755
+end
