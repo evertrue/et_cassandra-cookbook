@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.9] (2015-07-15)
+
+### Fixes
+
+* Include node fqdn in backup storage location prefix
+
 ## [v4.1.8] (2015-07-14)
 
 ### Fixes
