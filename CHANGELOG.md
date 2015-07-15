@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.10] (2015-07-15)
+
+### Fixes
+
+* Take the spaces out of the cron job names
+
 ## [v4.1.9] (2015-07-15)
 
 ### Fixes
