@@ -77,7 +77,7 @@ seed_ips = (
 )
 
 # Make sure our own IP is in the list
-seed_ips |= [node['ipaddress']]
+seed_ips |= [node['ipaddress']] if node.roles.include?('cassandra_seed')
 
 # Structure is seemingly ornate to map 1:1 to YAML output needed in actual config
 node.default['et_cassandra']['config']['seed_provider'] = [
