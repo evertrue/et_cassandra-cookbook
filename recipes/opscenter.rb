@@ -126,6 +126,7 @@ end
 
 template '/etc/default/datastax-agent' do
   source 'datastax-agent-default.erb'
+  notifies :restart, 'service[datastax-agent]'
 end
 
 cookbook_file '/etc/init.d/datastax-agent' do
