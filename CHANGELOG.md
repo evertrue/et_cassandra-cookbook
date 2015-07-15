@@ -1,5 +1,13 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.11] (2015-07-15)
+
+### Fixes
+
+* Bounce datastax-agent if the /etc/default file is updated
+* Only put our own IP in the seed_ips list if we are actually a seed node
+* Fix all of the things that are broken about the datastax-agent init script (by shipping our own)
+
 ## [v4.1.10] (2015-07-15)
 
 ### Fixes
