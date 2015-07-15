@@ -128,6 +128,12 @@ template '/etc/default/datastax-agent' do
   source 'datastax-agent-default.erb'
 end
 
+cookbook_file '/etc/init.d/datastax-agent' do
+  source   'datastax-agent-init'
+  mode     0755
+  notifies :restart, 'service[datastax-agent]'
+end
+
 template "#{agent_conf_path}/log4j.properties" do
   source 'datastax-log4j.properties.erb'
   notifies :restart, 'service[datastax-agent]'
