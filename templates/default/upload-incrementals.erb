@@ -21,9 +21,12 @@ for data_dir in $data_dirs; do
 
     if stat "$data_dir"/"$keyspace"/*/backups > /dev/null; then
       cd "$data_dir"
-      tar -czf "$tarball" "$keyspace"/*/backups
 
-      trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
+      # It's important to remove files in the backups directory as atomically
+      # as possible because this directory is going to be updated as we read it
+      tar -czf --remove-files "$tarball" "$keyspace"/*/backups
+
+      trap "cd \"$old_pwd\"; exit" INT TERM EXIT
 
       /usr/local/bin/s3put \
         --access_key $AWS_ACCESS_KEY_ID \
