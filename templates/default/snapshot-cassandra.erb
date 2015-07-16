@@ -11,7 +11,17 @@ old_pwd="$PWD"
 
 mkdir -p "${work_dir}"
 
-# Performs the snapshot and gets the ID
+# First delete all incremental backups
+for data_dir in $data_dirs; do
+  for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+    rm -f "$data_dir"/"$keyspace"/*/backups/*
+  done
+done
+
+# Clear out old snapshots
+nodetool -h localhost clearsnapshot
+
+# Perform the snapshot and get the ID
 snapshot_id=`nodetool -h localhost snapshot | \
              grep 'Snapshot directory: ' | \
              awk '{print $3}'`
@@ -22,10 +32,10 @@ let dir_index=1
 
 for data_dir in $data_dirs; do
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
-    tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
-
     if stat "$data_dir"/"$keyspace"/*/snapshots/$snapshot_id > /dev/null; then
       cd "$data_dir"
+
+      tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
       tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id
 
       trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
