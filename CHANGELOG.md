@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.12] (2015-07-16)
+
+### Fixes
+
+* Use underscores instead of dashes in the cron jobs
+
 ## [v4.1.11] (2015-07-15)
 
 ### Fixes
