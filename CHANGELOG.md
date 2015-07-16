@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.1.13] (2015-07-16)
+
+### Fixes
+
+* Properly delete old backup/snapshot files
+
 ## [v4.1.12] (2015-07-16)
 
 ### Fixes
