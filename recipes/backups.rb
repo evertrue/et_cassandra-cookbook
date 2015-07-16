@@ -22,14 +22,14 @@ template '/usr/local/sbin/upload-incrementals' do
   mode   0755
 end
 
-cron_d 'cassandra-weekly-snapshot' do
+cron_d 'cassandra_weekly_snapshot' do
   command '/usr/local/sbin/snapshot-cassandra'
   minute  0
   hour    1
   weekday 0
 end
 
-cron_d 'cassandra-daily-incremental' do
+cron_d 'cassandra_daily_incremental' do
   command '/usr/local/sbin/upload-incrementals'
   minute  0
   hour    1
