@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'DataStax OpsCenter' do
   it 'is installed' do
-    expect(package('opscenter')).to be_installed
+    expect(package('opscenter')).to be_installed.with_version('5.2.0')
   end
 
   it 'is enabled as a service' do

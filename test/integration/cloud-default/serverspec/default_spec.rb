@@ -144,7 +144,7 @@ end
 
 describe 'DataStax Agent' do
   it 'is installed' do
-    expect(package('datastax-agent')).to be_installed
+    expect(package('datastax-agent')).to be_installed.with_version('5.2.0')
   end
 
   it 'is enabled as a service' do

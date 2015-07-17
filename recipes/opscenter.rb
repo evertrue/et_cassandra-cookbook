@@ -27,7 +27,7 @@ else
 end
 
 package 'datastax-agent' do
-  action :upgrade
+  version node['et_cassandra']['datastax']['version']
 end
 
 service 'datastax-agent' do
@@ -36,7 +36,7 @@ service 'datastax-agent' do
 end
 
 package 'opscenter' do
-  action :upgrade
+  version node['et_cassandra']['datastax']['version']
   only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
