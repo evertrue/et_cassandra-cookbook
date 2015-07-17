@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.2.0] (2015-07-17)
+
+### Changes
+
+* OpsCenter and DataStax Agents are now set to a specific version
+* The OpsCenter & DataStax Agent services are now restarted upon a new version being installed
+
 ## [v4.1.13] (2015-07-16)
 
 ### Fixes
