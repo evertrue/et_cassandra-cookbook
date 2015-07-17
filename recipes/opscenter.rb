@@ -28,6 +28,7 @@ end
 
 package 'datastax-agent' do
   version node['et_cassandra']['datastax']['version']
+  notifies :restart, 'service[datastax-agent]'
 end
 
 service 'datastax-agent' do
@@ -37,6 +38,7 @@ end
 
 package 'opscenter' do
   version node['et_cassandra']['datastax']['version']
+  notifies :restart, 'service[opscenterd]'
   only_if { node['et_cassandra']['opscenter']['master'] }
 end
 
