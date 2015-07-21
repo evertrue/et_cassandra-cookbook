@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v3.1.1] (2015-07-21)
+
+* Fix bad flag order in incremental upload script
+
 ## [v3.1.0] (2015-07-16)
 
 * Hotfix branch to ship a bunch of stuff without bumping cassandra to 2.1.8
