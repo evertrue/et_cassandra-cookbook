@@ -1,3 +1,6 @@
+include_recipe 'python'
+python_pip 'boto'
+
 snapshot_conf = node['et_cassandra']['snapshot_conf'].to_h
 
 creds = data_bag_item(
