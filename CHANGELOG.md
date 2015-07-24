@@ -1,5 +1,16 @@
 # CHANGELOG for et_cassandra
 
+## [v3.2.0] (2015-07-24)
+
+### Changes
+
+* Create a backup lifecycle management resource
+* Allow backup/snapshot scripts to set the S3 region
+
+### Fixes
+
+* Explicitly install boto
+
 ## [v3.1.1] (2015-07-21)
 
 * Fix bad flag order in incremental upload script
