@@ -24,7 +24,7 @@ for data_dir in $data_dirs; do
 
       # It's important to remove files in the backups directory as atomically
       # as possible because this directory is going to be updated as we read it
-      tar -czf --remove-files "$tarball" "$keyspace"/*/backups
+      tar --remove-files -czf "$tarball" "$keyspace"/*/backups
 
       trap "cd \"$old_pwd\"; exit" INT TERM EXIT
 
@@ -32,6 +32,7 @@ for data_dir in $data_dirs; do
         --access_key $AWS_ACCESS_KEY_ID \
         --secret_key $AWS_SECRET_ACCESS_KEY \
         --bucket $BUCKET \
+        --region $REGION \
         --prefix "$work_dir" \
         --key_prefix "cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$backup_date" \
         "$tarball"

@@ -21,6 +21,11 @@ suites:
       ec2:
         placement_availability_zone: us-east-1b
       et_cassandra:
+        aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+        aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+        snapshot_conf:
+          BUCKET:
+            backups.evertrue.com
         env:
           jvm_opts:
             - -XX:+CMSConcurrentMTEnabled
