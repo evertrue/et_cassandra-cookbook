@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v4.3.0] (2015-07-24)
+
+* Merge in changes from the v3.x branch
+
 ## [v4.2.0] (2015-07-17)
 
 ### Changes
