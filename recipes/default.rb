@@ -11,3 +11,4 @@ end
 include_recipe 'apt'
 include_recipe 'java'
 include_recipe 'et_cassandra::install'
+include_recipe 'et_cassandra::backups'
