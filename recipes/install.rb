@@ -18,8 +18,8 @@ end
 include_recipe 'et_cassandra::repo'
 
 package 'cassandra' do
+  options '-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
   version node['et_cassandra']['version']
-  action :install
 end
 
 template "/etc/default/#{node['et_cassandra']['user']}" do
