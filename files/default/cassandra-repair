@@ -23,6 +23,7 @@ for ks in $keyspaces; do
         kill -9 $nt_pid
       fi
     fi
+    sleep 1
     let i++
   done
 done
