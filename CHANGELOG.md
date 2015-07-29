@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.1] (2015-07-29)
+
+### Fixes
+
+* Move repair cron job from 1am to 4am utc
+* Add missing sleep delay to repair cron job
+
 ## [v4.5.0] (2015-07-17)
 
 ### Changes
