@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.0] (2015-07-17)
+
+### Changes
+
+* Add cassandra repair job
+* Don't bother test converging the backups recipe (too much internal data is needed to make it work)
+
 ## [v4.4.0] (2015-07-24)
 
 ### Changes
