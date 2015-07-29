@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -e
+
+let timeout=7200
+
+keyspaces=`/usr/bin/cqlsh -e 'describe keyspaces;' \
+  | awk 'RS="  " {print $0}' \
+  | grep -v '^$' \
+  | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$'`
+
+for ks in $keyspaces; do
+  /usr/bin/nodetool -h localhost repair -par $ks &
+  nt_pid=$!
+
+  let i=1
+  while ps o cmd= $nt_pid | grep -q nodetool; do
+    if [[ $i > $timeout ]]; then
+      kill $nt_pid
+      sleep 1
+      if ps o cmd= $nt_pid | grep -q nodetool; then
+        sleep 10
+        kill -9 $nt_pid
+      fi
+    fi
+    let i++
+  done
+done
