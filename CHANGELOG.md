@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.4.0] (2015-07-24)
+
+### Changes
+
+* Add options to Cassandra package install to always keep our configs, avoiding the need for manual intervention
+
 ## [v4.3.0] (2015-07-24)
 
 * Merge in changes from the v3.x branch
