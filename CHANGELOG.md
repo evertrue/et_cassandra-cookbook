@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.2] (2015-07-29)
+
+### Fixes
+
+* Disable repair job until we can figure out why it doesn't space correctly
+
 ## [v4.5.1] (2015-07-29)
 
 ### Fixes
