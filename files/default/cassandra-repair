@@ -13,6 +13,7 @@ for ks in $keyspaces; do
   /usr/bin/nodetool -h localhost repair -par $ks &
   nt_pid=$!
 
+  echo "Waiting $timeout seconds to start the next repair job"
   sleep $timeout
 
   if ps o cmd= $nt_pid | grep -q nodetool; then
