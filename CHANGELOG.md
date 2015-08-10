@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.4] (2015-08-10)
+
+### Fixes
+
+* Un-disable cassandra_daily_repair job
+
 ## [v4.5.3] (2015-08-10)
 
 ### Fixes
