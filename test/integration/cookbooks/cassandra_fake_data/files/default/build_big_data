@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+let size=$1
+
+let i=1
+
+while [ $i -le $size ]; do
+  echo "INSERT INTO fakedata.sometable (id, property_id, sometext) VALUES " \
+       "($i, $i, 'a0000000000000000000000000000000000000000000000000000000');"
+  let i++
+done

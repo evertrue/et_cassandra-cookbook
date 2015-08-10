@@ -30,6 +30,7 @@ suites:
       - recipe[ec2test::default]
       - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
+      - recipe[cassandra_fake_data::default]
     attributes:
       et_cassandra:
         env:
