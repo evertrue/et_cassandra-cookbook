@@ -1,5 +1,14 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.3] (2015-08-10)
+
+### Fixes
+
+* Repair script should say that it is waiting 2 hrs
+* Run the backups recipe during testing add a mocking mode to prevent it from hitting S3
+* Add a cookbook to create fake data
+* Rework how the repair script decides to move on to the next keyspace
+
 ## [v4.5.2] (2015-07-29)
 
 ### Fixes
