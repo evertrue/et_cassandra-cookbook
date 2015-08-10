@@ -13,17 +13,10 @@ for ks in $keyspaces; do
   /usr/bin/nodetool -h localhost repair -par $ks &
   nt_pid=$!
 
-  let i=1
-  while ps o cmd= $nt_pid | grep -q nodetool; do
-    if [[ $i > $timeout ]]; then
-      kill $nt_pid
-      sleep 1
-      if ps o cmd= $nt_pid | grep -q nodetool; then
-        sleep 10
-        kill -9 $nt_pid
-      fi
-    fi
-    sleep 1
-    let i++
-  done
+  sleep $timeout
+
+  if ps o cmd= $nt_pid | grep -q nodetool; then
+    msg="Repair of keyspace $ks still running after $timeout seconds"
+    echo $msg | mail -s "Keyspace repair taking too long" root
+  fi
 done
