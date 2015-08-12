@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.6] (2015-08-12)
+
+### Fixes
+
+* Exempt some keyspaces from snapshots and backups
+
 ## [v4.5.5] (2015-08-12)
 
 ### Fixes
