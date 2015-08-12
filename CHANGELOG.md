@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.7] (2015-08-12)
+
+### Fixes
+
+* Put skip_keyspaces in the snapshots config file and add the OpsCenter keyspace to the list
+
 ## [v4.5.6] (2015-08-12)
 
 ### Fixes
