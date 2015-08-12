@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.5] (2015-08-12)
+
+### Fixes
+
+* Pipe cron job output to logger (to cut down on the spam)
+
 ## [v4.5.4] (2015-08-10)
 
 ### Fixes
