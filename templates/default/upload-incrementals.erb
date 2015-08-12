@@ -11,12 +11,22 @@ old_pwd="$PWD"
 
 mkdir -p "${work_dir}"
 
+skip_keyspaces=("keyspace1" "system_traces")
 backup_date=`date +%Y-%m-%dT%H%M%S`
+
+function contained_by {
+  local i
+
+  for i in "${@:2}"; do [[ "${i}" == "${1}" ]] && return 0; done
+  return 1
+}
 
 let dir_index=1
 
 for data_dir in $data_dirs; do
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+    if contained_by "${keyspace}" "${skip_keyspaces[@]}"; then continue; fi
+
     tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
     if stat "$data_dir"/"$keyspace"/*/backups > /dev/null; then
