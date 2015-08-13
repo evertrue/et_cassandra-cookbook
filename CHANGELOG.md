@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.8] (2015-08-13)
+
+### Fixes
+
+* Add -p and -t flags to cron job logger commands
+
 ## [v4.5.7] (2015-08-12)
 
 ### Fixes
