@@ -50,14 +50,14 @@ template '/usr/local/sbin/upload-incrementals' do
 end
 
 cron_d 'cassandra_weekly_snapshot' do
-  command '/usr/local/sbin/snapshot-cassandra | logger -t snapshot-cassandra'
+  command '/usr/local/sbin/snapshot-cassandra | logger -t snapshot-cassandra -p cron.info'
   minute  0
   hour    1
   weekday 0
 end
 
 cron_d 'cassandra_daily_incremental' do
-  command '/usr/local/sbin/upload-incrementals | logger -t upload-incrementals'
+  command '/usr/local/sbin/upload-incrementals | logger -t upload-incrementals -p cron.info'
   minute  0
   hour    1
   weekday '1-6'

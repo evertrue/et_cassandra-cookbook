@@ -3,7 +3,7 @@ cookbook_file '/usr/local/bin/cassandra-repair' do
 end
 
 cron_d 'cassandra_daily_repair' do
-  command '/usr/local/bin/cassandra-repair | logger cassandra-repair'
+  command '/usr/local/bin/cassandra-repair | logger -t cassandra-repair -p cron.info'
   minute  20
   hour    4
 end
