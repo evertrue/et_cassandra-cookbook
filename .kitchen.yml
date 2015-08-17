@@ -31,6 +31,8 @@ suites:
       - recipe[et_cassandra::opscenter]
       - role[cassandra_opscenter]
     attributes:
+      roles:
+      - cassandra_seed
       ec2:
         placement_availability_zone: us-east-1b
       et_cassandra:
