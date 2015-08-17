@@ -5,17 +5,24 @@ describe 'Apache Cassandra' do
     %w(
       libjna-java
       libjemalloc1
-      cassandra
     ).each do |pkg|
       describe package pkg do
         it { is_expected.to be_installed }
       end
     end
 
-    describe file('/etc/apt/preferences.d/cassandra.pref') do
+    describe package('cassandra') do
+      it { is_expected.to be_installed.with_version('2.1.8') }
+    end
+
+    describe package('dsc21') do
+      it { is_expected.to be_installed.with_version('2.1.8-1') }
+    end
+
+    describe file('/etc/apt/preferences.d/dsc21.pref') do
       its(:content) do
-        should match('Package: cassandra
-Pin: version 2.1.8
+        should match('Package: dsc21
+Pin: version 2.1.8-1
 Pin-Priority: -10')
       end
     end

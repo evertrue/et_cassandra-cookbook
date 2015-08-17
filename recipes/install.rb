@@ -17,7 +17,7 @@ end
 
 include_recipe 'et_cassandra::repo'
 
-package 'cassandra' do
+package 'dsc21' do
   options '-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
   version node['et_cassandra']['version']
 end
