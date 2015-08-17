@@ -62,3 +62,12 @@ cron_d 'cassandra_daily_incremental' do
   hour    1
   weekday '1-6'
 end
+
+%w(
+  cassandra-daily-incremental
+  cassandra-weekly-snapshot
+).each do |job|
+  cron_d job do
+    action :delete
+  end
+end
