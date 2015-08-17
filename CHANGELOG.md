@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.10] (2015-08-17)
+
+### Fixes
+
+* Delete old cassandra jobs with dashes in the names
+
 ## [v4.5.9] (2015-08-17)
 
 ### Fixes
