@@ -17,7 +17,6 @@ suites:
       - recipe[et_cassandra::backups]
       - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
-      - recipe[cassandra_fake_data::default]
     attributes:
       ec2:
         placement_availability_zone: us-east-1b
