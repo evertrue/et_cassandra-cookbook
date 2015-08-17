@@ -11,6 +11,14 @@ describe 'Apache Cassandra' do
         it { is_expected.to be_installed }
       end
     end
+
+    describe file('/etc/apt/preferences.d/cassandra.pref') do
+      its(:content) do
+        should match('Package: cassandra
+Pin: version 2.1.8
+Pin-Priority: -10')
+      end
+    end
   end
 
   context 'user has a high file descriptor limit' do
