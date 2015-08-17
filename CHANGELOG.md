@@ -1,5 +1,17 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.9] (2015-08-17)
+
+### Fixes
+
+* Use packge "dsc21" rather than "cassandra"
+* Repair jobs now runs at 4:20 UTC, not 1:20 (fix the tests)
+* Fix some overloaded filenames in the cassandra fake data cookbook
+* Add cassandra_seed to the roles list (so that cassandra is willing to start up without real cluster-mates to talk to)
+* Run the backups recipe last during testing
+* Don't bother running the fake data recipe
+* Pin the cassandra package version using apt-preferences
+
 ## [v4.5.8] (2015-08-13)
 
 ### Fixes
