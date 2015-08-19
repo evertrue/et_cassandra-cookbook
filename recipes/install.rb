@@ -17,9 +17,10 @@ end
 
 include_recipe 'et_cassandra::repo'
 
-package 'dsc21' do
+package %w(cassandra dsc21) do
   options '-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
-  version node['et_cassandra']['version']
+  version [node['et_cassandra']['version']['cassandra'],
+           node['et_cassandra']['version']['dsc21']]
 end
 
 template "/etc/default/#{node['et_cassandra']['user']}" do

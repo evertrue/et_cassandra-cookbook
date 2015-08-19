@@ -1,4 +1,6 @@
-default['et_cassandra']['version'] = '2.1.8-1'
+default['et_cassandra']['version']['cassandra'] = '2.1.8'
+default['et_cassandra']['version']['dsc21'] =
+  "#{node['et_cassandra']['version']['cassandra']}-1"
 default['et_cassandra']['datastax']['version'] = '5.2.0'
 
 default['et_cassandra']['user'] = 'cassandra'
