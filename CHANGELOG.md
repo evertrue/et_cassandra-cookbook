@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.12] (2015-08-19)
+
+### Fixes
+
+* Make directories for LOG, STARTUP_LOG, PIDFILE, and MONITOR_PIDFILE in datastax-agent init script
+
 ## [v4.5.11] (2015-08-19)
 
 ### Fixes
