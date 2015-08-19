@@ -12,8 +12,3 @@ include_recipe 'apt'
 include_recipe 'java'
 include_recipe 'et_cassandra::install'
 include_recipe 'et_cassandra::repair_jobs'
-
-apt_preference 'dsc21' do
-  pin          "version #{node['et_cassandra']['version']}"
-  pin_priority '-10'
-end

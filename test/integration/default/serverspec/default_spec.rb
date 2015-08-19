@@ -18,14 +18,6 @@ describe 'Apache Cassandra' do
     describe package('dsc21') do
       it { is_expected.to be_installed.with_version('2.1.8-1') }
     end
-
-    describe file('/etc/apt/preferences.d/dsc21.pref') do
-      its(:content) do
-        should match('Package: dsc21
-Pin: version 2.1.8-1
-Pin-Priority: -10')
-      end
-    end
   end
 
   context 'user has a high file descriptor limit' do
