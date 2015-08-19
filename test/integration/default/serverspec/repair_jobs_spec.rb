@@ -6,7 +6,7 @@ context 'Repair Jobs' do
     it { is_expected.to be_mode 755 }
   end
 
-  describe file('/etc/cron.d/cassandra_daily_repair') do
+  describe file('/etc/cron.d/cassandra_repair') do
     it { is_expected.to be_file }
     its(:content) { is_expected.to match(/^20 4 /) }
   end
