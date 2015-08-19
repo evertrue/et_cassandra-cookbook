@@ -1,5 +1,15 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.11] (2015-08-19)
+
+### Fixes
+
+* Install both cassandra and dsc21 packages at the same time
+* Remove dsc21 pin serverspec test
+* Run the repair job weekly and on an AZ-dependent day-of-week
+* Stop using apt_preference pinning (it does not do what we want)
+* Use -pr flag instead of -par for keyspace repair
+
 ## [v4.5.10] (2015-08-17)
 
 ### Fixes
