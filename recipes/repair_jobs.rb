@@ -6,7 +6,7 @@ cron_d 'cassandra_repair' do
   command '/usr/local/bin/cassandra-repair | logger -t cassandra-repair -p cron.info'
   minute  20
   hour    4
-  day     %w(
+  weekday %w(
     us-east-1a
     us-east-1b
     us-east-1c
