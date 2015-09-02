@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.13] (2015-09-02)
+
+### Fixes
+
+* Set the repair job by WEEKDAY not by DAY
+
 ## [v4.5.12] (2015-08-19)
 
 ### Fixes
