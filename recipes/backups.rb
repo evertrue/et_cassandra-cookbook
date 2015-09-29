@@ -14,7 +14,7 @@ snapshot_conf['AWS_ACCESS_KEY_ID'] =
 snapshot_conf['AWS_SECRET_ACCESS_KEY'] =
   node['et_cassandra']['aws_secret_access_key'] || creds['secret_access_key']
 
-if node['et_cassandra']['mocking']
+unless node['et_cassandra']['mocking']
   et_cassandra_backup_lifecycle "cassandra snapshots expiration (#{node.chef_environment})" do
     aws_access_key_id     snapshot_conf['AWS_ACCESS_KEY_ID']
     aws_secret_access_key snapshot_conf['AWS_SECRET_ACCESS_KEY']
