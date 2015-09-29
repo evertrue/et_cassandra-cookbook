@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.15] (2015-09-02)
+
+### Fixes
+
+* Backup lifecycle resource needs node FQDN in its name
+
 ## [v4.5.14] (2015-09-02)
 
 ### Fixes
