@@ -15,7 +15,7 @@ snapshot_conf['AWS_SECRET_ACCESS_KEY'] =
   node['et_cassandra']['aws_secret_access_key'] || creds['secret_access_key']
 
 unless node['et_cassandra']['mocking']
-  et_cassandra_backup_lifecycle "cassandra snapshots expiration (#{node.chef_environment})" do
+  et_cassandra_backup_lifecycle "cassandra snapshots expiration (#{node['fqdn']})" do
     aws_access_key_id     snapshot_conf['AWS_ACCESS_KEY_ID']
     aws_secret_access_key snapshot_conf['AWS_SECRET_ACCESS_KEY']
     type                  'snapshots'
@@ -24,7 +24,7 @@ unless node['et_cassandra']['mocking']
     region                node['et_cassandra']['snapshot_conf']['REGION']
   end
 
-  et_cassandra_backup_lifecycle "cassandra incrementals expiration (#{node.chef_environment})" do
+  et_cassandra_backup_lifecycle "cassandra incrementals expiration (#{node['fqdn']})" do
     aws_access_key_id     snapshot_conf['AWS_ACCESS_KEY_ID']
     aws_secret_access_key snapshot_conf['AWS_SECRET_ACCESS_KEY']
     type                  'incrementals'
