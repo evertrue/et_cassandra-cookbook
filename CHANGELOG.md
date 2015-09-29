@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.5.14] (2015-09-02)
+
+### Fixes
+
+* Mocking boolean was keeping lifecycles from being set. Reverse that logic.
+
 ## [v4.5.13] (2015-09-02)
 
 ### Fixes
