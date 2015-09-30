@@ -1,3 +1,9 @@
+#
+# Cookbook Name:: et_cassandra
+# Recipe:: backups
+#
+# Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
+
 include_recipe 'python'
 python_pip 's3cmd'
 

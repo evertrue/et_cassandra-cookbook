@@ -1,3 +1,9 @@
+#
+# Cookbook Name:: et_cassandra
+# Recipe:: repair_jobs
+#
+# Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
+
 cookbook_file '/usr/local/bin/cassandra-repair' do
   mode 0755
 end
