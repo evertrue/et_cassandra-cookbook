@@ -21,6 +21,7 @@ suites:
       ec2:
         placement_availability_zone: us-east-1b
       et_cassandra:
+        mocking: true
         env:
           jvm_opts:
             - -XX:+CMSConcurrentMTEnabled

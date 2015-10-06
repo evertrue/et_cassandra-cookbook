@@ -55,30 +55,34 @@ service 'cassandra' do
   action node['et_cassandra']['service_action']
 end
 
-seeds = search(
-  :node,
-  node['et_cassandra']['discovery']['seed_search_str'] +
-  " AND chef_environment:#{node.chef_environment}",
-  filter_result: {
-    'ip' => %w(ipaddress)
-  }
-)
+if node['et_cassandra']['mocking']
+  seed_ips = [node['ipaddress']]
+else
+  seeds = search(
+    :node,
+    node['et_cassandra']['discovery']['seed_search_str'] +
+    " AND chef_environment:#{node.chef_environment}",
+    filter_result: {
+      'ip' => %w(ipaddress)
+    }
+  )
 
-seed_ips = (
-  if seeds.nil? || seeds.empty?
-    log 'Assuming this node is the first node of a new ring, and should be a Cassandra seed'
-    [node['ipaddress']]
-  elsif Chef::VersionConstraint.new('< 12.1.1').include? Chef::VERSION
-    # Versions of Chef prior to 12.1 return this data in a format that can only
-    # be described as "bizarre."
-    seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }
-  else
-    seeds.map { |h| h['ip'] }
-  end
-)
+  seed_ips = (
+    if seeds.nil? || seeds.empty?
+      log 'Assuming this node is the first node of a new ring, and should be a Cassandra seed'
+      [node['ipaddress']]
+    elsif Chef::VersionConstraint.new('< 12.1.1').include? Chef::VERSION
+      # Versions of Chef prior to 12.1 return this data in a format that can only
+      # be described as "bizarre."
+      seeds.each_with_object([]) { |s, m| s['data'].map { |_k, ip| m << ip } }
+    else
+      seeds.map { |h| h['ip'] }
+    end
+  )
 
-# Make sure our own IP is in the list
-seed_ips |= [node['ipaddress']] if node.roles.include?('cassandra_seed')
+  # Make sure our own IP is in the list
+  seed_ips |= [node['ipaddress']] if node.roles.include?('cassandra_seed')
+end
 
 # Structure is seemingly ornate to map 1:1 to YAML output needed in actual config
 node.default['et_cassandra']['config']['seed_provider'] = [

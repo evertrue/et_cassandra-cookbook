@@ -72,7 +72,7 @@ describe 'Apache Cassandra' do
         it { is_expected.to include "data_file_directories:\n- \"/var/lib/cassandra/data\"" }
         it { is_expected.to include 'commitlog_directory: "/var/lib/cassandra/commitlog"' }
         it { is_expected.to include 'saved_caches_directory: "/var/lib/cassandra/saved_caches"' }
-        it { is_expected.to include '- seeds: 169.254.0.1,169.254.0.3' }
+        it { is_expected.to include(/\- seeds: (?:[0-9]{1,3}\.){3}[0-9]{1,3}/) }
       end
     end
   end
