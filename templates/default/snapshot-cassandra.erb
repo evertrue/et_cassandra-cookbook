@@ -49,14 +49,13 @@ for data_dir in $data_dirs; do
 
       trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
 
-      /usr/local/bin/s3put \
+      /usr/local/bin/s3cmd \
         --access_key $AWS_ACCESS_KEY_ID \
         --secret_key $AWS_SECRET_ACCESS_KEY \
-        --bucket $BUCKET \
+        --server-side-encryption \
         --region $REGION \
-        --prefix "$work_dir" \
-        --key_prefix "cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/snapshots/$backup_date" \
-        "$tarball"
+        "$tarball" \
+        "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/snapshots/$backup_date/$tarball"
 
       rm -f "$tarball"
 

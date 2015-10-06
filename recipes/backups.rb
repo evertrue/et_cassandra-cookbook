@@ -1,5 +1,5 @@
 include_recipe 'python'
-python_pip 'boto'
+python_pip 's3cmd'
 
 include_recipe 'et_fog'
 
