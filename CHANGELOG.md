@@ -1,5 +1,18 @@
 # CHANGELOG for et_cassandra
 
+## [v4.6.0] (2015-10-06)
+
+### Changes
+
+* Enable Server Side Encryption for S3 backups
+* Use s3cmd instead of boto-s3put to upload backup files (so that we can enable SSE)
+* New kitchen-ec2 yaml format
+
+### Fixes
+
+* Move cassandra backups recipe to the end of the run list (in kitchen cloud)
+* In mocking/test mode, populate seed list with just our own machine (so the cluster will start)
+
 ## [v4.5.15] (2015-09-02)
 
 ### Fixes
