@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.6.1] (2015-10-07)
+
+### Fixes
+
+* Oops: s3cmd needs a verb ("put")
+* Only pass the tarball file name to s3cmd, not the whole path
+
 ## [v4.6.0] (2015-10-06)
 
 ### Changes
