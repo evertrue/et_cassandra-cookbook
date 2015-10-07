@@ -37,7 +37,7 @@ for data_dir in $data_dirs; do
 
       trap "cd \"$old_pwd\"; exit" INT TERM EXIT
 
-      /usr/local/bin/s3cmd \
+      /usr/local/bin/s3cmd put \
         --access_key $AWS_ACCESS_KEY_ID \
         --secret_key $AWS_SECRET_ACCESS_KEY \
         --server-side-encryption \
