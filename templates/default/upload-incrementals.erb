@@ -32,7 +32,7 @@ for data_dir in $data_dirs; do
 
     tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
-    if stat "$data_dir"/"$keyspace"/*/backups > /dev/null; then
+    if [ -n "$(find $data_dir/$keyspace -maxdepth 2 -mindepth 2 -name backups -type d | head -n 1)" ]; then
       cd "$data_dir"
 
       # It's important to remove files in the backups directory as atomically
