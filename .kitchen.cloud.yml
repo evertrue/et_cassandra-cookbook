@@ -9,6 +9,9 @@ driver:
     - ci-testing
   instance_type: c3.large
   interface: public
+  tags:
+    Env: public
+    Type: test
 
 transport:
   username: ubuntu
@@ -21,12 +24,12 @@ platforms:
   - name: ubuntu-14.04
     driver:
       image_id: ami-b2bc80da
-      tags:
-        Name: vagrant-et-cassandra-ubuntu-1404
-        Env: dev
 
 suites:
   - name: cloud-default
+    driver:
+      tags:
+        Name: et_cassandra-cloud-default-ubuntu-1404
     run_list:
       - recipe[ec2test::default]
       - recipe[et_cassandra::default]
@@ -42,6 +45,9 @@ suites:
             - -XX:ConcGCThreads=6
 
   - name: cloud-opscenter
+    driver:
+      tags:
+        Name: et_cassandra-cloud-opscenter-ubuntu-1404
     run_list:
       - recipe[ec2test::default]
       - recipe[et_cassandra::opscenter]
