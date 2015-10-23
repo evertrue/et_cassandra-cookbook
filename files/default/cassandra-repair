@@ -4,10 +4,10 @@ set -e
 
 let timeout=7200
 
-keyspaces=`/usr/bin/cqlsh -e 'describe keyspaces;' \
+keyspaces=$(/usr/bin/cqlsh -e 'describe keyspaces;' \
   | awk 'RS="  " {print $0}' \
   | grep -v '^$' \
-  | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$'`
+  | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$')
 
 for ks in $keyspaces; do
   /usr/bin/nodetool -h localhost repair $ks -pr &
