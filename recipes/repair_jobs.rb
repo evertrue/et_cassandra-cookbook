@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
 
-cookbook_file '/usr/local/bin/cassandra-repair' do
+template '/usr/local/bin/cassandra-repair' do
   mode 0755
 end
 

@@ -2,6 +2,10 @@
 
 set -e
 
+<% if node['et_cassandra']['cronitor']['backups']['enabled'] -%>
+/usr/local/bin/cronitor_backups run
+<% end -%>
+
 source /etc/cassandra/snapshots.conf
 
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
@@ -57,3 +61,7 @@ for data_dir in $data_dirs; do
 done
 
 cd "$old_pwd"
+
+<% if node['et_cassandra']['cronitor']['backups']['enabled'] -%>
+/usr/local/bin/cronitor_backups complete
+<% end -%>
