@@ -5,11 +5,18 @@ describe 'Apache Cassandra' do
     %w(
       libjna-java
       libjemalloc1
-      cassandra
     ).each do |pkg|
       describe package pkg do
         it { is_expected.to be_installed }
       end
+    end
+
+    describe package('cassandra') do
+      it { is_expected.to be_installed.with_version('2.1.8') }
+    end
+
+    describe package('dsc21') do
+      it { is_expected.to be_installed.with_version('2.1.8-1') }
     end
   end
 
@@ -192,6 +199,28 @@ describe 'DataStax Agent' do
 
     describe file('/mnt/dev0/datastax-agent/startup.log') do
       it { is_expected.to be_file }
+    end
+  end
+end
+
+describe 'Snapshot Tool' do
+  context 'is installed' do
+    describe file '/usr/local/sbin/snapshot-cassandra' do
+      it { is_expected.to be_file }
+      it { is_expected.to be_mode(755) }
+    end
+  end
+
+  context 'has correct configuration' do
+    describe file '/etc/cassandra/snapshots.conf' do
+      it { is_expected.to be_file }
+      it { is_expected.to be_mode(600) }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'BUCKET=cassandra_bucket' }
+        it { is_expected.to include 'AWS_ACCESS_KEY_ID' }
+        it { is_expected.to include 'AWS_SECRET_ACCESS_KEY' }
+      end
     end
   end
 end

@@ -72,7 +72,7 @@ describe 'Apache Cassandra' do
         it { is_expected.to include "data_file_directories:\n- \"/var/lib/cassandra/data\"" }
         it { is_expected.to include 'commitlog_directory: "/var/lib/cassandra/commitlog"' }
         it { is_expected.to include 'saved_caches_directory: "/var/lib/cassandra/saved_caches"' }
-        it { is_expected.to include(/\- seeds: (?:[0-9]{1,3}\.){3}[0-9]{1,3}/) }
+        it { is_expected.to match(/\- seeds: (?:[0-9]{1,3}\.){3}[0-9]{1,3}/) }
       end
     end
   end
@@ -131,6 +131,16 @@ eos
       end
     end
   end
+
+  context 'has content in the correct log files' do
+    describe file('/var/log/cassandra/system.log') do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'CassandraDaemon.java' }
+      end
+    end
+  end
 end
 
 describe 'DataStax OpsCenter' do
@@ -175,6 +185,20 @@ describe 'DataStax Agent' do
     describe file '/var/lib/datastax-agent/conf' do
       it { is_expected.to be_symlink }
       it { is_expected.to be_linked_to '/etc/datastax-agent' }
+    end
+  end
+
+  context 'has content in the correct log files' do
+    describe file('/var/log/datastax-agent/agent.log') do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to include 'DataStax Agent version' }
+      end
+    end
+
+    describe file('/var/log/datastax-agent/startup.log') do
+      it { is_expected.to be_file }
     end
   end
 end
