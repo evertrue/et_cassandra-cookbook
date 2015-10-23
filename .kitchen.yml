@@ -29,6 +29,7 @@ suites:
 
   - name: opscenter
     run_list:
+      - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
       - role[cassandra_opscenter]
     attributes:

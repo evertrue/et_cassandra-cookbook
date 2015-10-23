@@ -50,6 +50,7 @@ suites:
         Name: et_cassandra-cloud-opscenter-ubuntu-1404
     run_list:
       - recipe[ec2test::default]
+      - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
       - role[cassandra_opscenter]
     attributes:
