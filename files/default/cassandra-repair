@@ -10,7 +10,7 @@ keyspaces=$(/usr/bin/cqlsh -e 'describe keyspaces;' \
   | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$')
 
 for ks in $keyspaces; do
-  /usr/bin/nodetool -h localhost repair $ks -pr &
+  /usr/bin/nodetool -h localhost repair "$ks" -pr &
   nt_pid=$!
 
   echo "Waiting $timeout seconds to start the next repair job"
@@ -18,6 +18,6 @@ for ks in $keyspaces; do
 
   if ps o cmd= $nt_pid | grep -q nodetool; then
     msg="Repair of keyspace $ks still running after $timeout seconds"
-    echo $msg | mail -s "Keyspace repair taking too long" root
+    echo "$msg" | mail -s "Keyspace repair taking too long" root
   fi
 done
