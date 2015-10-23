@@ -4,6 +4,10 @@ set -e
 
 let timeout=7200
 
+<% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
+/usr/local/bin/cronitor_repairs run
+<% end -%>
+
 keyspaces=$(/usr/bin/cqlsh -e 'describe keyspaces;' \
   | awk 'RS="  " {print $0}' \
   | grep -v '^$' \
@@ -21,3 +25,7 @@ for ks in $keyspaces; do
     echo "$msg" | mail -s "Keyspace repair taking too long" root
   fi
 done
+
+<% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
+/usr/local/bin/cronitor_repairs complete
+<% end -%>
