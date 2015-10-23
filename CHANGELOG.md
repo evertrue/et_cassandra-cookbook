@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.7.0] (2015-10-23)
+
+### Added
+
+* Add incredibly prescriptive and hard-coded method to ping [Cronitor](https://cronitor.io) when the repair and backup scripts are run
+    - Needs _significant_ refactoring to make it friendly to anyone else doing this other than EverTrue, but it does depend on an attribut being activated to be turned on
+
 ## [v4.6.1] (2015-10-07)
 
 ### Fixes
