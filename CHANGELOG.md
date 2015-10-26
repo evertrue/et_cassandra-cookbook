@@ -1,5 +1,16 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.0] (2015-10-26)
+
+### Added
+
+* The two styles of backup can now be monitored separately, using separate scripts for Cronitor
+
+### Changed
+
+* The incremental backup now runs daily
+* The snapshot backup still runs weekly, but has been moved back 12 hours to attempt to prevent it from running at the same time as an incremental backup
+
 ## [v4.7.0] (2015-10-23)
 
 ### Added
