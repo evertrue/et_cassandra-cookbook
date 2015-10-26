@@ -2,8 +2,8 @@
 
 set -e
 
-<% if node['et_cassandra']['cronitor']['backups']['enabled'] -%>
-/usr/local/bin/cronitor_backups run
+<% if node['et_cassandra']['cronitor']['backups_incremental']['enabled'] -%>
+/usr/local/bin/cronitor_backups_incremental run
 <% end -%>
 
 source /etc/cassandra/snapshots.conf
@@ -62,6 +62,6 @@ done
 
 cd "$old_pwd"
 
-<% if node['et_cassandra']['cronitor']['backups']['enabled'] -%>
-/usr/local/bin/cronitor_backups complete
+<% if node['et_cassandra']['cronitor']['backups_incremental']['enabled'] -%>
+/usr/local/bin/cronitor_backups_incremental complete
 <% end -%>

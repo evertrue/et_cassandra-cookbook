@@ -130,5 +130,6 @@ default['java']['jdk_version'] = '7'
 default['java']['oracle']['accept_oracle_download_terms'] = true
 default['java']['oracle']['jce']['enabled'] = true
 
-default['et_cassandra']['cronitor']['backups']['enabled'] = false
+default['et_cassandra']['cronitor']['backups_snapshot']['enabled'] = false
+default['et_cassandra']['cronitor']['backups_incremental']['enabled'] = false
 default['et_cassandra']['cronitor']['repairs']['enabled'] = false
