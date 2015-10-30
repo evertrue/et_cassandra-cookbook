@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.1] (2015-10-30)
+
+### Added
+
+* Don't spit out errors during snapshots if a keyspace doesn't have a snapshots/backups directory
+
 ## [v4.8.0] (2015-10-26)
 
 ### Added
