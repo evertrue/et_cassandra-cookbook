@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.2] (2015-11-05)
+
+### Fixes
+
+* Adjust `tar` arguments so that upload-incrementals does not try to delete the `backups` directory
+
 ## [v4.8.1] (2015-10-30)
 
 ### Added
