@@ -49,6 +49,12 @@ for data_dir in $data_dirs; do
       cd "$data_dir"
 
       tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+
+      if [ -e "$tarball" ]; then
+        echo "$tarball already exists! Bailing instead of overwriting it."
+        exit 1
+      fi
+
       tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id
 
       trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
