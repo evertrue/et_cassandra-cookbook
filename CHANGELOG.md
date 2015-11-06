@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.3] (2015-11-06)
+
+### Fixes
+
+* Do not let the backup script overwrite existing archives
+* Send backup script stdout to the syslog
+
 ## [v4.8.2] (2015-11-05)
 
 ### Fixes
