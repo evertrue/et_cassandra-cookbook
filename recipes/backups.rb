@@ -56,14 +56,14 @@ template '/usr/local/sbin/upload-incrementals' do
 end
 
 cron_d 'cassandra_weekly_snapshot' do
-  command '/usr/local/sbin/snapshot-cassandra | logger -t snapshot-cassandra -p cron.info'
+  command '/usr/local/sbin/snapshot-cassandra 2>&1 | logger -t snapshot-cassandra -p cron.info -s'
   minute  0
   hour    13
   weekday 6
 end
 
 cron_d 'cassandra_daily_incremental' do
-  command '/usr/local/sbin/upload-incrementals | logger -t upload-incrementals -p cron.info'
+  command '/usr/local/sbin/upload-incrementals 2>&1 | logger -t upload-incrementals -p cron.info -s'
   minute  0
   hour    1
 end
