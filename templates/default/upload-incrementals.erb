@@ -32,7 +32,8 @@ for data_dir in $data_dirs; do
 
     tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
-    if [ -n "$(find $data_dir/$keyspace -maxdepth 2 -mindepth 2 -name backups -type d | head -n 1)" ]; then
+    if [ -n "$(find $data_dir/$keyspace -maxdepth 2 -mindepth 2 -name backups -type d | head -n 1)" ] && \
+       [ "$(ls -A $data_dir/$keyspace/*/backups/*)" ]; then
       cd "$data_dir"
 
       if [ -e "$tarball" ]; then
