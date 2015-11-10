@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.4] (2015-11-10)
+
+### Fixes
+
+* Check to make sure some backup files actually exist before running tar
+
 ## [v4.8.3] (2015-11-06)
 
 ### Fixes
