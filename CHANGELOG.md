@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.5] (2015-11-10)
+
+### Fixes
+
+* Tighten up check for existence of backup files to avoid tarring up nothing, which breaks later backups
+
 ## [v4.8.4] (2015-11-10)
 
 ### Fixes
