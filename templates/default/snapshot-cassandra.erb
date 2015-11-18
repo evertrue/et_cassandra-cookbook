@@ -24,8 +24,10 @@ function contained_by {
 
 # First delete all incremental backups
 for data_dir in $data_dirs; do
+  # The following may be over-engineering but it prevents us from accidentally
+  # deleting a future keyspace named "backups" should one ever be created.
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
-    rm -f "$data_dir"/"$keyspace"/*/backups/*
+    find "$data_dir"/"$keyspace" -mindepth 4 -type f -path '*/backups/*' -delete
   done
 done
 
