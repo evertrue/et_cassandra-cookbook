@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.6] (2015-11-18)
+
+### Fixes
+
+* Use find instead of rm to delete old incremental backups
+
 ## [v4.8.5] (2015-11-10)
 
 ### Fixes
