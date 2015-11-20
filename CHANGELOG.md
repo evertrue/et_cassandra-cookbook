@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.9] (2015-11-20)
+
+### Fixes
+
+* reset backup_holding_dir var in upload-incrementals
+
 ## [v4.8.8] (2015-11-20)
 
 ### Fixes
