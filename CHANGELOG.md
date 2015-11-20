@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.8] (2015-11-20)
+
+### Fixes
+
+* Upload and archive old incremental backups
+
 ## [v4.8.7] (2015-11-19)
 
 ### Fixes
