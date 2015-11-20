@@ -34,11 +34,60 @@ function contained_by {
   return 1
 }
 
+function archive_and_upload {
+  local keyspace="${1}"
+  local dir_index="${2}"
+  local cur_backup_date="${3}"
+
+  local backup_holding_dir="${work_dir}/${cur_backup_date}/${dir_index}"
+
+  tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+
+  cd "${backup_holding_dir}"
+
+  if [ -e "$tarball" ]; then
+    echo "$tarball already exists! Bailing instead of overwriting it."
+    exit 1
+  fi
+
+  # It's important to remove files in the backups directory as atomically
+  # as possible because this directory is going to be updated as we read it
+  tar --remove-files -czf "$tarball" "${keyspace}"
+
+  trap "cd \"$old_pwd\"; exit" INT TERM EXIT
+
+  /usr/local/bin/s3cmd put \
+    --quiet \
+    --access_key $AWS_ACCESS_KEY_ID \
+    --secret_key $AWS_SECRET_ACCESS_KEY \
+    --server-side-encryption \
+    --region $REGION \
+    "$tarball" \
+    "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$cur_backup_date/$keyspace-$dir_index.tar.gz"
+
+  rm -f "$tarball"
+  rm -rf "${backup_holding_dir}/${keyspace}"
+
+  trap - INT TERM EXIT
+}
+
+# Re-upload any existing backups
+for old_backup in `ls -A ${work_dir}`; do
+  for dir_index in `ls -A ${work_dir}/${old_backup}`; do
+    backup_holding_dir="${work_dir}/${old_backup}/${dir_index}"
+    for keyspace in `ls -A ${work_dir}/${old_backup}/${dir_index}`; do
+      echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
+      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}"
+    done
+    rmdir "${backup_holding_dir}"
+  done
+done
+
+
+# Start a new backup...
 let dir_index=1
 
 for data_dir in $data_dirs; do
-  backup_holding_dir="${work_dir}/${backup_date}/${dir_index}"
-
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
     if contained_by "${keyspace}" "${SKIP_KEYSPACES[@]}"; then continue; fi
 
@@ -49,36 +98,9 @@ for data_dir in $data_dirs; do
       fi
     done
 
-    tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
-
-    cd "${backup_holding_dir}"
-
-    if [ -e "$tarball" ]; then
-      echo "$tarball already exists! Bailing instead of overwriting it."
-      exit 1
-    fi
-
-    # It's important to remove files in the backups directory as atomically
-    # as possible because this directory is going to be updated as we read it
-    tar --remove-files -czf "$tarball" "${keyspace}"
-
-    trap "cd \"$old_pwd\"; exit" INT TERM EXIT
-
-    /usr/local/bin/s3cmd put \
-      --quiet \
-      --access_key $AWS_ACCESS_KEY_ID \
-      --secret_key $AWS_SECRET_ACCESS_KEY \
-      --server-side-encryption \
-      --region $REGION \
-      "$tarball" \
-      "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$backup_date/$keyspace-$dir_index.tar.gz"
-
-    rm -f "$tarball"
-    rm -rf "${backup_holding_dir}/${keyspace}"
-
-    trap - INT TERM EXIT
+    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}"
   done # keyspaces loop
-  rmdir "${backup_holding_dir}"
+  rmdir "${work_dir}/${backup_date}/${dir_index}"
   let dir_index++
 done
 
