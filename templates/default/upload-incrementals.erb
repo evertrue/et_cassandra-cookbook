@@ -91,6 +91,8 @@ for data_dir in $data_dirs; do
   for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
     if contained_by "${keyspace}" "${SKIP_KEYSPACES[@]}"; then continue; fi
 
+    backup_holding_dir="${work_dir}/${backup_date}/${dir_index}"
+
     for table in `find ${data_dir}/${keyspace} -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
       mkdir -p "${backup_holding_dir}/${keyspace}/${table}"
       if [ -d "${data_dir}/${keyspace}/${table}/backups" ]; then
