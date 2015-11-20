@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.7] (2015-11-19)
+
+### Fixes
+
+* Get rid of all the shell globbing in the incremental backup script
+
 ## [v4.8.6] (2015-11-18)
 
 ### Fixes

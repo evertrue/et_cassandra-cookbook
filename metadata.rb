@@ -4,7 +4,7 @@ maintainer_email 'devops@evertrue.com'
 license          'all_rights'
 description      'Installs/Configures a Cassandra ring w/ various goodies'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '4.8.6'
+version          '4.8.7'
 
 supports 'ubuntu', '= 14.04'
 
