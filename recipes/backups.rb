@@ -20,26 +20,6 @@ snapshot_conf['AWS_ACCESS_KEY_ID'] =
 snapshot_conf['AWS_SECRET_ACCESS_KEY'] =
   node['et_cassandra']['aws_secret_access_key'] || creds['secret_access_key']
 
-unless node['et_cassandra']['mocking']
-  et_cassandra_backup_lifecycle "cassandra snapshots expiration (#{node['fqdn']})" do
-    aws_access_key_id     snapshot_conf['AWS_ACCESS_KEY_ID']
-    aws_secret_access_key snapshot_conf['AWS_SECRET_ACCESS_KEY']
-    type                  'snapshots'
-    days                  node['et_cassandra']['snapshot']['snapshot_retention_days']
-    bucket                node['et_cassandra']['snapshot_conf']['BUCKET']
-    region                node['et_cassandra']['snapshot_conf']['REGION']
-  end
-
-  et_cassandra_backup_lifecycle "cassandra incrementals expiration (#{node['fqdn']})" do
-    aws_access_key_id     snapshot_conf['AWS_ACCESS_KEY_ID']
-    aws_secret_access_key snapshot_conf['AWS_SECRET_ACCESS_KEY']
-    type                  'incrementals'
-    days                  node['et_cassandra']['snapshot']['incremental_retention_days']
-    bucket                node['et_cassandra']['snapshot_conf']['BUCKET']
-    region                node['et_cassandra']['snapshot_conf']['REGION']
-  end
-end
-
 file '/etc/cassandra/snapshots.conf' do
   content snapshot_conf.map { |k, v| "#{k}=#{v}" }.join("\n") + "\n"
   mode    0600
