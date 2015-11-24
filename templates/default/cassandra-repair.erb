@@ -14,6 +14,7 @@ keyspaces=$(/usr/bin/cqlsh -e 'describe keyspaces;' \
   | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$')
 
 for ks in $keyspaces; do
+  echo "Running repair on keyspace $ks"
   /usr/bin/nodetool -h localhost repair "$ks" -pr &
   nt_pid=$!
 
