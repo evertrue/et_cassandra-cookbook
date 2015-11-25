@@ -72,10 +72,10 @@ function archive_and_upload {
 }
 
 # Re-upload any existing backups
-for old_backup in `ls -A ${work_dir}`; do
-  for dir_index in `ls -A ${work_dir}/${old_backup}`; do
+for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
+  for dir_index in `find ${work_dir}/${old_backup} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
     backup_holding_dir="${work_dir}/${old_backup}/${dir_index}"
-    for keyspace in `ls -A ${work_dir}/${old_backup}/${dir_index}`; do
+    for keyspace in `find ${work_dir}/${old_backup}/${dir_index} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
       echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
       archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}"
     done
