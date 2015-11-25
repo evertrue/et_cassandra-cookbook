@@ -38,6 +38,11 @@ suites:
       - recipe[cassandra_fake_data::default]
     attributes:
       et_cassandra:
+        snapshot_conf:
+          SKIP_KEYSPACES: (system_traces OpsCenter)
+          BUCKET: et-cassandra-backups-test
+        config:
+          memtable_heap_space_in_mb: 1
         mocking: true
         env:
           jvm_opts:
