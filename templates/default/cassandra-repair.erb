@@ -14,15 +14,13 @@ keyspaces=$(/usr/bin/cqlsh -e 'describe keyspaces;' \
   | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$')
 
 for ks in $keyspaces; do
-  /usr/bin/nodetool -h localhost repair "$ks" -pr &
-  nt_pid=$!
-
-  echo "Waiting $timeout seconds to start the next repair job"
-  sleep $timeout
-
-  if ps o cmd= $nt_pid | grep -q nodetool; then
-    msg="Repair of keyspace $ks still running after $timeout seconds"
-    echo "$msg" | mail -s "Keyspace repair taking too long" root
+  /usr/bin/nodetool -h localhost repair "$ks" -pr || retval=$?
+  if [ "$retval" ] && [[ $retval != 0 ]]; then
+    echo "Repair of keyspace ${ks} failed with code ${retval}"
+    <% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
+    /usr/local/bin/cronitor_repairs fail
+    <% end -%>
+    exit $retval
   fi
 done
 
