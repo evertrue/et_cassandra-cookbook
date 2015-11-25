@@ -56,10 +56,13 @@ function archive_and_upload {
 
   trap "cd \"$old_pwd\"; exit" INT TERM EXIT
 
+  if [ "$AWS_ACCESS_KEY_ID" ]; then
+    local access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
+  fi
+
   /usr/local/bin/s3cmd put \
     --quiet \
-    --access_key $AWS_ACCESS_KEY_ID \
-    --secret_key $AWS_SECRET_ACCESS_KEY \
+    ${access_key_flags} \
     --server-side-encryption \
     --region $REGION \
     "$tarball" \

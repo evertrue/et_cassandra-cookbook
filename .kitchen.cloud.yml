@@ -9,6 +9,7 @@ driver:
     - ci-testing
   instance_type: c3.large
   interface: public
+  iam_profile_name: test-et-cassandra
   tags:
     Env: public
     Type: test
@@ -38,6 +39,8 @@ suites:
       - recipe[cassandra_fake_data::default]
     attributes:
       et_cassandra:
+        snapshot:
+          data_bag: false
         snapshot_conf:
           SKIP_KEYSPACES: (system_traces OpsCenter)
           BUCKET: et-cassandra-backups-test
