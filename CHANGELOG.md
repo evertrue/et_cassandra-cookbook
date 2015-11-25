@@ -1,5 +1,20 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.10] (2015-11-25)
+
+### Fixes
+
+* Stop managing Cassandra backups lifecycle
+* Send test backup data to real S3
+* Use cassandra-stress to generate data for testing
+* Fail if no OpsCenter nodes found
+* Incremental Backups
+    * Use find instead of ls so as to avoid grabbing regular files
+    * test root_dir for same-fs state (work_dir does not exist yet)
+* Repairs
+    * Stop running repair in the background
+    * Add preamble
+
 ## [v4.8.9] (2015-11-20)
 
 ### Fixes
