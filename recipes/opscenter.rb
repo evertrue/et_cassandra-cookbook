@@ -107,6 +107,9 @@ else
       'ip' => %w(ipaddress)
     }
   ).first
+
+  fail 'Could not find any OpsCenter nodes' unless r
+
   stomp_interface = (
     if Chef::VersionConstraint.new('< 12.1.1').include?(Chef::VERSION)
       r['data']['ip']
