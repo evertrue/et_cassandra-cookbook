@@ -21,6 +21,10 @@ suites:
       ec2:
         placement_availability_zone: us-east-1b
       et_cassandra:
+        snapshot:
+          SKIP_KEYSPACES: (system_traces OpsCenter)
+        config:
+          memtable_heap_space_in_mb: 1
         mocking: true
         env:
           jvm_opts:
