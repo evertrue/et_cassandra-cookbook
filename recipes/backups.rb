@@ -11,14 +11,17 @@ include_recipe 'et_fog'
 
 snapshot_conf = node['et_cassandra']['snapshot_conf'].to_h
 
-creds = data_bag_item(
-  node['et_cassandra']['snapshot']['data_bag'],
-  node['et_cassandra']['snapshot']['data_bag_item']
-)['CassandraBackups']
-snapshot_conf['AWS_ACCESS_KEY_ID'] =
-  node['et_cassandra']['aws_access_key_id'] || creds['access_key_id']
-snapshot_conf['AWS_SECRET_ACCESS_KEY'] =
-  node['et_cassandra']['aws_secret_access_key'] || creds['secret_access_key']
+if node['et_cassandra']['snapshot']['data_bag']
+  creds = data_bag_item(
+    node['et_cassandra']['snapshot']['data_bag'],
+    node['et_cassandra']['snapshot']['data_bag_item']
+  )['CassandraBackups']
+  snapshot_conf['AWS_ACCESS_KEY_ID'] = creds['access_key_id']
+  snapshot_conf['AWS_SECRET_ACCESS_KEY'] = creds['secret_access_key']
+elsif node['et_cassandra']['aws_access_key_id']
+  snapshot_conf['AWS_ACCESS_KEY_ID'] = node['et_cassandra']['aws_access_key_id']
+  snapshot_conf['AWS_SECRET_ACCESS_KEY'] = node['et_cassandra']['aws_secret_access_key']
+end
 
 unless node['et_cassandra']['mocking']
   et_cassandra_backup_lifecycle "cassandra snapshots expiration (#{node['fqdn']})" do

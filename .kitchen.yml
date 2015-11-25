@@ -23,6 +23,8 @@ suites:
       et_cassandra:
         snapshot:
           SKIP_KEYSPACES: (system_traces OpsCenter)
+        snapshot_conf:
+          BUCKET: et-cassandra-backups-test
         config:
           memtable_heap_space_in_mb: 1
         mocking: true
