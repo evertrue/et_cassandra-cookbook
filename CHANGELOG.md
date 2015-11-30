@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.11] (2015-11-30)
+
+### Fixes
+
+* "local" cannot be used outside of functions
+* Exempt keyspaces from repair using a slightly different method
+
 ## [v4.8.10] (2015-11-25)
 
 ### Fixes
