@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.12] (2015-11-30)
+
+### Fixes
+
+* Repair tool: Remove goddamned carriage returns from cqlsh output
+
 ## [v4.8.11] (2015-11-30)
 
 ### Fixes
