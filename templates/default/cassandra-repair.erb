@@ -8,10 +8,9 @@ let timeout=7200
 /usr/local/bin/cronitor_repairs run
 <% end -%>
 
-keyspaces=$(/usr/bin/cqlsh -e 'describe keyspaces;' \
-  | awk 'RS="  " {print $0}' \
-  | grep -v '^$' \
-  | grep -v '^\(system\|system_traces\|\"OpsCenter\"\)$')
+keyspaces=$(/usr/bin/cqlsh -e 'copy system.schema_keyspaces (keyspace_name) to stdout;' \
+  | grep -v '^$\|rows exported' \
+  | grep -v '^\(system\|system_traces\|OpsCenter\)$')
 
 for ks in $keyspaces; do
   echo "Running repair on keyspace $ks"
