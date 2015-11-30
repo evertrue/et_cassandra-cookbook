@@ -10,6 +10,7 @@ let timeout=7200
 
 keyspaces=$(/usr/bin/cqlsh -e 'copy system.schema_keyspaces (keyspace_name) to stdout;' \
   | grep -v '^$\|rows exported' \
+  | sed 's/\r//g' \
   | grep -v '^\(system\|system_traces\|OpsCenter\)$')
 
 for ks in $keyspaces; do
