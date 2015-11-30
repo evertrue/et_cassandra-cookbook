@@ -39,6 +39,9 @@ snapshot_id=`nodetool -h localhost snapshot | \
              grep 'Snapshot directory: ' | \
              awk '{print $3}'`
 
+# Wait 30 seconds for the snapshots to complete
+sleep 30
+
 backup_date=`date +%Y-%m-%dT%H%M%S`
 
 let dir_index=1
