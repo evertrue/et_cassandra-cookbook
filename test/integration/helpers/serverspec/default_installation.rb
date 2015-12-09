@@ -216,9 +216,10 @@ eos
         it { is_expected.to be_mode(600) }
         describe '#content' do
           subject { super().content }
-          it { is_expected.to include 'BUCKET=cassandra_bucket' }
-          it { is_expected.to include 'AWS_ACCESS_KEY_ID' }
-          it { is_expected.to include 'AWS_SECRET_ACCESS_KEY' }
+          it { is_expected.to include 'BUCKET=et-cassandra-backups-test' }
+          it { is_expected.to include 'CHEF_ENVIRONMENT' }
+          it { is_expected.to include 'REGION' }
+          it { is_expected.to include 'SKIP_KEYSPACES' }
         end
       end
     end
