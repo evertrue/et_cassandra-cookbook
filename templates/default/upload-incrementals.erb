@@ -38,10 +38,9 @@ function archive_and_upload {
   local keyspace="${1}"
   local dir_index="${2}"
   local cur_backup_date="${3}"
+  local tarball="${4}"
 
   local backup_holding_dir="${work_dir}/${cur_backup_date}/${dir_index}"
-
-  tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
 
   cd "${backup_holding_dir}"
 
@@ -80,7 +79,15 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
     backup_holding_dir="${work_dir}/${old_backup}/${dir_index}"
     for keyspace in `find ${work_dir}/${old_backup}/${dir_index} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
       echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
-      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}"
+
+      tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+
+      if [ -e "$tarball" ]; then
+        echo "$tarball already exists! Bailing instead of overwriting it."
+        exit 1
+      fi
+
+      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}" "${tarball}"
     done
     rmdir "${backup_holding_dir}"
   done
@@ -95,6 +102,12 @@ for data_dir in $data_dirs; do
     if contained_by "${keyspace}" "${SKIP_KEYSPACES[@]}"; then continue; fi
 
     backup_holding_dir="${work_dir}/${backup_date}/${dir_index}"
+    tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+
+    if [ -e "$tarball" ]; then
+      echo "$tarball already exists! Bailing instead of overwriting it."
+      exit 1
+    fi
 
     for table in `find ${data_dir}/${keyspace} -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
       mkdir -p "${backup_holding_dir}/${keyspace}/${table}"
@@ -103,7 +116,7 @@ for data_dir in $data_dirs; do
       fi
     done
 
-    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}"
+    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}" "${tarball}"
   done # keyspaces loop
   rmdir "${work_dir}/${backup_date}/${dir_index}"
   let dir_index++
