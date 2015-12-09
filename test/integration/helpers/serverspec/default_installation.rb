@@ -132,7 +132,7 @@ eos
     end
 
     context 'has content in the correct log files' do
-      describe file("/#{log_dir}/cassandra/system.log") do
+      describe file("#{log_dir}/cassandra/system.log") do
         it { is_expected.to be_file }
         describe '#content' do
           subject { super().content }
