@@ -88,6 +88,9 @@ done
 
 cd "$old_pwd"
 
+# Clear out newly created snapshots
+nodetool -h localhost clearsnapshot
+
 <% if node['et_cassandra']['cronitor']['backups_snapshot']['enabled'] -%>
 /usr/local/bin/cronitor_backups_snapshot complete
 <% end -%>
