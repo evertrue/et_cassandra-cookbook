@@ -1,0 +1,43 @@
+{
+  "id": "cloud-opscenter-ubuntu-1404",
+  "chef_environment": "_default",
+  "automatic": {
+    "ipaddress": "54.157.36.186",
+    "platform": "ubuntu",
+    "fqdn": "ip-10-145-39-244.ec2.internal",
+    "recipes": [
+      "ec2test::default",
+      "et_cassandra::default",
+      "et_cassandra::opscenter"
+    ]
+  },
+  "normal": {
+    "et_cassandra": {
+      "mocking": true,
+      "opscenter": {
+        "cluster": {
+          "managed": true,
+          "config": {
+            "jmx": {
+              "username": "",
+              "password": "",
+              "port": 7199
+            },
+            "cassandra": {
+              "username": "",
+              "seed_hosts": "0.0.0.0",
+              "api_port": 9160,
+              "password": ""
+            }
+          }
+        }
+      }
+    }
+  },
+  "run_list": [
+    "recipe[ec2test::default]",
+    "recipe[et_cassandra::default]",
+    "recipe[et_cassandra::opscenter]",
+    "role[cassandra_opscenter]"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "cloud-default-2-ubuntu-1404",
+  "chef_environment": "_default",
+  "automatic": {
+    "ipaddress": "54.211.148.179",
+    "platform": "ubuntu",
+    "fqdn": "ip-10-167-196-154.ec2.internal",
+    "recipes": [
+      "ec2test::default",
+      "et_cassandra::default",
+      "et_cassandra::opscenter",
+      "et_cassandra::backups"
+    ]
+  },
+  "normal": {
+    "et_cassandra": {
+      "snapshot": {
+        "data_bag": false
+      },
+      "snapshot_conf": {
+        "SKIP_KEYSPACES": "(system_traces OpsCenter)",
+        "BUCKET": "et-cassandra-backups-test"
+      },
+      "config": {
+        "memtable_heap_space_in_mb": 1
+      },
+      "mocking": true,
+      "env": {
+        "jvm_opts": [
+          "-XX:+CMSConcurrentMTEnabled",
+          "-XX:ConcGCThreads=6"
+        ]
+      }
+    }
+  },
+  "run_list": [
+    "recipe[ec2test::default]",
+    "recipe[et_cassandra::default]",
+    "recipe[et_cassandra::opscenter]",
+    "recipe[et_cassandra::backups]"
+  ]
+}
