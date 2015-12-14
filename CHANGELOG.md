@@ -1,5 +1,13 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.13] (2015-12-14)
+
+### Fixes
+
+* Update serverspec test to reflect change real S3 test
+* Clear out snapshots after uploading
+* Check for an existing tarball before moving incremental backup files
+
 ## [v4.8.12] (2015-11-30)
 
 ### Fixes
