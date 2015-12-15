@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v4.8.14] (2015-12-14)
+
+### Fixes
+
+* Provide a script for uploading old snapshots
+
 ## [v4.8.13] (2015-12-14)
 
 ### Fixes
