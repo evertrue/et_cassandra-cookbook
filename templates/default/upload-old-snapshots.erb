@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -z "${2}" ]; then
+  echo "Please specify a snapshot ID and backup_date"
+  exit 1
+fi
+
+snapshot_id="${1}"
+backup_date="${2}"
+
+<% if node['et_cassandra']['cronitor']['backups_snapshot']['enabled'] -%>
+/usr/local/bin/cronitor_backups_snapshot run
+<% end -%>
+
+source /etc/cassandra/snapshots.conf
+
+root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
+data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
+work_dir="${root_dir}/backup_work_dir"
+old_pwd="$PWD"
+
+mkdir -p "${work_dir}"
+
+function contained_by {
+  local i
+
+  for i in "${@:2}"; do [[ "${i}" == "${1}" ]] && return 0; done
+  return 1
+}
+
+
+let dir_index=1
+
+for data_dir in $data_dirs; do
+  for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+    if contained_by "${keyspace}" "${SKIP_KEYSPACES[@]}"; then continue; fi
+
+    if [ -n "$(find $data_dir/$keyspace -maxdepth 3 -mindepth 3 -path \*/snapshots/$snapshot_id -type d | head -n 1)" ]; then
+      cd "$data_dir"
+
+      tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+
+      if [ -e "$tarball" ]; then
+        echo "$tarball already exists! Bailing instead of overwriting it."
+        exit 1
+      fi
+
+      tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id
+
+      trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
+
+      if [ "$AWS_ACCESS_KEY_ID" ]; then
+        access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
+      fi
+
+      /usr/local/bin/s3cmd put \
+        --quiet \
+        ${access_key_flags} \
+        --server-side-encryption \
+        --region $REGION \
+        "$tarball" \
+        "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/snapshots/$backup_date/$keyspace-$dir_index.tar.gz"
+
+      rm -f "$tarball"
+
+      trap - INT TERM EXIT
+    else
+      echo "Nothing to back up in "$data_dir"/"$keyspace"/*/snapshots/$snapshot_id"
+    fi
+  done
+  let dir_index++
+done
+
+cd "$old_pwd"
+
+# Clear out newly uploaded snapshots
+nodetool -h localhost clearsnapshot
+
+<% if node['et_cassandra']['cronitor']['backups_snapshot']['enabled'] -%>
+/usr/local/bin/cronitor_backups_snapshot complete
+<% end -%>

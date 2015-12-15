@@ -38,6 +38,10 @@ template '/usr/local/sbin/upload-incrementals' do
   mode   0755
 end
 
+template '/usr/local/sbin/upload-old-snapshots' do
+  mode   0755
+end
+
 cron_d 'cassandra_weekly_snapshot' do
   command '/usr/local/sbin/snapshot-cassandra 2>&1 | logger -t snapshot-cassandra -p cron.info -s'
   minute  0
