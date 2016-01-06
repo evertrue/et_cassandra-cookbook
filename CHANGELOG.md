@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.1] (2016-01-06)
+
+### Fixes
+
+* cassandra-repair: Parse out additional stupid text from nodetool cqlsh output
+
 ## [v5.0.0] (2015-12-07)
 
 ### Changes
