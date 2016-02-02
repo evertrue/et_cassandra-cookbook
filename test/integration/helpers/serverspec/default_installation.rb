@@ -11,11 +11,11 @@ shared_examples_for 'a default installation' do |log_root, log_dir|
       end
 
       describe package('cassandra') do
-        it { is_expected.to be_installed.with_version('2.1.8') }
+        it { is_expected.to be_installed.with_version('2.1.12') }
       end
 
       describe package('dsc21') do
-        it { is_expected.to be_installed.with_version('2.1.8-1') }
+        it { is_expected.to be_installed.with_version('2.1.12-1') }
       end
     end
 
