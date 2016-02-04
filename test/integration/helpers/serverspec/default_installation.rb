@@ -202,24 +202,147 @@ eos
     end
   end
 
-  describe 'Snapshot Tool' do
-    context 'is installed' do
-      describe file '/usr/local/sbin/snapshot-cassandra' do
-        it { is_expected.to be_file }
-        it { is_expected.to be_mode(755) }
-      end
-    end
+  describe 'Backups' do
+    let(:backup_root_dir) { '/var/lib/cassandra' }
+    describe 'Snapshot Tool' do
+      include Rspec::Shell::Expectations
 
-    context 'has correct configuration' do
-      describe file '/etc/cassandra/snapshots.conf' do
-        it { is_expected.to be_file }
-        it { is_expected.to be_mode(600) }
-        describe '#content' do
-          subject { super().content }
-          it { is_expected.to include 'BUCKET=et-cassandra-backups-test' }
-          it { is_expected.to include 'CHEF_ENVIRONMENT' }
-          it { is_expected.to include 'REGION' }
-          it { is_expected.to include 'SKIP_KEYSPACES' }
+      context 'is installed' do
+        describe file '/usr/local/sbin/snapshot-cassandra' do
+          it { is_expected.to be_file }
+          it { is_expected.to be_mode(755) }
+        end
+      end
+
+      context 'has correct configuration' do
+        describe file '/etc/cassandra/snapshots.conf' do
+          it { is_expected.to be_file }
+          it { is_expected.to be_mode(600) }
+          describe '#content' do
+            subject { super().content }
+            it { is_expected.to include 'BUCKET=et-cassandra-backups-test' }
+            it { is_expected.to include 'CHEF_ENVIRONMENT' }
+            it { is_expected.to include 'REGION' }
+            it { is_expected.to include 'SKIP_KEYSPACES' }
+          end
+        end
+      end
+
+      context 's3 upload fails' do
+        let(:stubbed_env) { create_stubbed_env }
+
+        before do
+          stubbed_env.stub_command('s3cmd').returns_exitstatus 1
+        end
+
+        it 'indicates tarball could not be uploaded' do
+          stdout, _stderr, status = stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
+          expect(stdout).to contain 'S3 Upload failed. Retrying \('
+          expect(stdout).to contain(
+            'Could not upload /var/lib/cassandra/backup_work_dir/keyspace1-1.tar.gz' \
+            ' in 5 tries. Skipping keyspace keyspace1 in data_dir /var/lib/cassandra/data.'
+          )
+          expect(status.exitstatus).to eq 0
+          File.delete('/var/lib/cassandra/backup_work_dir/keyspace1-1.tar.gz')
+        end
+      end
+
+      context 'clean backup environment' do
+        let(:stubbed_env) { create_stubbed_env }
+        let(:s3cmd_stub) { stubbed_env.stub_command('s3cmd') }
+
+        before do
+          s3cmd_stub.returns_exitstatus 0
+        end
+
+        it 'indicates snapshots cleared' do
+          stdout, _stderr, _status = stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
+          expect(stdout).to contain(
+            'Requested clearing snapshot\(s\) for \[all keyspaces\]\n' \
+            'Requested clearing snapshot\(s\) for \[all keyspaces\]\n'
+          )
+        end
+
+        it 'runs without errors' do
+          _stdout, _stderr, status = stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
+          expect(status.exitstatus).to eq 0
+        end
+      end
+
+      context 'tarball exists' do
+        let(:tarball) { "#{backup_root_dir}/backup_work_dir/keyspace1-1.tar.gz" }
+        before(:each) do
+          File.open(tarball, 'w') { |f| f.write('temp data') }
+        end
+
+        describe command('/usr/local/sbin/snapshot-cassandra') do
+          its(:exit_status) { should eq 1 }
+          its(:stdout) do
+            should contain("#{tarball} already exists! Bailing instead of overwriting it.")
+          end
+        end
+
+        after(:each) do
+          File.delete tarball
+        end
+      end
+
+      context 'tar files changed as we read them' do
+        let(:stubbed_env) { create_stubbed_env }
+        let(:tar_stub) { stubbed_env.stub_command('tar') }
+
+        before do
+          tar_stub
+            .outputs(
+              'tar: keyspace1/FAKE_TABLE_ID/snapshots/FAKE_SNAPSHOT_ID/FAKE_TABLE-Data.db: file changed as we read it',
+              to: :stderr
+            )
+            .returns_exitstatus 1
+        end
+
+        it 'indicates that it cannot make the tarball but finishes anyway' do
+          stdout, _stderr, status = stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
+          expect(stdout).to contain('tar failed. Retrying...')
+          expect(stdout).to contain(
+            "Could not create #{backup_root_dir}/backup_work_dir/keyspace1-1.tar.gz " \
+            "in 5 tries. Skipping keyspace keyspace1 in data_dir #{backup_root_dir}/data."
+          )
+          expect(status.exitstatus).to eq 0
+        end
+
+        describe command('ls /var/lib/cassandra/backup_work_dir/*') do
+          its(:stderr) { should contain 'ls: cannot access /var/lib/cassandra/backup_work_dir/\*: No such file or directory' }
+        end
+      end
+
+      context 'no snapshots to back up' do
+        let(:stubbed_env) { create_stubbed_env }
+        let(:nodetool_stub) do
+          stubbed_env
+            .stub_command('nodetool')
+            .with_args('-h', 'localhost', 'snapshot')
+        end
+
+        before do
+          nodetool_stub.outputs(
+            "Requested creating snapshot(s) for [all keyspaces] with snapshot name [FAKE_SNAPSHOT_ID]\n" \
+            'Snapshot directory: FAKE_SNAPSHOT_ID'
+          )
+        end
+
+        it 'indicates there is nothing to back up' do
+          stdout, _stderr, _status =
+            stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
+          expect(stdout).to contain(
+            'Nothing to back up in /var/lib/cassandra/data/keyspace1/\\*/' \
+            'snapshots/FAKE_SNAPSHOT_ID\n'
+          )
+        end
+
+        it 'exits with status 0' do
+          _stdout, _stderr, status =
+            stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
+          expect(status.exitstatus).to eq 0
         end
       end
     end
