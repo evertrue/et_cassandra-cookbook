@@ -2,8 +2,8 @@
 
 set -e
 
-let timeout=7200
-let retries=3
+let timeout=<%= node['et_cassandra']['repairs']['timeout'] %>
+let retries=<%= node['et_cassandra']['repairs']['retries'] %>
 
 <% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
 /usr/local/bin/cronitor_repairs run
