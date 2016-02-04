@@ -5,3 +5,4 @@ default['et_cassandra']['snapshot_conf']['SKIP_KEYSPACES'] =
   '(keyspace1 system_traces OpsCenter)'
 default['et_cassandra']['snapshot']['data_bag'] = 'secrets'
 default['et_cassandra']['snapshot']['data_bag_item'] = 'aws_credentials'
+default['et_cassandra']['snapshot']['tar_retry_secs'] = 30

@@ -3,6 +3,7 @@
 set -e
 
 let timeout=7200
+let retries=3
 
 <% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
 /usr/local/bin/cronitor_repairs run
@@ -15,9 +16,20 @@ keyspaces=$(/usr/bin/cqlsh -e 'copy system.schema_keyspaces (keyspace_name) to s
 
 for ks in $keyspaces; do
   echo "Running repair on keyspace $ks"
-  /usr/bin/nodetool -h localhost repair "$ks" -pr || retval=$?
-  if [ "$retval" ] && [[ $retval != 0 ]]; then
-    echo "Repair of keyspace ${ks} failed with code ${retval}"
+
+  set +e
+  let try=0
+  until [ $try -ge $retries ]; do
+    /usr/bin/nodetool -h localhost repair "$ks" -pr && break
+    retval=$?
+    echo "Repair of keyspace ${ks} failed with status ${retval}. Retrying..."
+    let try=$[$try+1]
+    sleep 5
+  done
+  set -e
+
+  if [ "$retval" ]; then
+    echo "Repair of keyspace ${ks} failed with code ${retval} after ${tries} tries"
     <% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
     /usr/local/bin/cronitor_repairs fail
     <% end -%>

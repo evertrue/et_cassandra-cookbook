@@ -8,6 +8,8 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
+let upload_retries=5
+
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
 work_dir="${root_dir}/backup_work_dir"
@@ -59,13 +61,26 @@ function archive_and_upload {
     local access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
   fi
 
-  /usr/local/bin/s3cmd put \
-    --quiet \
-    ${access_key_flags} \
-    --server-side-encryption \
-    --region $REGION \
-    "$tarball" \
-    "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$cur_backup_date/$keyspace-$dir_index.tar.gz"
+  set +e
+  let try=0
+  until [ $try -ge $upload_retries ]; do
+    /usr/local/bin/s3cmd put \
+      --quiet \
+      ${access_key_flags} \
+      --server-side-encryption \
+      --region $REGION \
+      "$tarball" \
+      "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$cur_backup_date/$keyspace-$dir_index.tar.gz" \
+      && break
+    sleep 5
+    let try=$[$try+1]
+  done
+  set -e
+
+  if [ $try -ge $upload_retries ]; then
+    echo "Could not upload ${tarball} in ${upload_retries} tries."
+    return 1
+  fi
 
   rm -f "$tarball"
   rm -rf "${backup_holding_dir}/${keyspace}"
