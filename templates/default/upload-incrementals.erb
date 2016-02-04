@@ -57,7 +57,7 @@ function archive_and_upload {
 
   trap "cd \"$old_pwd\"; exit" INT TERM EXIT
 
-  if [ "$AWS_ACCESS_KEY_ID" ]; then
+  if [ -n "$AWS_ACCESS_KEY_ID" ]; then
     local access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
   fi
 
@@ -102,7 +102,14 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
         exit 1
       fi
 
-      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}" "${tarball}"
+      retval=0
+
+      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}" "${tarball}" || retval=$?
+
+      if [ $retval -gt 0 ]; then
+        echo "archive_and_upload failed with code ${retval}. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
+        continue
+      fi
     done
     rmdir "${backup_holding_dir}"
   done
