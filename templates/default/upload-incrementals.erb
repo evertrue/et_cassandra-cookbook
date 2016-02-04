@@ -93,6 +93,7 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
   done
 done
 
+nodetool -h localhost flush
 
 # Start a new backup...
 let dir_index=1
