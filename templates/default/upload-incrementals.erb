@@ -72,8 +72,8 @@ function archive_and_upload {
       "$tarball" \
       "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$cur_backup_date/$keyspace-$dir_index.tar.gz" \
       && break
-    sleep 5
     let try=$[$try+1]
+    sleep <%= node['et_cassandra']['incrementals']['upload_retry_delay'] %>
   done
   set -e
 
