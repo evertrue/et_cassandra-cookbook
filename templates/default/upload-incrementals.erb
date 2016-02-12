@@ -140,7 +140,16 @@ for data_dir in $data_dirs; do
       fi
     done
 
-    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}" "${tarball}"
+    set +e
+    retval=0
+
+    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}" "${tarball}" || retval=$?
+
+    if [ $retval -gt 0 ]; then
+      echo "archive_and_upload failed with code ${retval}. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
+      continue
+    fi
+    set -e
   done # keyspaces loop
   rmdir "${work_dir}/${backup_date}/${dir_index}"
   let dir_index++
