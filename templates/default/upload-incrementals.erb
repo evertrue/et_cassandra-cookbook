@@ -61,7 +61,6 @@ function archive_and_upload {
     local access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
   fi
 
-  set +e
   let try=0
   until [ $try -ge $upload_retries ]; do
     s3cmd put \
@@ -75,7 +74,6 @@ function archive_and_upload {
     let try=$[$try+1]
     sleep <%= node['et_cassandra']['incrementals']['upload_retry_delay'] %>
   done
-  set -e
 
   if [ $try -ge $upload_retries ]; then
     echo "Could not upload ${tarball} in ${upload_retries} tries."
@@ -104,7 +102,9 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
 
       retval=0
 
+      set +e
       archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}" "${tarball}" || retval=$?
+      set -e
 
       if [ $retval -gt 0 ]; then
         echo "archive_and_upload failed with code ${retval}. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
