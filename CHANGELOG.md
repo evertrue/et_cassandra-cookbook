@@ -1,5 +1,12 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.2] (2016-02-12)
+
+### Fixes
+
+* Add retries to the backup and repair scripts
+* Add ServerSpec tests for upload-incrementals and snapshot-cassandra 
+
 ## [v5.0.1] (2016-01-06)
 
 ### Fixes
