@@ -250,7 +250,7 @@ eos
             ' in 5 tries. Skipping keyspace keyspace1 in data_dir /var/lib/cassandra/data.'
           )
           expect(status.exitstatus).to eq 0
-          File.delete('/var/lib/cassandra/backup_work_dir/keyspace1-1.tar.gz')
+          FileUtils.rm_rf(Dir.glob('/var/lib/cassandra/backup_work_dir/*'))
         end
 
         after do
