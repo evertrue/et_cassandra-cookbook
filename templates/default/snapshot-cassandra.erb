@@ -8,6 +8,9 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
+let tar_retries=5
+let upload_retries=5
+
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
 work_dir="${root_dir}/backup_work_dir"
@@ -39,8 +42,8 @@ snapshot_id=`nodetool -h localhost snapshot | \
              grep 'Snapshot directory: ' | \
              awk '{print $3}'`
 
-# Wait 30 seconds for the snapshots to complete
-sleep 30
+# Wait <%= node['et_cassandra']['snapshot']['wait_secs'] %> seconds for the snapshots to complete
+sleep <%= node['et_cassandra']['snapshot']['wait_secs'] %>
 
 backup_date=`date +%Y-%m-%dT%H%M%S`
 
@@ -60,7 +63,23 @@ for data_dir in $data_dirs; do
         exit 1
       fi
 
-      tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id
+      set +e
+      let try=0
+      until [ $try -ge $tar_retries ]; do
+        tar -czf "$tarball" "$keyspace"/*/snapshots/$snapshot_id && break
+        if [ -f "${tarball}" ]; then
+          rm -f "${tarball}"
+        fi
+        echo "tar failed. Retrying... ($try/$tar_retries)"
+        let try=$[$try+1]
+        sleep <%= node['et_cassandra']['snapshot']['tar_retry_secs'] %>
+      done
+      set -e
+
+      if [ $try -ge $tar_retries ]; then
+        echo "Could not create ${tarball} in ${tar_retries} tries. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
+        continue
+      fi
 
       trap "rm -f $tarball; cd \"$old_pwd\"; exit" INT TERM EXIT
 
@@ -68,13 +87,26 @@ for data_dir in $data_dirs; do
         access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
       fi
 
-      /usr/local/bin/s3cmd put \
-        --quiet \
-        ${access_key_flags} \
-        --server-side-encryption \
-        --region $REGION \
-        "$tarball" \
-        "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/snapshots/$backup_date/$keyspace-$dir_index.tar.gz"
+      set +e
+      let try=0
+      until [ $try -ge $upload_retries ]; do
+        s3cmd put \
+          --quiet \
+          ${access_key_flags} \
+          --server-side-encryption \
+          --region $REGION \
+          "$tarball" \
+          "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/snapshots/$backup_date/$keyspace-$dir_index.tar.gz" && break
+        echo "S3 Upload failed. Retrying ($try/$upload_retries)"
+        let try=$[$try+1]
+        sleep 5
+      done
+      set -e
+
+      if [ $try -ge $upload_retries ]; then
+        echo "Could not upload ${tarball} in ${upload_retries} tries. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
+        continue
+      fi
 
       rm -f "$tarball"
 

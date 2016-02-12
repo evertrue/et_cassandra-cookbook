@@ -133,3 +133,6 @@ default['java']['oracle']['jce']['enabled'] = true
 default['et_cassandra']['cronitor']['backups_snapshot']['enabled'] = false
 default['et_cassandra']['cronitor']['backups_incremental']['enabled'] = false
 default['et_cassandra']['cronitor']['repairs']['enabled'] = false
+
+default['et_cassandra']['repairs']['timeout'] = 7200
+default['et_cassandra']['repairs']['retries'] = 5

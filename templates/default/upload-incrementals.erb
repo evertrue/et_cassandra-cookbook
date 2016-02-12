@@ -8,16 +8,18 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
+let upload_retries=5
+
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
 work_dir="${root_dir}/backup_work_dir"
 old_pwd="$PWD"
 
-root_dir_fs_id=`/usr/bin/stat -f -c %i ${root_dir}`
+work_dir_fs_id=`stat -f -c %i ${work_dir}`
 
 # Ensure that $work_dir and $data_dirs are on the same filesystem
 for data_dir in $data_dirs; do
-  if [[ $(stat -f -c %i ${data_dir}) != ${root_dir_fs_id} ]]; then
+  if [[ $(stat -f -c %i ${data_dir}) != ${work_dir_fs_id} ]]; then
     echo "ERROR: Backup work_dir ${work_dir} is not on the same filesystem with data_dir (${data_dir})"
     exit 99
   fi
@@ -51,21 +53,33 @@ function archive_and_upload {
 
   # It's important to remove files in the backups directory as atomically
   # as possible because this directory is going to be updated as we read it
-  tar --remove-files -czf "$tarball" "${keyspace}"
+  tar -czf "$tarball" "${keyspace}"
 
   trap "cd \"$old_pwd\"; exit" INT TERM EXIT
 
-  if [ "$AWS_ACCESS_KEY_ID" ]; then
+  if [ -n "$AWS_ACCESS_KEY_ID" ]; then
     local access_key_flags="--access_key $AWS_ACCESS_KEY_ID --secret_key $AWS_SECRET_ACCESS_KEY"
   fi
 
-  /usr/local/bin/s3cmd put \
-    --quiet \
-    ${access_key_flags} \
-    --server-side-encryption \
-    --region $REGION \
-    "$tarball" \
-    "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$cur_backup_date/$keyspace-$dir_index.tar.gz"
+  let try=0
+  until [ $try -ge $upload_retries ]; do
+    s3cmd put \
+      --quiet \
+      ${access_key_flags} \
+      --server-side-encryption \
+      --region $REGION \
+      "$tarball" \
+      "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/incrementals/$cur_backup_date/$keyspace-$dir_index.tar.gz" \
+      && break
+    echo "S3 Upload failed. Retrying ($try/$upload_retries)"
+    let try=$[$try+1]
+    sleep <%= node['et_cassandra']['incrementals']['upload_retry_delay'] %>
+  done
+
+  if [ $try -ge $upload_retries ]; then
+    echo "Could not upload ${tarball} in ${upload_retries} tries."
+    return 1
+  fi
 
   rm -f "$tarball"
   rm -rf "${backup_holding_dir}/${keyspace}"
@@ -76,7 +90,6 @@ function archive_and_upload {
 # Re-upload any existing backups
 for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
   for dir_index in `find ${work_dir}/${old_backup} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
-    backup_holding_dir="${work_dir}/${old_backup}/${dir_index}"
     for keyspace in `find ${work_dir}/${old_backup}/${dir_index} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
       echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
 
@@ -87,10 +100,20 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
         exit 1
       fi
 
-      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}" "${tarball}"
+      retval=0
+
+      set +e
+      archive_and_upload "${keyspace}" "${dir_index}" "${old_backup}" "${tarball}" || retval=$?
+      set -e
+
+      if [ $retval -gt 0 ]; then
+        echo "archive_and_upload failed with code ${retval}. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
+        continue
+      fi
     done
-    rmdir "${backup_holding_dir}"
+    rmdir "${work_dir}/${old_backup}/${dir_index}" || true
   done
+  rmdir "${work_dir}/${old_backup}" || true
 done
 
 nodetool -h localhost flush
@@ -117,7 +140,16 @@ for data_dir in $data_dirs; do
       fi
     done
 
-    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}" "${tarball}"
+    set +e
+    retval=0
+
+    archive_and_upload "${keyspace}" "${dir_index}" "${backup_date}" "${tarball}" || retval=$?
+
+    if [ $retval -gt 0 ]; then
+      echo "archive_and_upload failed with code ${retval}. Skipping keyspace ${keyspace} in data_dir ${data_dir}."
+      continue
+    fi
+    set -e
   done # keyspaces loop
   rmdir "${work_dir}/${backup_date}/${dir_index}"
   let dir_index++
