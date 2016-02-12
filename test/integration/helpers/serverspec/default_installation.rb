@@ -245,6 +245,10 @@ eos
           expect(status.exitstatus).to eq 0
           File.delete('/var/lib/cassandra/backup_work_dir/keyspace1-1.tar.gz')
         end
+
+        after do
+          stubbed_env.cleanup
+        end
       end
 
       context 'clean backup environment' do
@@ -266,6 +270,10 @@ eos
         it 'runs without errors' do
           _stdout, _stderr, status = stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
           expect(status.exitstatus).to eq 0
+        end
+
+        after do
+          stubbed_env.cleanup
         end
       end
 
@@ -313,6 +321,10 @@ eos
         describe command('ls /var/lib/cassandra/backup_work_dir/*') do
           its(:stderr) { should contain 'ls: cannot access /var/lib/cassandra/backup_work_dir/\*: No such file or directory' }
         end
+
+        after do
+          stubbed_env.cleanup
+        end
       end
 
       context 'no snapshots to back up' do
@@ -343,6 +355,10 @@ eos
           _stdout, _stderr, status =
             stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
           expect(status.exitstatus).to eq 0
+        end
+
+        after do
+          stubbed_env.cleanup
         end
       end
     end
