@@ -212,6 +212,14 @@ eos
         it { is_expected.to be_mode(755) }
       end
 
+      describe file('/etc/cron.d/cassandra_weekly_snapshot') do
+        it do
+          is_expected.to contain(
+            '0 13 * * 6 root /usr/local/sbin/snapshot-cassandra 2>&1 | ' \
+            'logger -t snapshot-cassandra -p cron.info -s'
+          )
+        end
+      end
 
       context 'has correct configuration' do
         describe file '/etc/cassandra/snapshots.conf' do
