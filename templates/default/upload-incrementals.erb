@@ -15,7 +15,7 @@ data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ')
 work_dir="${root_dir}/backup_work_dir"
 old_pwd="$PWD"
 
-root_dir_fs_id=`/usr/bin/stat -f -c %i ${root_dir}`
+root_dir_fs_id=`stat -f -c %i ${root_dir}`
 
 # Ensure that $work_dir and $data_dirs are on the same filesystem
 for data_dir in $data_dirs; do
@@ -64,7 +64,7 @@ function archive_and_upload {
   set +e
   let try=0
   until [ $try -ge $upload_retries ]; do
-    /usr/local/bin/s3cmd put \
+    s3cmd put \
       --quiet \
       ${access_key_flags} \
       --server-side-encryption \
