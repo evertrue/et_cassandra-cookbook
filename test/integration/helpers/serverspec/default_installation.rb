@@ -205,6 +205,7 @@ eos
   describe 'Backups' do
     include Rspec::Shell::Expectations
     let(:backup_root_dir) { '/var/lib/cassandra' }
+
     describe 'Snapshot Tool' do
 
       context 'is installed' do
