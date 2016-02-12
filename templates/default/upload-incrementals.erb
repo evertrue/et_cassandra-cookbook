@@ -90,7 +90,6 @@ function archive_and_upload {
 # Re-upload any existing backups
 for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
   for dir_index in `find ${work_dir}/${old_backup} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
-    backup_holding_dir="${work_dir}/${old_backup}/${dir_index}"
     for keyspace in `find ${work_dir}/${old_backup}/${dir_index} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
       echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
 
@@ -112,8 +111,9 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
         continue
       fi
     done
-    rmdir "${backup_holding_dir}"
+    rmdir "${work_dir}/${old_backup}/${dir_index}" || true
   done
+  rmdir "${work_dir}/${old_backup}" || true
 done
 
 nodetool -h localhost flush
