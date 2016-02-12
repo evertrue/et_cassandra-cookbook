@@ -260,10 +260,9 @@ eos
 
       context 'clean backup environment' do
         let(:stubbed_env) { create_stubbed_env }
-        let(:s3cmd_stub) { stubbed_env.stub_command('s3cmd') }
 
         before do
-          s3cmd_stub.returns_exitstatus 0
+          stubbed_env.stub_command('s3cmd').returns_exitstatus 0
         end
 
         it 'indicates snapshots cleared' do
