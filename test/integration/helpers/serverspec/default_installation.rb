@@ -207,13 +207,11 @@ eos
     let(:backup_root_dir) { '/var/lib/cassandra' }
 
     describe 'Snapshot Tool' do
-
-      context 'is installed' do
-        describe file '/usr/local/sbin/snapshot-cassandra' do
-          it { is_expected.to be_file }
-          it { is_expected.to be_mode(755) }
-        end
+      describe file '/usr/local/sbin/snapshot-cassandra' do
+        it { is_expected.to be_file }
+        it { is_expected.to be_mode(755) }
       end
+
 
       context 'has correct configuration' do
         describe file '/etc/cassandra/snapshots.conf' do
