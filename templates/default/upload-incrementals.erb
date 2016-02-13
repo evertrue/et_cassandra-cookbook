@@ -12,19 +12,19 @@ let upload_retries=5
 
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
-work_dir="${root_dir}/backup_work_dir/incrementals"
 old_pwd="$PWD"
 
-work_dir_fs_id=`stat -f -c %i ${work_dir}`
+root_dir_fs_id=`stat -f -c %i ${root_dir}`
 
-# Ensure that $work_dir and $data_dirs are on the same filesystem
+# Ensure that $root_dir and $data_dirs are on the same filesystem
 for data_dir in $data_dirs; do
-  if [[ $(stat -f -c %i ${data_dir}) != ${work_dir_fs_id} ]]; then
-    echo "ERROR: Backup work_dir ${work_dir} is not on the same filesystem with data_dir (${data_dir})"
+  if [[ $(stat -f -c %i ${data_dir}) != ${root_dir_fs_id} ]]; then
+    echo "ERROR: Backup root_dir ${root_dir} is not on the same filesystem with data_dir (${data_dir})"
     exit 99
   fi
 done
 
+work_dir="${root_dir}/backup_work_dir/incrementals"
 mkdir -p "${work_dir}"
 
 backup_date=`date +%Y-%m-%dT%H%M%S`
