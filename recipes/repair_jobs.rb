@@ -9,6 +9,7 @@ template '/usr/local/bin/cassandra-repair' do
 end
 
 cron_d 'cassandra_repair' do
+  path '/usr/local/bin:/usr/bin:/bin'
   command '/usr/local/bin/cassandra-repair | logger -t cassandra-repair -p cron.info'
   minute  20
   hour    4

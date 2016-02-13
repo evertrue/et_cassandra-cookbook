@@ -43,6 +43,7 @@ template '/usr/local/sbin/upload-old-snapshots' do
 end
 
 cron_d 'cassandra_weekly_snapshot' do
+  path '/usr/local/bin:/usr/bin:/bin'
   command '/usr/local/sbin/snapshot-cassandra 2>&1 | logger -t snapshot-cassandra -p cron.info -s'
   minute  0
   hour    13
@@ -50,6 +51,7 @@ cron_d 'cassandra_weekly_snapshot' do
 end
 
 cron_d 'cassandra_daily_incremental' do
+  path '/usr/local/bin:/usr/bin:/bin'
   command '/usr/local/sbin/upload-incrementals 2>&1 | logger -t upload-incrementals -p cron.info -s'
   minute  0
   hour    1
