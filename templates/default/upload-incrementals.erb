@@ -12,7 +12,7 @@ let upload_retries=5
 
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
-work_dir="${root_dir}/backup_work_dir"
+work_dir="${root_dir}/backup_work_dir/incrementals"
 old_pwd="$PWD"
 
 work_dir_fs_id=`stat -f -c %i ${work_dir}`
