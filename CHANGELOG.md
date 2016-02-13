@@ -1,5 +1,13 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.3] (2016-02-13)
+
+### Fixes
+
+* Add more "set +/-e" flags to upload-incrementals
+* Add /usr/local/bin to cron path
+* Give snapshots and incrementals their own respective working directories
+
 ## [v5.0.2] (2016-02-12)
 
 ### Fixes
