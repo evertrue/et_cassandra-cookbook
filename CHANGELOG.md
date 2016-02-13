@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.4] (2016-02-13)
+
+### Fixes
+
+* Check the root_dir for fs sameness before accessing work_dir
+
 ## [v5.0.3] (2016-02-13)
 
 ### Fixes
