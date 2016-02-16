@@ -29,7 +29,7 @@ for ks in $keyspaces; do
   set -e
 
   if [ "$retval" ]; then
-    echo "Repair of keyspace ${ks} failed with code ${retval} after ${tries} tries"
+    echo "Repair of keyspace ${ks} failed with code ${retval} after ${retries} tries"
     <% if node['et_cassandra']['cronitor']['repairs']['enabled'] -%>
     /usr/local/bin/cronitor_repairs fail
     <% end -%>
