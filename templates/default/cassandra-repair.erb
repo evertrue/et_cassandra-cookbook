@@ -22,7 +22,7 @@ for ks in $keyspaces; do
   until [ $try -ge $retries ]; do
     /usr/bin/nodetool -h localhost repair "$ks" -pr && break
     retval=$?
-    echo "Repair of keyspace ${ks} failed with status ${retval}. Retrying..."
+    echo "Repair of keyspace ${ks} failed with status ${retval}. Retrying (${try}/${retries})..."
     let try=$[$try+1]
     sleep 5
   done
