@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.6] (2016-02-16)
+
+### Fixes
+
+* Cassandra repair: Only error out if final retval != 0
+
 ## [v5.0.5] (2016-02-16)
 
 ### Fixes
