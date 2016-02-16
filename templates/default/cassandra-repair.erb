@@ -14,19 +14,22 @@ keyspaces=$(/usr/bin/cqlsh -e 'copy system.schema_keyspaces (keyspace_name) to s
   | sed 's/\r//g' \
   | grep -v '^\(system\|system_traces\|OpsCenter\)$')
 
+set +e
+
 for ks in $keyspaces; do
   echo "Running repair on keyspace $ks"
 
-  set +e
   let try=0
   until [ $try -ge $retries ]; do
-    /usr/bin/nodetool -h localhost repair "$ks" -pr && break
+    /usr/bin/nodetool -h localhost repair "$ks" -pr
     retval=$?
+    if [[ ${retval} == 0 ]]; then
+      break
+    fi
     echo "Repair of keyspace ${ks} failed with status ${retval}. Retrying (${try}/${retries})..."
     let try=$[$try+1]
     sleep 5
   done
-  set -e
 
   if [ "$retval" ]; then
     echo "Repair of keyspace ${ks} failed with code ${retval} after ${retries} tries"
