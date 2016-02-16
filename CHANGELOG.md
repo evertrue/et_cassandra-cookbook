@@ -1,5 +1,18 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.5] (2016-02-16)
+
+### Fixes
+
+* Cassandra repair
+    - Test for success instead of failure
+    - Fix null pointer in output text
+
+### Changes
+
+* Run repair cron job at 03:20UTC instead of 04:20UTC (so much for our calm)
+* Cassandra repair: Show which retry we're on
+
 ## [v5.0.4] (2016-02-13)
 
 ### Fixes
