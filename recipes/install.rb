@@ -116,3 +116,8 @@ ruby_block 'cassandra_started' do
     node.save
   end
 end
+
+template '/usr/sbin/cassandra' do
+  source 'cassandra-bin.erb'
+  mode 0755
+end
