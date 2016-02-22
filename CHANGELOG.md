@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.7 (2016-02-22)
+
+### Fixes
+
+* Move repair jobs from 0300UTC to 1000UTC to prevent conflicts with Spark jobs
+
 ## [v5.0.6] (2016-02-16)
 
 ### Fixes
