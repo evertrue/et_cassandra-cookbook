@@ -1,6 +1,6 @@
 # CHANGELOG for et_cassandra
 
-## [v5.0.7 (2016-02-22)
+## [v5.0.7] (2016-02-22)
 
 ### Fixes
 
@@ -44,7 +44,7 @@
 ### Fixes
 
 * Add retries to the backup and repair scripts
-* Add ServerSpec tests for upload-incrementals and snapshot-cassandra 
+* Add ServerSpec tests for upload-incrementals and snapshot-cassandra
 
 ## [v5.0.1] (2016-01-06)
 
@@ -664,6 +664,74 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v5.0.7]: https://github.com/evertrue/et_cassandra/compare/v5.0.6...v5.0.7
+[v5.0.6]: https://github.com/evertrue/et_cassandra/compare/v5.0.5...v5.0.6
+[v5.0.5]: https://github.com/evertrue/et_cassandra/compare/v5.0.4...v5.0.5
+[v5.0.4]: https://github.com/evertrue/et_cassandra/compare/v5.0.3...v5.0.4
+[v5.0.3]: https://github.com/evertrue/et_cassandra/compare/v5.0.2...v5.0.3
+[v5.0.2]: https://github.com/evertrue/et_cassandra/compare/v5.0.1...v5.0.2
+[v5.0.1]: https://github.com/evertrue/et_cassandra/compare/v5.0.0...v5.0.1
+[v5.0.0]: https://github.com/evertrue/et_cassandra/compare/v4.8.14...v5.0.0
+[v4.8.14]: https://github.com/evertrue/et_cassandra/compare/v4.8.13...v4.8.14
+[v4.8.13]: https://github.com/evertrue/et_cassandra/compare/v4.8.12...v4.8.13
+[v4.8.12]: https://github.com/evertrue/et_cassandra/compare/v4.8.11...v4.8.12
+[v4.8.11]: https://github.com/evertrue/et_cassandra/compare/v4.8.10...v4.8.11
+[v4.8.10]: https://github.com/evertrue/et_cassandra/compare/v4.8.9...v4.8.10
+[v4.8.9]: https://github.com/evertrue/et_cassandra/compare/v4.8.8...v4.8.9
+[v4.8.8]: https://github.com/evertrue/et_cassandra/compare/v4.8.7...v4.8.8
+[v4.8.7]: https://github.com/evertrue/et_cassandra/compare/v4.8.6...v4.8.7
+[v4.8.6]: https://github.com/evertrue/et_cassandra/compare/v4.8.5...v4.8.6
+[v4.8.5]: https://github.com/evertrue/et_cassandra/compare/v4.8.4...v4.8.5
+[v4.8.4]: https://github.com/evertrue/et_cassandra/compare/v4.8.3...v4.8.4
+[v4.8.3]: https://github.com/evertrue/et_cassandra/compare/v4.8.2...v4.8.3
+[v4.8.2]: https://github.com/evertrue/et_cassandra/compare/v4.8.1...v4.8.2
+[v4.8.1]: https://github.com/evertrue/et_cassandra/compare/v4.8.0...v4.8.1
+[v4.8.0]: https://github.com/evertrue/et_cassandra/compare/v4.7.0...v4.8.0
+[v4.7.0]: https://github.com/evertrue/et_cassandra/compare/v4.6.1...v4.7.0
+[v4.6.1]: https://github.com/evertrue/et_cassandra/compare/v4.6.0...v4.6.1
+[v4.6.0]: https://github.com/evertrue/et_cassandra/compare/v4.5.15...v4.6.0
+[v4.5.15]: https://github.com/evertrue/et_cassandra/compare/v4.5.14...v4.5.15
+[v4.5.14]: https://github.com/evertrue/et_cassandra/compare/v4.5.13...v4.5.14
+[v4.5.13]: https://github.com/evertrue/et_cassandra/compare/v4.5.12...v4.5.13
+[v4.5.12]: https://github.com/evertrue/et_cassandra/compare/v4.5.11...v4.5.12
+[v4.5.11]: https://github.com/evertrue/et_cassandra/compare/v4.5.10...v4.5.11
+[v4.5.10]: https://github.com/evertrue/et_cassandra/compare/v4.5.9...v4.5.10
+[v4.5.9]: https://github.com/evertrue/et_cassandra/compare/v4.5.8...v4.5.9
+[v4.5.8]: https://github.com/evertrue/et_cassandra/compare/v4.5.7...v4.5.8
+[v4.5.7]: https://github.com/evertrue/et_cassandra/compare/v4.5.6...v4.5.7
+[v4.5.6]: https://github.com/evertrue/et_cassandra/compare/v4.5.5...v4.5.6
+[v4.5.5]: https://github.com/evertrue/et_cassandra/compare/v4.5.4...v4.5.5
+[v4.5.4]: https://github.com/evertrue/et_cassandra/compare/v4.5.3...v4.5.4
+[v4.5.3]: https://github.com/evertrue/et_cassandra/compare/v4.5.2...v4.5.3
+[v4.5.2]: https://github.com/evertrue/et_cassandra/compare/v4.5.1...v4.5.2
+[v4.5.1]: https://github.com/evertrue/et_cassandra/compare/v4.5.0...v4.5.1
+[v4.5.0]: https://github.com/evertrue/et_cassandra/compare/v4.4.0...v4.5.0
+[v4.4.0]: https://github.com/evertrue/et_cassandra/compare/v4.3.0...v4.4.0
+[v4.3.0]: https://github.com/evertrue/et_cassandra/compare/v4.2.0...v4.3.0
+[v4.2.0]: https://github.com/evertrue/et_cassandra/compare/v4.1.13...v4.2.0
+[v4.1.13]: https://github.com/evertrue/et_cassandra/compare/v4.1.12...v4.1.13
+[v4.1.12]: https://github.com/evertrue/et_cassandra/compare/v4.1.11...v4.1.12
+[v4.1.11]: https://github.com/evertrue/et_cassandra/compare/v4.1.10...v4.1.11
+[v4.1.10]: https://github.com/evertrue/et_cassandra/compare/v4.1.9...v4.1.10
+[v4.1.9]: https://github.com/evertrue/et_cassandra/compare/v4.1.8...v4.1.9
+[v4.1.8]: https://github.com/evertrue/et_cassandra/compare/v4.1.7...v4.1.8
+[v4.1.7]: https://github.com/evertrue/et_cassandra/compare/v4.1.6...v4.1.7
+[v4.1.6]: https://github.com/evertrue/et_cassandra/compare/v4.1.5...v4.1.6
+[v4.1.5]: https://github.com/evertrue/et_cassandra/compare/v4.1.4...v4.1.5
+[v4.1.4]: https://github.com/evertrue/et_cassandra/compare/v4.1.3...v4.1.4
+[v4.1.3]: https://github.com/evertrue/et_cassandra/compare/v4.1.2...v4.1.3
+[v4.1.2]: https://github.com/evertrue/et_cassandra/compare/v4.1.1...v4.1.2
+[v4.1.1]: https://github.com/evertrue/et_cassandra/compare/v4.1.0...v4.1.1
+[v4.1.0]: https://github.com/evertrue/et_cassandra/compare/v4.0.0...v4.1.0
+[v4.0.0]: https://github.com/evertrue/et_cassandra/compare/v3.2.0...v4.0.0
+[v3.2.0]: https://github.com/evertrue/et_cassandra/compare/v3.1.1...v3.2.0
+[v3.1.1]: https://github.com/evertrue/et_cassandra/compare/v3.1.0...v3.1.1
+[v3.1.0]: https://github.com/evertrue/et_cassandra/compare/v3.0.1...v3.1.0
+[v3.0.1]: https://github.com/evertrue/et_cassandra/compare/v3.0.0...v3.0.1
+[v3.0.0]: https://github.com/evertrue/et_cassandra/compare/v2.1.4...v3.0.0
+[v2.1.4]: https://github.com/evertrue/et_cassandra/compare/v2.1.3...v2.1.4
+[v2.1.3]: https://github.com/evertrue/et_cassandra/compare/v2.1.2...v2.1.3
+[v2.1.2]: https://github.com/evertrue/et_cassandra/compare/v2.1.1...v2.1.2
 [v2.1.1]: https://github.com/evertrue/et_cassandra/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/evertrue/et_cassandra/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/evertrue/et_cassandra/compare/v2.0.0...v2.0.1
