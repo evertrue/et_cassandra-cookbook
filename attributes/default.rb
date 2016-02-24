@@ -1,7 +1,7 @@
 default['et_cassandra']['version']['cassandra'] = '2.1.12'
 default['et_cassandra']['version']['dsc21'] =
   "#{node['et_cassandra']['version']['cassandra']}-1"
-default['et_cassandra']['datastax']['version'] = '5.2.0'
+default['et_cassandra']['datastax']['version'] = '5.2.4'
 
 default['et_cassandra']['user'] = 'cassandra'
 default['et_cassandra']['home'] = '/var/lib/cassandra'
