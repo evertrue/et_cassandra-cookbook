@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.8] (2016-02-24)
+
+* Fix Cassandra topology search string for Chef > 12.1.1
+
 ## [v5.0.7] (2016-02-22)
 
 ### Fixes
@@ -664,6 +668,7 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v5.0.8]: https://github.com/evertrue/et_cassandra/compare/v5.0.7...v5.0.8
 [v5.0.7]: https://github.com/evertrue/et_cassandra/compare/v5.0.6...v5.0.7
 [v5.0.6]: https://github.com/evertrue/et_cassandra/compare/v5.0.5...v5.0.6
 [v5.0.5]: https://github.com/evertrue/et_cassandra/compare/v5.0.4...v5.0.5
