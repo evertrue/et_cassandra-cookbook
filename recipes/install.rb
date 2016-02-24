@@ -98,12 +98,15 @@ node.default['et_cassandra']['config']['seed_provider'] = [
 
 [
   'cassandra-env.sh',
-  'cassandra.yaml',
   'logback.xml'
 ].each do |conf|
   template "#{node['et_cassandra']['conf_path']}/#{conf}" do
     notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
   end
+end
+
+template "#{node['et_cassandra']['conf_path']}/cassandra.yaml" do
+  notifies :restart, 'service[cassandra]', :immediately unless node['et_cassandra']['skip_restart']
 end
 
 include_recipe 'et_cassandra::search_discovery'
