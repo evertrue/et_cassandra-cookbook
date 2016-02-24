@@ -34,7 +34,7 @@ default['et_cassandra']['env']['enable_gc_logging'] = false
 default['et_cassandra']['env']['jvm_opts'] = []
 
 # Node discovery
-default['et_cassandra']['discovery']['topo_search_str'] = 'recipe:et_cassandra'
+default['et_cassandra']['discovery']['topo_search_str'] = 'recipes:et_cassandra\:\:default'
 default['et_cassandra']['discovery']['seed_search_str'] = 'role:cassandra_seed'
 
 # Cassandra storage config
