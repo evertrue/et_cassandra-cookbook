@@ -5,6 +5,9 @@
     "ipaddress": "54.157.57.84",
     "platform": "ubuntu",
     "fqdn": "ip-10-30-20-33.ec2.internal",
+    "ec2": {
+      "placement_availability_zone":"us-east-1b"
+    },
     "recipes": [
       "ec2test::default",
       "et_cassandra::default",
