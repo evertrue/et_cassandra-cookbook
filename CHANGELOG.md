@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v5.0.9] (2016-02-25)
+
+* Set Cassandra to restart immediately when cassandra.yaml file is sourced
+
 ## [v5.0.8] (2016-02-24)
 
 * Fix Cassandra topology search string for Chef > 12.1.1
