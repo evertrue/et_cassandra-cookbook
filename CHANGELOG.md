@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v6.0.0] (2016-04-28)
+
+* Upgrade to jdk 8
+
 ## [v5.0.9] (2016-02-25)
 
 * Set Cassandra to restart immediately when cassandra.yaml file is sourced
