@@ -24,8 +24,6 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
-    driver:
-      image_id: ami-b2bc80da
 
 suites:
   - name: cloud-default
