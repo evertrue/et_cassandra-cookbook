@@ -8,8 +8,9 @@ version          '6.0.0'
 
 supports 'ubuntu', '= 14.04'
 
+chef_version '~> 12.10'
+
 depends 'java', '~> 1.29'
-depends 'apt',  '~> 2.6'
 depends 'storage', '~> 2.2'
 depends 'cron'
 depends 'python'
