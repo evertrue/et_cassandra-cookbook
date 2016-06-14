@@ -28,7 +28,7 @@ before_install:
 - rubocop --version
 - foodcritic --version
 install:
-- chef gem install kitchen-ec2
+- chef gem install kitchen-ec2 kitchen-sync
 - berks
 script:
 - rubocop
