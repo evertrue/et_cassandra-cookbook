@@ -471,9 +471,9 @@ eos
         it 'call tar with the right args' do
           stubbed_env.stub_command('s3cmd')
           stdout, stderr, _status = stubbed_env.execute('/usr/local/sbin/upload-incrementals')
-          puts "STDOUT:"
+          puts 'STDOUT:'
           puts stdout
-          puts "STDERR:"
+          puts 'STDERR:'
           puts stderr
           puts
           expect(

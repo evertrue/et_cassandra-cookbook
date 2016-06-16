@@ -21,14 +21,14 @@ action :update do
     converge_by("Update #{@new_resource}") do
       update_lifecycle
     end
-    @new_resource.updated_by_last_action(true)
   else
     Chef::Log.info "Creating LifeCycle #{@new_resource}"
     converge_by("Create #{@new_resource}") do
       create_lifecycle
     end
-    @new_resource.updated_by_last_action(true)
   end
+
+  @new_resource.updated_by_last_action true
 end
 
 action :delete do
@@ -39,7 +39,7 @@ action :delete do
     end
     @new_resource.updated_by_last_action(true)
   else
-    Chef::Log.info "#{ @current_resource } doesn't exist - nothing to do"
+    Chef::Log.info "#{@current_resource} doesn't exist - nothing to do"
   end
 end
 
@@ -86,7 +86,5 @@ def load_current_resource
   @current_resource.bucket(@new_resource.bucket)
   @current_resource.region(@new_resource.region)
 
-  if lifecycle_exists?(@current_resource.id)
-    @current_resource.exists = true
-  end
+  @current_resource.exists = true if lifecycle_exists? @current_resource.id
 end

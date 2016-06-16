@@ -108,7 +108,7 @@ else
     }
   ).first
 
-  fail 'Could not find any OpsCenter nodes' unless r
+  raise 'Could not find any OpsCenter nodes' unless r
 
   stomp_interface = (
     if Chef::VersionConstraint.new('< 12.1.1').include?(Chef::VERSION)
