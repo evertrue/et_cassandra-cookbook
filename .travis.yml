@@ -13,6 +13,9 @@ addons:
     packages:
     - chefdk
 env:
+  matrix:
+  - KITCHEN_SUITE=cloud-default
+  - KITCHEN_SUITE=cloud-opscenter
   global:
   - KITCHEN_YAML=.kitchen.cloud.yml
   - secure: X2sTENP5OzTbAX0LYfYbYgyyg7QNLmh5gSLXpeo1YWIQy7WFbsyzqOBONSi6U7CrvXmn182C9z6yPX9EXgormp6vse6vWHmsrL+40/oL4MON4PAmbTYTSima+EBCxT0MYV6NMyDlZr+6bJkRTQ+3IbbGa66xbXEnLtKernFDyPA=
@@ -28,9 +31,9 @@ before_install:
 - rubocop --version
 - foodcritic --version
 install:
-- chef gem install kitchen-ec2
+- chef gem install kitchen-ec2 kitchen-sync
 - berks
 script:
 - rubocop
 - foodcritic .
-- kitchen test -d always -c
+- kitchen test ${KITCHEN_SUITE} -d always

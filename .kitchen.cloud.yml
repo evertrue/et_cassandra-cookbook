@@ -15,6 +15,7 @@ driver:
     Type: test
 
 transport:
+  name: sftp
   username: ubuntu
   ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
@@ -23,8 +24,6 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
-    driver:
-      image_id: ami-b2bc80da
 
 suites:
   - name: cloud-default
