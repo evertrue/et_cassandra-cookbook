@@ -676,6 +676,8 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v6.0.0]: https://github.com/evertrue/et_cassandra/compare/v5.0.9...v6.0.0
+[v5.0.9]: https://github.com/evertrue/et_cassandra/compare/v5.0.8...v5.0.9
 [v5.0.8]: https://github.com/evertrue/et_cassandra/compare/v5.0.7...v5.0.8
 [v5.0.7]: https://github.com/evertrue/et_cassandra/compare/v5.0.6...v5.0.7
 [v5.0.6]: https://github.com/evertrue/et_cassandra/compare/v5.0.5...v5.0.6
