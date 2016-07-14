@@ -23,11 +23,6 @@ package %w(cassandra dsc21) do
            node['et_cassandra']['version']['dsc21']]
 end
 
-template "/etc/default/#{node['et_cassandra']['user']}" do
-  source 'cassandra-user-default.erb'
-  notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
-end
-
 include_recipe 'storage'
 
 node.set['et_cassandra']['log_dir'] =
@@ -35,6 +30,13 @@ node.set['et_cassandra']['log_dir'] =
     "#{node['storage']['ephemeral_mounts'].first}/cassandra"
   else
     '/var/log/cassandra'
+  end
+
+node.override['et_cassandra']['heap_dump_dir'] =
+  if node['storage']['ephemeral_mounts']
+    "#{node['storage']['ephemeral_mounts'].first}/cassandra"
+  else
+    node['et_cassandra']['home']
   end
 
 [
@@ -48,6 +50,16 @@ node.set['et_cassandra']['log_dir'] =
     group node['et_cassandra']['user']
     recursive true
   end
+end
+
+template "/etc/default/#{node['et_cassandra']['user']}" do
+  source 'cassandra-user-default.erb'
+  notifies :restart, 'service[cassandra]' unless node['et_cassandra']['skip_restart']
+end
+
+cookbook_file '/etc/init.d/cassandra' do
+  source 'cassandra-init'
+  mode   0755
 end
 
 service 'cassandra' do

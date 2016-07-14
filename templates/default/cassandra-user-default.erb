@@ -7,3 +7,5 @@
 # JMX-to-web bridge install libmx4j-java and uncomment the following.
 #EXTRA_CLASSPATH="/usr/share/java/mx4j-tools.jar"
 ulimit -n <%= node['et_cassandra']['limits']['nofile'] %>
+CASSANDRA_ERROR_LOG_DIR=<%= node['et_cassandra']['log_dir'] %>
+CASSANDRA_HEAP_DUMP_DIR=<%= node['et_cassandra']['heap_dump_dir'] %>
