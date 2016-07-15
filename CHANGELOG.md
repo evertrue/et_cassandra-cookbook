@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v6.0.2] (2016-07-15)
+
+* Manage cassandra init script ergo setting CASSANDRA_HEAP_DUMP_DIR and CASSANDRA_ERROR_LOG_DIR to rational values
+* Remove useless heap dump setting from cassandra-env (gets overridden later)
+* Update cassandra_repair serverspec test to match new cron settings
+
 ## [v6.0.1] (2016-06-17)
 
 * Fix apt repository usage due to breaking Chef Client changes
