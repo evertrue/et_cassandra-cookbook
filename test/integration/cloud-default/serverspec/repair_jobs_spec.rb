@@ -8,6 +8,6 @@ context 'Repair Jobs' do
 
   describe file('/etc/cron.d/cassandra_repair') do
     it { is_expected.to be_file }
-    its(:content) { is_expected.to match(/^20 4 /) }
+    its(:content) { is_expected.to match(/^20 10 /) }
   end
 end
