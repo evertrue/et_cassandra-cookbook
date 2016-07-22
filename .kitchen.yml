@@ -17,7 +17,10 @@ suites:
       - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
       - recipe[et_cassandra::backups]
+      - recipe[et_logger::forwarder]
     attributes:
+      et_logger:
+        generate_cert: true
       ec2:
         placement_availability_zone: us-east-1b
       et_cassandra:
