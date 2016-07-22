@@ -36,7 +36,10 @@ suites:
       - recipe[et_cassandra::opscenter]
       - recipe[et_cassandra::backups]
       - recipe[cassandra_fake_data::default]
+      - recipe[et_logger::forwarder]
     attributes:
+      et_logger:
+        generate_cert: true
       et_cassandra:
         snapshot:
           data_bag: false
