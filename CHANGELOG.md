@@ -1,5 +1,15 @@
 # CHANGELOG for et_cassandra
 
+## [v6.0.2] (2016-07-15)
+
+* Manage cassandra init script ergo setting CASSANDRA_HEAP_DUMP_DIR and CASSANDRA_ERROR_LOG_DIR to rational values
+* Remove useless heap dump setting from cassandra-env (gets overridden later)
+* Update cassandra_repair serverspec test to match new cron settings
+
+## [v6.0.1] (2016-06-17)
+
+* Fix apt repository usage due to breaking Chef Client changes
+
 ## [v6.0.0] (2016-04-28)
 
 * Upgrade to jdk 8
@@ -676,6 +686,9 @@
     - A great many config options are still hard-wired to the defaults provided by Cassandra
     - Many, however, can be configured via attributes
 
+[v6.0.1]: https://github.com/evertrue/et_cassandra/compare/v6.0.0...v6.0.1
+[v6.0.0]: https://github.com/evertrue/et_cassandra/compare/v5.0.9...v6.0.0
+[v5.0.9]: https://github.com/evertrue/et_cassandra/compare/v5.0.8...v5.0.9
 [v5.0.8]: https://github.com/evertrue/et_cassandra/compare/v5.0.7...v5.0.8
 [v5.0.7]: https://github.com/evertrue/et_cassandra/compare/v5.0.6...v5.0.7
 [v5.0.6]: https://github.com/evertrue/et_cassandra/compare/v5.0.5...v5.0.6

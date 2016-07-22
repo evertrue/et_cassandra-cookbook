@@ -25,6 +25,8 @@ shared_examples_for 'a default installation' do |log_root, log_dir|
         describe '#content' do
           subject { super().content }
           it { is_expected.to include 'ulimit -n 65535' }
+          it { is_expected.to match "CASSANDRA_ERROR_LOG_DIR=#{log_dir}/cassandra" }
+          it { is_expected.to match "CASSANDRA_HEAP_DUMP_DIR=#{log_dir}/cassandra" }
         end
       end
     end
@@ -35,6 +37,10 @@ shared_examples_for 'a default installation' do |log_root, log_dir|
 
     it 'has a running service of cassandra' do
       expect(service('cassandra')).to be_running
+    end
+
+    describe process 'java' do
+      its(:args) { should match %r{-XX:HeapDumpPath=#{log_dir}/cassandra/java_.*\.hprof} }
     end
 
     it 'has the necessary permissions for its directories' do
@@ -73,6 +79,14 @@ shared_examples_for 'a default installation' do |log_root, log_dir|
           it { is_expected.to include 'saved_caches_directory: "/var/lib/cassandra/saved_caches"' }
           it { is_expected.to match(/\- seeds: (?:[0-9]{1,3}\.){3}[0-9]{1,3}/) }
         end
+      end
+    end
+
+    describe file '/etc/init.d/cassandra' do
+      it { is_expected.to be_file }
+      describe '#content' do
+        subject { super().content }
+        it { is_expected.to match 'CASSANDRA_HEAP_DUMP_DIR' }
       end
     end
 
@@ -471,9 +485,9 @@ eos
         it 'call tar with the right args' do
           stubbed_env.stub_command('s3cmd')
           stdout, stderr, _status = stubbed_env.execute('/usr/local/sbin/upload-incrementals')
-          puts "STDOUT:"
+          puts 'STDOUT:'
           puts stdout
-          puts "STDERR:"
+          puts 'STDERR:'
           puts stderr
           puts
           expect(

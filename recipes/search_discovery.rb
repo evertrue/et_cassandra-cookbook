@@ -9,7 +9,7 @@ nodes = search(
   node['et_cassandra']['discovery']['topo_search_str'] +
   " AND chef_environment:#{node.chef_environment}",
   filter_result: {
-    'ip'  => %w(ipaddress),
+    'ip' => %w(ipaddress),
     'az' => %w(ec2 placement_availability_zone)
   }
 )

@@ -4,5 +4,5 @@ execute 'write_900k_rows' do
   # Cassandra sometimes takes a few seconds to start up
   retries 4
   retry_delay 5
-  action  :run
+  action :run
 end
