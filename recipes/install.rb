@@ -23,22 +23,6 @@ package %w(cassandra dsc21) do
            node['et_cassandra']['version']['dsc21']]
 end
 
-include_recipe 'storage'
-
-node.set['et_cassandra']['log_dir'] =
-  if node['storage']['ephemeral_mounts']
-    "#{node['storage']['ephemeral_mounts'].first}/cassandra"
-  else
-    '/var/log/cassandra'
-  end
-
-node.override['et_cassandra']['heap_dump_dir'] =
-  if node['storage']['ephemeral_mounts']
-    "#{node['storage']['ephemeral_mounts'].first}/cassandra"
-  else
-    node['et_cassandra']['home']
-  end
-
 [
   node['et_cassandra']['config']['data_file_directories'],
   node['et_cassandra']['config']['commitlog_directory'],

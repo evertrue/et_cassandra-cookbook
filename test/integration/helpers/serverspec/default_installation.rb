@@ -25,8 +25,8 @@ shared_examples_for 'a default installation' do |log_root, log_dir|
         describe '#content' do
           subject { super().content }
           it { is_expected.to include 'ulimit -n 65535' }
-          it { is_expected.to match "CASSANDRA_ERROR_LOG_DIR=#{log_dir}/cassandra" }
-          it { is_expected.to match "CASSANDRA_HEAP_DUMP_DIR=#{log_dir}/cassandra" }
+          it { is_expected.to match 'CASSANDRA_ERROR_LOG_DIR=/var/log/cassandra' }
+          it { is_expected.to match 'CASSANDRA_HEAP_DUMP_DIR=/var/lib/cassandra' }
         end
       end
     end
@@ -40,7 +40,7 @@ shared_examples_for 'a default installation' do |log_root, log_dir|
     end
 
     describe process 'java' do
-      its(:args) { should match %r{-XX:HeapDumpPath=#{log_dir}/cassandra/java_.*\.hprof} }
+      its(:args) { should match %r{-XX:HeapDumpPath=/var/lib/cassandra/java_.*\.hprof} }
     end
 
     it 'has the necessary permissions for its directories' do
@@ -146,7 +146,7 @@ eos
     end
 
     context 'has content in the correct log files' do
-      describe file("#{log_dir}/cassandra/system.log") do
+      describe file('/var/log/cassandra/system.log') do
         it { is_expected.to be_file }
         describe '#content' do
           subject { super().content }
@@ -189,7 +189,7 @@ eos
         it { is_expected.to be_file }
         describe '#content' do
           subject { super().content }
-          it { is_expected.to include "LOG=\"#{log_root}" }
+          it { is_expected.to include 'LOG="/var/log/cassandra' }
         end
       end
     end
@@ -202,7 +202,7 @@ eos
     end
 
     context 'has content in the correct log files' do
-      describe file("/#{log_dir}/datastax-agent/agent.log") do
+      describe file('/var/log/datastax-agent/agent.log') do
         it { is_expected.to be_file }
         describe '#content' do
           subject { super().content }
@@ -210,7 +210,7 @@ eos
         end
       end
 
-      describe file("/#{log_dir}/datastax-agent/startup.log") do
+      describe file('/var/log/datastax-agent/startup.log') do
         it { is_expected.to be_file }
       end
     end

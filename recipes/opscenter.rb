@@ -5,26 +5,6 @@
 # Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
 
 include_recipe 'et_cassandra::repo'
-include_recipe 'storage'
-
-if node['storage']['ephemeral_mounts']
-  node.set['et_cassandra']['opscenter']['config']['logging']['log_path'] =
-    "#{node['storage']['ephemeral_mounts'].first}/opscenter/opscenterd.log"
-  node.set['et_cassandra']['datastax-agent']['log_dir'] =
-    "#{node['storage']['ephemeral_mounts'].first}/datastax-agent"
-  directory node.set['et_cassandra']['datastax-agent']['log_dir'] do
-    owner     node['et_cassandra']['user']
-    group     node['et_cassandra']['user']
-    mode      0755
-    action    :create
-    recursive true
-  end
-else
-  node.set['et_cassandra']['opscenter']['config']['logging']['log_path'] =
-    '/var/log/opscenter/opscenterd.log'
-  node.set['et_cassandra']['datastax-agent']['log_dir'] =
-    '/var/log/datastax-agent'
-end
 
 package 'datastax-agent' do
   version node['et_cassandra']['datastax']['version']
