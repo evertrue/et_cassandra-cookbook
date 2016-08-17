@@ -298,9 +298,9 @@ eos
       end
 
       context 'tarball exists' do
-        let(:tarball) { "#{backup_root_dir}/backup_work_dir/keyspace1-1.tar.gz" }
+        let(:tarball) { "#{backup_root_dir}/backup_work_dir/snapshots/keyspace1-1.tar.gz" }
         before(:each) do
-          File.open(tarball, 'w') { |f| f.write('temp data') }
+          File.open(tarball, 'w') { |f| f.write("temp data\n") }
         end
 
         describe command('/usr/local/sbin/snapshot-cassandra') do
@@ -332,14 +332,14 @@ eos
           stdout, _stderr, status = stubbed_env.execute '/usr/local/sbin/snapshot-cassandra'
           expect(stdout).to contain('tar failed. Retrying...')
           expect(stdout).to contain(
-            "Could not create #{backup_root_dir}/backup_work_dir/keyspace1-1.tar.gz " \
-            "in 5 tries. Skipping keyspace keyspace1 in data_dir #{backup_root_dir}/data."
+            "Could not create #{backup_root_dir}/cassandra/backup_work_dir/snapshots/keyspace1-1.tar.gz " \
+            "in 5 tries. Skipping keyspace keyspace1 in data_dir #{backup_root_dir}/cassandra/data."
           )
           expect(status.exitstatus).to eq 0
         end
 
-        describe command('ls /var/lib/cassandra/backup_work_dir/*') do
-          its(:stderr) { should contain 'ls: cannot access /var/lib/cassandra/backup_work_dir/\*: No such file or directory' }
+        describe command('ls /var/lib/cassandra/backup_work_dir/snapshots/*') do
+          its(:stderr) { should contain 'ls: cannot access /var/lib/cassandra/backup_work_dir/snapshots/\\*: No such file or directory' }
         end
 
         after do
@@ -404,9 +404,9 @@ eos
           stubbed_env.stub_command('s3cmd').returns_exitstatus 1
           r = stubbed_env.execute '/usr/local/sbin/upload-incrementals'
           %w(keyspace1 system).each do |ks|
-            File.delete("/var/lib/cassandra/backup_work_dir/#{ks}-1.tar.gz")
+            File.delete("/var/lib/cassandra/backup_work_dir/incrementals/#{ks}-1.tar.gz")
           end
-          FileUtils.rm_rf Dir.glob('/var/lib/cassandra/backup_work_dir/*-*-*T*')
+          FileUtils.rm_rf Dir.glob('/var/lib/cassandra/backup_work_dir/incrementals/*-*-*T*')
           r
         end
 
@@ -414,7 +414,7 @@ eos
           stdout, _stderr, _status = exec_result
           expect(stdout).to contain 'S3 Upload failed. Retrying \('
           expect(stdout).to contain(
-            'Could not upload /var/lib/cassandra/backup_work_dir/keyspace1-1.tar.gz' \
+            'Could not upload /var/lib/cassandra/backup_work_dir/incrementals/keyspace1-1.tar.gz' \
             ' in 5 tries.'
           )
         end
@@ -430,7 +430,7 @@ eos
       end
 
       context 'tarball exists' do
-        let(:tarball) { "#{backup_root_dir}/backup_work_dir/keyspace1-1.tar.gz" }
+        let(:tarball) { "#{backup_root_dir}/backup_work_dir/incrementals/keyspace1-1.tar.gz" }
         before(:each) do
           File.open(tarball, 'w') { |f| f.write('temp data') }
         end
@@ -453,7 +453,7 @@ eos
           stubbed_env
             .stub_command('find')
             .with_args(
-              '/var/lib/cassandra/backup_work_dir',
+              '/var/lib/cassandra/backup_work_dir/incrementals',
               '-mindepth', '1',
               '-maxdepth', '1',
               '-type', 'd',
@@ -463,7 +463,7 @@ eos
           stubbed_env
             .stub_command('find')
             .with_args(
-              '/var/lib/cassandra/backup_work_dir/2016-02-05T190413',
+              '/var/lib/cassandra/backup_work_dir/incrementals/2016-02-05T190413',
               '-mindepth', '1',
               '-maxdepth', '1',
               '-type', 'd',
@@ -473,7 +473,7 @@ eos
           stubbed_env
             .stub_command('find')
             .with_args(
-              '/var/lib/cassandra/backup_work_dir/2016-02-05T190413/1',
+              '/var/lib/cassandra/backup_work_dir/incrementals/2016-02-05T190413/1',
               '-mindepth', '1',
               '-maxdepth', '1',
               '-type', 'd',
@@ -495,7 +495,7 @@ eos
               .stub_command('tar')
               .with_args(
                 '-czf',
-                '/var/lib/cassandra/backup_work_dir/keyspace1-1.tar.gz',
+                '/var/lib/cassandra/backup_work_dir/incrementals/keyspace1-1.tar.gz',
                 'keyspace1'
               )
           ).to be_called
@@ -534,7 +534,7 @@ eos
         let(:stat_workdir_stub) do
           stubbed_env
             .stub_command('stat')
-            .with_args('-f', '-c', '%i', '/var/lib/cassandra/backup_work_dir')
+            .with_args('-f', '-c', '%i', '/var/lib/cassandra/backup_work_dir/incrementals')
         end
 
         before do
