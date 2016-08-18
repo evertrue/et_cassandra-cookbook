@@ -124,3 +124,10 @@ template "#{agent_conf_path}/log4j.properties" do
   source 'datastax-log4j.properties.erb'
   notifies :restart, 'service[datastax-agent]'
 end
+
+directory node['et_cassandra']['datastax-agent']['log_dir'] do
+  owner     node['et_cassandra']['user']
+  group     node['et_cassandra']['user']
+  recursive true
+  only_if   { node['et_cassandra']['datastax-agent']['log_dir'] != '/var/log/datastax-agent' }
+end
