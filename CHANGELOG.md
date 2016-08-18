@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v7.0.3] (2016-08-18)
+
+* Switch from override to default for cassandra prospector
+
 ## [v7.0.2] (2016-08-18)
 
 * Fix the filebeat prospector syntax so that the config file actually renders
