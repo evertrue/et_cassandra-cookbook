@@ -15,4 +15,3 @@ end.run_action :periodic
 include_recipe 'java'
 include_recipe 'et_cassandra::install'
 include_recipe 'et_cassandra::repair_jobs'
-include_recipe 'et_cassandra::logging'
