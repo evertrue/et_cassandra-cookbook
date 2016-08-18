@@ -134,9 +134,15 @@ for old_backup in $(old_backups); do
         continue
       fi
     done
-    rmdir "${work_dir}/${old_backup}/${dir_index}" || true
+
+    if [ -d "${work_dir}/${old_backup}/${dir_index}" ]; then
+      rmdir "${work_dir}/${old_backup}/${dir_index}"
+    fi
   done
-  rmdir "${work_dir}/${old_backup}" || true
+
+  if [ -d "${work_dir}/${old_backup}" ]; then
+    rmdir "${work_dir}/${old_backup}"
+  fi
 done
 
 nodetool -h localhost flush
@@ -180,11 +186,17 @@ for data_dir in $data_dirs; do
     fi
     set -e
   done # keyspaces loop
-  rmdir "${work_dir}/${backup_date}/${dir_index}"
+
+  if [ -d "${work_dir}/${backup_date}/${dir_index}" ]; then
+    rmdir "${work_dir}/${backup_date}/${dir_index}"
+  fi
+
   let dir_index++
 done
 
-rmdir "${work_dir}/${backup_date}"
+if [ -d "${work_dir}/${backup_date}" ]; then
+  rmdir "${work_dir}/${backup_date}"
+fi
 
 cd "$old_pwd"
 
