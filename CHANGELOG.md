@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v7.0.4] (2016-08-18)
+
+* Put filebeat prospector settings entirely in attributes
+
 ## [v7.0.3] (2016-08-18)
 
 * Switch from override to default for cassandra prospector
