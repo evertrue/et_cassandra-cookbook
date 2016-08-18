@@ -32,11 +32,11 @@ suites:
         Name: et_cassandra-cloud-default-ubuntu-1404
     run_list:
       - recipe[ec2test::default]
+      - recipe[et_logger::forwarder]
       - recipe[et_cassandra::default]
       - recipe[et_cassandra::opscenter]
       - recipe[et_cassandra::backups]
       - recipe[cassandra_fake_data::default]
-      - recipe[et_logger::forwarder]
     attributes:
       et_logger:
         generate_cert: true
