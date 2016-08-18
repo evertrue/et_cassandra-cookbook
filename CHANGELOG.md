@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v7.0.1] (2016-08-18)
+
+* Manage datastax logdir here (instead of in the wrapper)
+
 ## [v7.0.0] (2016-08-18)
 
 * Fix the ServerSpec tests for the backups (mostly by bringing them up to date with what the code currently does)
