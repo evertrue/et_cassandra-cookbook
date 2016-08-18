@@ -8,7 +8,7 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
-let upload_retries=5
+let upload_retries=<%= node['et_cassandra']['incrementals']['upload_retries'] %>
 
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"

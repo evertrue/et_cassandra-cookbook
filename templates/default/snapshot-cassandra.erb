@@ -8,8 +8,8 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
-let tar_retries=5
-let upload_retries=5
+let tar_retries=<%= node['et_cassandra']['snapshot']['tar_retries'] %>
+let upload_retries=<%= node['et_cassandra']['snapshot']['upload_retries'] %>
 
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
@@ -99,7 +99,7 @@ for data_dir in $data_dirs; do
           "s3://$BUCKET/cassandra/<%= node.chef_environment %>/<%= node['fqdn'] %>/snapshots/$backup_date/$keyspace-$dir_index.tar.gz" && break
         echo "S3 Upload failed. Retrying ($try/$upload_retries)"
         let try=$[$try+1]
-        sleep 5
+        sleep <%= node['et_cassandra']['snapshot']['upload_retry_delay'] %>
       done
       set -e
 
