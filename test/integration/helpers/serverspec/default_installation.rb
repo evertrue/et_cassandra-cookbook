@@ -189,7 +189,7 @@ eos
         it { is_expected.to be_file }
         describe '#content' do
           subject { super().content }
-          it { is_expected.to include 'LOG="/var/log/cassandra' }
+          it { is_expected.to include 'LOG="/var/log/datastax-agent' }
         end
       end
     end
