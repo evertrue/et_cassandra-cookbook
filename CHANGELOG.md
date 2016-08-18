@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v7.0.2] (2016-08-18)
+
+* Fix the filebeat prospector syntax so that the config file actually renders
+
 ## [v7.0.1] (2016-08-18)
 
 * Manage datastax logdir here (instead of in the wrapper)
