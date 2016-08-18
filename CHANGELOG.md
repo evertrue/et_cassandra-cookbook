@@ -1,5 +1,11 @@
 # CHANGELOG for et_cassandra
 
+## [v7.0.0] (2016-08-18)
+
+* Fix the ServerSpec tests for the backups (mostly by bringing them up to date with what the code currently does)
+* BREAKING: Remove all dependencies on the storage cookbook (should be handled exclusively in the wrapper)
+* Do remote logging
+
 ## [v6.0.2] (2016-07-15)
 
 * Manage cassandra init script ergo setting CASSANDRA_HEAP_DUMP_DIR and CASSANDRA_ERROR_LOG_DIR to rational values
