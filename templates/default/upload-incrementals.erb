@@ -8,7 +8,7 @@ set -e
 
 source /etc/cassandra/snapshots.conf
 
-let upload_retries=5
+let upload_retries=<%= node['et_cassandra']['incrementals']['upload_retries'] %>
 
 root_dir=`dirname "<%= node['et_cassandra']['config']['data_file_directories'].first %>"`
 data_dirs="<%= node['et_cassandra']['config']['data_file_directories'].join(' ') %>"
@@ -95,10 +95,27 @@ function archive_and_upload {
   trap - INT TERM EXIT
 }
 
+function old_backups {
+  find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P '
+}
+
+function dir_indices {
+  local subdir="${1}"
+
+  find ${work_dir}/${subdir} -mindepth 1 -maxdepth 1 -type d -printf '%P '
+}
+
+function old_backup_keyspaces {
+  local subdir="${1}"
+  local index="${2}"
+
+  find ${work_dir}/${subdir}/${index} -mindepth 1 -maxdepth 1 -type d -printf '%P '
+}
+
 # Re-upload any existing backups
-for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
-  for dir_index in `find ${work_dir}/${old_backup} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
-    for keyspace in `find ${work_dir}/${old_backup}/${dir_index} -mindepth 1 -maxdepth 1 -type d -printf '%P '`; do
+for old_backup in $(old_backups); do
+  for dir_index in $(dir_indices "$old_backup"); do
+    for keyspace in $(old_backup_keyspaces "$old_backup" $dir_index); do
       echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
 
       tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
@@ -117,18 +134,30 @@ for old_backup in `find ${work_dir} -mindepth 1 -maxdepth 1 -type d -printf '%P 
         continue
       fi
     done
-    rmdir "${work_dir}/${old_backup}/${dir_index}" || true
+
+    if [ -d "${work_dir}/${old_backup}/${dir_index}" ]; then
+      rmdir "${work_dir}/${old_backup}/${dir_index}"
+    fi
   done
-  rmdir "${work_dir}/${old_backup}" || true
+
+  if [ -d "${work_dir}/${old_backup}" ]; then
+    rmdir "${work_dir}/${old_backup}"
+  fi
 done
 
 nodetool -h localhost flush
+
+function keyspaces {
+  local subdir="${1}"
+
+  find $subdir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;
+}
 
 # Start a new backup...
 let dir_index=1
 
 for data_dir in $data_dirs; do
-  for keyspace in `find $data_dir -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+  for keyspace in $(keyspaces "$data_dir"); do
     if contained_by "${keyspace}" "${SKIP_KEYSPACES[@]}"; then continue; fi
 
     backup_holding_dir="${work_dir}/${backup_date}/${dir_index}"
@@ -139,7 +168,7 @@ for data_dir in $data_dirs; do
       exit 1
     fi
 
-    for table in `find ${data_dir}/${keyspace} -maxdepth 1 -mindepth 1 -type d -exec basename {} \;`; do
+    for table in $(keyspaces "${data_dir}/${keyspace}"); do
       mkdir -p "${backup_holding_dir}/${keyspace}/${table}"
       if [ -d "${data_dir}/${keyspace}/${table}/backups" ]; then
         mv "${data_dir}/${keyspace}/${table}/backups" "${backup_holding_dir}/${keyspace}/${table}/"
@@ -157,11 +186,17 @@ for data_dir in $data_dirs; do
     fi
     set -e
   done # keyspaces loop
-  rmdir "${work_dir}/${backup_date}/${dir_index}"
+
+  if [ -d "${work_dir}/${backup_date}/${dir_index}" ]; then
+    rmdir "${work_dir}/${backup_date}/${dir_index}"
+  fi
+
   let dir_index++
 done
 
-rmdir "${work_dir}/${backup_date}"
+if [ -d "${work_dir}/${backup_date}" ]; then
+  rmdir "${work_dir}/${backup_date}"
+fi
 
 cd "$old_pwd"
 

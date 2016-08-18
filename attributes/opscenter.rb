@@ -16,3 +16,5 @@ default['et_cassandra']['opscenter']['config'] = {
 }
 
 default['et_cassandra']['opscenter']['cluster']['managed'] = false
+default['et_cassandra']['opscenter']['config']['logging']['log_path'] =
+  '/var/log/opscenter/opscenterd.log'

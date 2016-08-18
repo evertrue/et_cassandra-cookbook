@@ -43,10 +43,15 @@ suites:
       et_cassandra:
         snapshot:
           data_bag: false
-          wait_secs: 2
+          wait_secs: 1
           tar_retry_secs: 0
+          tar_retries: 1
+          upload_retries: 1
+          upload_retry_delay: 0
         incrementals:
           upload_retry_delay: 0
+          tar_retries: 1
+          upload_retries: 1
         snapshot_conf:
           SKIP_KEYSPACES: (system_traces OpsCenter)
           BUCKET: et-cassandra-backups-test
