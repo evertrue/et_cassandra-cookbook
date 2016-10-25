@@ -115,3 +115,5 @@ ruby_block 'cassandra_started' do
     node.save
   end
 end
+
+cookbook_file('/usr/local/sbin/cassandra-prep-reboot') { mode 0o755 }

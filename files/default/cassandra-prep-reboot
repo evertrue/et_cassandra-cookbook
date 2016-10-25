@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+if /usr/sbin/service cassandra status | grep -q 'Cassandra is not running'; then
+  echo 'Cassandra is already stopped'
+  exit 0
+fi
+
+if [[ $(id -u) != 0 ]]; then
+  echo 'This script must be run with root privileges'
+  exit 1
+fi
+
+if [ ! -x /usr/bin/nodetool ]; then
+  echo "/usr/bin/nodetool not found or not executable"
+  exit 2
+fi
+
+res=$(/usr/bin/nodetool status | grep '^DN')
+
+if [ -n "${res}" ]; then
+  echo -e "One or more nodes appear to be down:\n${res}"
+  exit 3
+fi
+
+if [ -z "${HOSTNAME}" ]; then
+  HOSTNAME=$(hostname)
+fi
+
+set -e
+
+/usr/bin/nodetool -h ${HOSTNAME} disablegossip
+/usr/bin/nodetool -h ${HOSTNAME} disablethrift
+/usr/bin/nodetool -h ${HOSTNAME} drain
+/usr/sbin/service cassandra stop
+
+set +e
