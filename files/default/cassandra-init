@@ -97,7 +97,15 @@ do_start()
 
     # Run a repair if one is pending
     if [ -f "/var/run/$NAME/pending-repair" ]; then
-      /usr/bin/nodetool repair && rm -f "/var/run/$NAME/pending-repair"
+      let i=0
+      let tries=20
+      while [ $i -le $tries ] && ! echo | nc localhost 7199; do
+        let i=$i+1
+        sleep 1
+      done
+      if [ $i -le $tries ]; then
+        /usr/bin/nodetool repair && rm -f "/var/run/$NAME/pending-repair"
+      fi
     fi
 }
 
