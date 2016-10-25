@@ -28,6 +28,7 @@ fi
 
 set -e
 
+touch /var/run/cassandra/pending-repair
 /usr/bin/nodetool -h ${HOSTNAME} disablegossip
 /usr/bin/nodetool -h ${HOSTNAME} disablethrift
 /usr/bin/nodetool -h ${HOSTNAME} drain
