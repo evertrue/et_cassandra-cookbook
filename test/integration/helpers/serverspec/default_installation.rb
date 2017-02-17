@@ -154,20 +154,6 @@ eos
         end
       end
     end
-
-    describe file '/etc/filebeat/conf.d/prospector-cassandra_system.yml' do
-      it { is_expected.to be_file }
-      describe '#content' do
-        subject { super().content }
-        it do
-          is_expected.to contain 'filebeat:
-  prospectors:
-  - paths:
-    - "/var/log/cassandra/system.log"
-    document_type: cassandra_system'
-        end
-      end
-    end
   end
 
   describe 'DataStax OpsCenter' do

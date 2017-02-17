@@ -139,8 +139,3 @@ default['et_cassandra']['cronitor']['repairs']['enabled'] = false
 
 default['et_cassandra']['repairs']['timeout'] = 7200
 default['et_cassandra']['repairs']['retries'] = 5
-
-default['filebeat']['prospectors']['cassandra_system']['filebeat']['prospectors'] = [{
-  'paths' => ["#{node['et_cassandra']['log_dir']}/system.log"],
-  'document_type' => 'cassandra_system'
-}]
