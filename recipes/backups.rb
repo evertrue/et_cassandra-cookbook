@@ -42,6 +42,10 @@ template '/usr/local/sbin/upload-old-snapshots' do
   mode   0755
 end
 
+directory node['et_cassandra']['snapshot_conf']['TARBALL_DIR'] do
+  recursive true
+end
+
 cron_d 'cassandra_weekly_snapshot' do
   path '/usr/local/bin:/usr/bin:/bin'
   command '/usr/local/sbin/snapshot-cassandra 2>&1 | logger -t snapshot-cassandra -p cron.info -s'
