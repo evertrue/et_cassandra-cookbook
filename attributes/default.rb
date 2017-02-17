@@ -7,6 +7,7 @@ default['et_cassandra']['datastax-agent']['log_dir'] = '/var/log/datastax-agent'
 default['et_cassandra']['user'] = 'cassandra'
 default['et_cassandra']['home'] = '/var/lib/cassandra'
 default['et_cassandra']['log_dir'] = '/var/log/cassandra'
+default['et_cassandra']['tarball_dir'] = '/var/lib/cassandra/tarball_dir'
 default['et_cassandra']['heap_dump_dir'] = node['et_cassandra']['home']
 
 default['et_cassandra']['limits']['nofile'] = 65_535

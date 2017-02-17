@@ -56,7 +56,7 @@ for data_dir in $data_dirs; do
     if [ -n "$(find $data_dir/$keyspace -maxdepth 3 -mindepth 3 -path \*/snapshots/$snapshot_id -type d | head -n 1)" ]; then
       cd "$data_dir"
 
-      tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+      tarball="${TARBALL_DIR}/$keyspace-$dir_index.tar.gz"
 
       if [ -e "$tarball" ]; then
         echo "$tarball already exists! Bailing instead of overwriting it."

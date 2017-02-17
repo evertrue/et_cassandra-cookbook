@@ -118,7 +118,7 @@ for old_backup in $(old_backups); do
     for keyspace in $(old_backup_keyspaces "$old_backup" $dir_index); do
       echo "Re-archiving old backup: ${old_backup}/${dir_index}/${keyspace}"
 
-      tarball="${work_dir}/$keyspace-$dir_index.tar.gz"
+      tarball="${TARBALL_DIR}/$keyspace-$dir_index.tar.gz"
 
       if [ -e "$tarball" ]; then
         echo "$tarball already exists! Bailing instead of overwriting it."
