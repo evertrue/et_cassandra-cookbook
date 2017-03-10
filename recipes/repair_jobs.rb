@@ -18,7 +18,7 @@ cron_d 'cassandra_repair' do
     us-east-1b
     us-east-1c
     us-east-1d
-  ).find_index(node['ec2']['placement_availability_zone'])
+  ).find_index(node['ec2']['placement_availability_zone']).to_s
 end
 
 cron_d 'cassandra_daily_repair' do

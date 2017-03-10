@@ -51,7 +51,7 @@ cron_d 'cassandra_weekly_snapshot' do
   command '/usr/local/sbin/snapshot-cassandra 2>&1 | logger -t snapshot-cassandra -p cron.info -s'
   minute  0
   hour    13
-  weekday 6
+  weekday 6.to_s
 end
 
 cron_d 'cassandra_daily_incremental' do
