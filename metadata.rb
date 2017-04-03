@@ -10,7 +10,10 @@ supports 'ubuntu', '= 14.04'
 
 chef_version '~> 12.10'
 
-depends 'java', '~> 1.29'
+# Prevent new JDK's from being installed. Old ones do not get cleaned up and large amounts of
+# disk space get used. Plus: C* is never restarted so security updates are mostly pointless.
+depends 'java', '~> 1.48.0'
+
 depends 'cron'
 depends 'python'
 depends 'et_fog'
