@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v7.0.5] (2017-10-09)
+
+* Switch to OpenJDK from Oracle
+
 ## [v7.0.4] (2016-08-18)
 
 * Put filebeat prospector settings entirely in attributes
