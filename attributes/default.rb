@@ -129,10 +129,8 @@ default['et_cassandra']['config'] = {
 }
 
 # Java install settings
-default['java']['install_flavor'] = 'oracle'
+default['java']['install_flavor'] = 'openjdk'
 default['java']['jdk_version'] = '8'
-default['java']['oracle']['accept_oracle_download_terms'] = true
-default['java']['oracle']['jce']['enabled'] = true
 
 default['et_cassandra']['cronitor']['backups_snapshot']['enabled'] = false
 default['et_cassandra']['cronitor']['backups_incremental']['enabled'] = false
