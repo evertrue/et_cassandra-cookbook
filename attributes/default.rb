@@ -132,6 +132,9 @@ default['et_cassandra']['config'] = {
 default['java']['install_flavor'] = 'openjdk'
 default['java']['jdk_version'] = '8'
 
+# set JAVA_HOME for root so that service scripts have the correct conf
+default['java']['set_etc_environment'] = true
+
 default['et_cassandra']['cronitor']['backups_snapshot']['enabled'] = false
 default['et_cassandra']['cronitor']['backups_incremental']['enabled'] = false
 default['et_cassandra']['cronitor']['repairs']['enabled'] = false
