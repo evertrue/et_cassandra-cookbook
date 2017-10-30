@@ -1,6 +1,10 @@
 # CHANGELOG for et_cassandra
 
-## [v7.0.5] (2017-10-09)
+## [v7.1.8] (2017-10-30)
+
+* Set JAVA_HOME for root
+
+## [v7.1.7] (2017-10-09)
 
 * Switch to OpenJDK from Oracle
 
