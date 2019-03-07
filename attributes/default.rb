@@ -131,6 +131,7 @@ default['et_cassandra']['config'] = {
 # Java install settings
 default['java']['install_flavor'] = 'openjdk'
 default['java']['jdk_version'] = '8'
+default['java']['java_home'] = '/usr/lib/jvm/java-7-openjdk-amd64'
 
 # set JAVA_HOME for root so that service scripts have the correct conf
 default['java']['set_etc_environment'] = true

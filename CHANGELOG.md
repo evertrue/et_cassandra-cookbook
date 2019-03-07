@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [v7.1.9] (2019-03-07)
+
+* Set node java_home value
+
 ## [v7.1.8] (2017-10-30)
 
 * Set JAVA_HOME for root
