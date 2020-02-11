@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [7.1.10] (2020-02-11)
+
+* switched to poise-python
+
 ## [v7.1.9] (2019-03-07)
 
 * Set node java_home value
