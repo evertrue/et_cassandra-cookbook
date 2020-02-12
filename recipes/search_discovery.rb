@@ -37,7 +37,6 @@ topology[current_node_region][current_node_az] << node['ipaddress']
 topology[current_node_region][current_node_az] = topology[current_node_region][current_node_az].uniq
 
 %w(
-  properties
   yaml
 ).each do |ext|
   template "/etc/cassandra/cassandra-topology.#{ext}" do
