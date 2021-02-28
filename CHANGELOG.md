@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [7.1.13] (2021-02-28)
+
+* Specify pip url and pin pip & virtualenv versions
+
 ## [7.1.10] (2020-02-11)
 
 * switched to poise-python
