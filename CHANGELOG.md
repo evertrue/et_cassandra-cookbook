@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## [7.1.14] (2021-03-11)
+
+* Update pip url
+
 ## [7.1.13] (2021-02-28)
 
 * Specify pip url and pin pip & virtualenv versions
