@@ -4,7 +4,7 @@ maintainer_email 'devops@evertrue.com'
 license          'all_rights'
 description      'Installs/Configures a Cassandra ring w/ various goodies'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '7.1.14'
+version          '7.1.15'
 
 supports 'ubuntu', '= 14.04'
 
@@ -15,5 +15,4 @@ chef_version '~> 12.10'
 depends 'et_java', '~> 1.50.0'
 
 depends 'cron'
-depends 'poise-python'
 depends 'et_fog'

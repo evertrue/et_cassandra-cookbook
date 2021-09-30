@@ -1,5 +1,9 @@
 # CHANGELOG for et_cassandra
 
+## v7.1.15 (2021-09-30)
+
+* switching to apt install s3cmd
+
 ## [7.1.14] (2021-03-11)
 
 * Update pip url

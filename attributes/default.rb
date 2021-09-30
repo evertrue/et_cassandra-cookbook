@@ -142,8 +142,3 @@ default['et_cassandra']['cronitor']['repairs']['enabled'] = false
 
 default['et_cassandra']['repairs']['timeout'] = 7200
 default['et_cassandra']['repairs']['retries'] = 5
-
-# python versions
-default['poise-python']['options']['get_pip_url'] = 'https://bootstrap.pypa.io/pip/2.7/get-pip.py'
-default['poise-python']['options']['pip_version'] = '18.0'
-default['poise-python']['options']['virtualenv_version'] = '16.7.9'

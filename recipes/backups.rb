@@ -4,8 +4,7 @@
 #
 # Copyright (c) 2014 EverTrue, Inc., All Rights Reserved.
 
-include_recipe 'poise-python'
-python_package 's3cmd'
+package 's3cmd'
 
 include_recipe 'et_fog'
 
